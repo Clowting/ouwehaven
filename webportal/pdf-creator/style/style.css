@@ -1,0 +1,34 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	font-family: "Arial";
+}
+
+h1 { //
+	color: orange;
+	text-align: left;
+	font-family: "Arial";
+}
+
+table {
+	border-color: blue;
+	font-family: "Arial";
+	table-layout: fixed;
+}
+
+p {
+	font-family: "Arial";
+	font-size: 20px;
+}
+
+.total {
+	font-size: 15px;
+	font-weight: bold;
+	color: orange;
+	background-color: grey;
+}
+
+.header {
+	font-size: 10px;
+	text-align: right;
+}
