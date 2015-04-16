@@ -26,3 +26,16 @@
 
 		return $transactions;
 	}
+
+	function cleanInput($input) {
+		return preg_replace("/[^[:alnum:][:space:]]/ui", '', $input);
+	}
+
+	function validateInput($input, $min, $max) {
+		if(isset($input) && !empty($input)) {
+			if((strlen($input) >= $min) && (strlen($input) <= $max)) {
+				return true;
+			}
+		}
+		return false;
+	}
