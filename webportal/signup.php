@@ -50,20 +50,20 @@
         <?php
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            if( validateInput($_POST['voornaam'], 2, 64) &&
-                validateInput($_POST['achternaam'], 2, 64) &&
-                validateInput($_POST['adres'], 4, 128) &&
-                validateInput($_POST['postcode'], 6, 7) &&
-                validateInput($_POST['woonplaats']), 2, 128) {
+            $voornaam = cleanInput($_POST['voornaam']);
+            $tussenvoegsel = cleanInput($_POST['tussenvoegsel']);
+            $achternaam = cleanInput($_POST['achternaam']);
+            $adres = cleanInput($_POST['adres']);
+            $postcode = cleanInput($_POST['postcode']);
+            $woonplaats = cleanInput($_POST['woonplaats']);
 
-                $voornaam = cleanInput($_POST['voornaam']);
-                $achternaam = cleanInput($_POST['achternaam']);
-                $adres = cleanInput($_POST['adres']);
-                $postcode = cleanInput($_POST['postcode']);
-                $woonplaats = cleanInput($_POST['woonplaats']);
+            if( validateInput($voornaam, 2, 64) &&
+                validateInput($achternaam, 2, 64) &&
+                validateInput($adres, 4, 128) &&
+                validateInput($postcode, 6, 7) &&
+                validateInput($woonplaats, 2, 128)) {
 
-                if(validateInput($_POST['tussenvoegsel'], 1, 16)) {
-                    $tussenvoegsel = cleanInput($_POST['tussenvoegsel']);
+                if(validateInput($tussenvoegsel, 1, 16)) {
                     $sql = "INSERT INTO oh_members (User_ID, Voornaam, Tussenvoegsel, Achternaam, Adres, Postcode, Woonplaats)
                             VALUES ($userID, '$voornaam', '$tussenvoegsel', '$achternaam', '$adres', '$postcode', '$woonplaats')";
 
