@@ -1,7 +1,8 @@
 <?php
-	require 'includes/requireSession.php';
-	require 'includes/functions.php';
-    require 'includes/connectdb.php';
+    require_once 'includes/requireSession.php';
+    require_once 'includes/requirePenningmeester.php';
+    require_once 'includes/functions.php';
+    require_once 'includes/connectdb.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
