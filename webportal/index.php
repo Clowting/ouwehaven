@@ -1,6 +1,7 @@
 <?php
-	require 'includes/requireSession.php';
-	require 'includes/functions.php';
+    require_once 'includes/globals.php';
+	require_once 'includes/requireSession.php';
+	require_once 'includes/functions.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +13,7 @@
 
     ?>
 
-    <title>De 'n ouwe haven - Webportal</title>
+    <title><?php echo SITE_TITLE; ?> - Webportal</title>
 
 </head>
 

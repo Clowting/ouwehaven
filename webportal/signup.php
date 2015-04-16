@@ -1,4 +1,5 @@
 <?php
+    require_once 'includes/globals.php';
 	include_once '../wp-config.php';
     require_once 'includes/connectdb.php';
     require_once 'includes/functions.php';
@@ -31,10 +32,7 @@
 
     ?>
 
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="js/signup.js"></script>
-
-    <title>De 'n ouwe haven - Webportal</title>
+    <title><?php echo SITE_TITLE; ?> - Registreren</title>
 
 </head>
 
@@ -42,7 +40,7 @@
 
     <div class="container signup">
     	<div class="row text-center">
-    		<h2>Welkom bij het De 'n ouwe haven - Webportal</h1>
+    		<h2>Welkom bij het webportal van <?php echo SITE_TITLE; ?></h1>
     		<small>Voor u verder kunt gaan hebben we een aantal extra gegevens van u nodig.</small>
     	</div>
 
