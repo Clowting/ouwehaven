@@ -53,7 +53,7 @@
                             if(isset($_GET['id'])) {
                                 $transactie = getTransaction($mysqli, $_GET['id']);
 
-                                if($transaction !== false) {
+                                if($transactie !== false) {
                                     echo '<div class="col-xs-12 col-md-7">';
                                         // Details
                                         echo '<h4>Details</h4>';
