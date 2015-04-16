@@ -21,6 +21,10 @@ html, body {
 	height: 100%;
 }
 
+.align-right {
+	text-align: right;
+}
+
 #wrapper {
 	padding-left: 0;
 	transition: all 0.5s ease;
@@ -109,6 +113,10 @@ html, body {
 	}
 }
 
+.nav-tabs {
+	margin-bottom: 20px;
+}
+
 #menu-toggle {
 	background: transparentize(#000, .6);
 	color: #FFF;
@@ -120,6 +128,20 @@ html, body {
 
 div.alert-form {
 	margin-top: 10px;
+}
+
+.amount {
+	&.amount-credit {
+		i {
+			color: #8AC007;
+		}
+	}
+
+	&.amount-debit {
+		i {
+			color: #DA0000;
+		}
+	}
 }
 
 @media(min-width:768px) {

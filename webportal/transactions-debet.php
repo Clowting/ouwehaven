@@ -58,7 +58,7 @@
                                         <th>Rekeningnummer</th>
                                         <th>Tegenrekening</th>
                                         <th>Houder tegenrekening</th>
-                                        <th>Bedrag</th>
+                                        <th colspan="2">Bedrag</th>
                                     </tr>
                                 </thead>
 
@@ -74,7 +74,8 @@
                                                 echo '<td>' . $transaction["Rekeningnummer"] . '</td>';
                                                 echo '<td>' . $transaction["Tegenrekening"] . '</td>';
                                                 echo '<td>' . $transaction["Naam_Ontvanger"] . '</td>';
-                                                echo '<td>&euro;' . $transaction["Bedrag"] . '</td>';
+                                                echo '<td>&euro; ' . $transaction["Bedrag"] . '</td>';
+                                                echo '<td><a href="transactions-details.php?id=' . $transaction["ID"] . '"><i class="fa fa-arrow-right"></i></a></td>';
                                             echo '</tr>';
                                         }
 
