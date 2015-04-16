@@ -92,7 +92,7 @@
         } else {
         ?>
 
-    	<div class="row col-md-9 col-xs-7">
+    	<div class="row">
     		<form id="signupForm" role="form" method="POST">
     			<div class="form-group">
                     <label for="voornaam">Voornaam:</label>
