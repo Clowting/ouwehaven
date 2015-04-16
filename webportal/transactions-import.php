@@ -61,7 +61,7 @@
                         <?php
 
                             if($_SERVER["REQUEST_METHOD"] == "POST") {
-                                if(isset($_FILES["transactions"])) {
+                                if(isset($_FILES["transactions"]["tmp_name"]) && !empty($_FILES["transactions"]["tmp_name"])) {
                                     $file = file($_FILES["transactions"]["tmp_name"]);
                                     $csv = array_map('str_getcsv', $file);
 
