@@ -1,15 +1,25 @@
 <?php
-	include '../wp-config.php';
+	include_once '../wp-config.php';
+    require_once 'includes/connectdb.php';
+    require_once 'includes/functions.php';
+
 	if(is_user_logged_in()) {
 		$user = wp_get_current_user();
 		$roles = $user->roles;
 		$userID = $user->ID;
+
+        $sql = "SELECT *
+                FROM oh_members
+                WHERE User_ID = " . $userID;
+
+        $result = $mysqli->query($sql);
+
+        if ($result->num_rows > 0) {
+            header('Location: /webportal');
+        }
 	} else {
 		header('Location: ../wp-login.php');
-	};
-
-	require 'includes/functions.php';
-	require 'includes/connectdb.php';
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
