@@ -31,6 +31,7 @@
 
     ?>
 
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/signup.js"></script>
 
     <title>De 'n ouwe haven - Webportal</title>
