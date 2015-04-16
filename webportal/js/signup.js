@@ -2,6 +2,9 @@ $(document).ready(function ($) {
 
 	$("#signupForm").validate({
 		debug: false,
+    	errorClass: 'alert alert-danger alert-form',
+    	validClass: 'alert alert-success alert-form',
+    	errorElement: 'div',
 		rules: {
 			voornaam: {
 		    	required: true,
