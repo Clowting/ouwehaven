@@ -1,7 +1,8 @@
         <div id="sidebar-wrapper">
-            <button class="btn btn-default" id="menu-toggle">
-                <i class="fa fa-angle-right"></i>
-            </button>
+            <a class="btn btn-default" id="menu-toggle">
+                <i class="fa fa-lg fa-angle-right"></i>
+            </a>
+            
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="#">
