@@ -158,8 +158,6 @@
 
                             <button type="submit" class="btn btn-default">Importeren</button>
                         </form>
-
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
                     </div>
                 </div>
             </div>

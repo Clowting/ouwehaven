@@ -21,6 +21,10 @@ html, body {
 	height: 100%;
 }
 
+a, button {
+	@include transition(all .2s linear);
+}
+
 .align-right {
 	text-align: right;
 }
@@ -50,9 +54,21 @@ html, body {
 	overflow-y: auto;
 	background: $black;
 	transition: all 0.5s ease;
+
+	#menu-toggle {
+		z-index: 3000;
+		background-color: $black;
+		color: $color_mountain_mist_approx;
+		position: absolute;
+		top: 10px;
+		right: -30px;
+		width: 30px;
+		height: 30px;
+	}
 }
 
 #page-content-wrapper {
+	z-index: 2000;
 	width: 100%;
 	position: absolute;
 	padding: 15px;
@@ -115,15 +131,6 @@ html, body {
 
 .nav-tabs {
 	margin-bottom: 20px;
-}
-
-#menu-toggle {
-	background: transparentize(#000, .6);
-	color: #FFF;
-	position: fixed;
-	bottom: 20px;
-	right: 20px;
-	border: none;
 }
 
 div.alert-form {
