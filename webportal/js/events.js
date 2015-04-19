@@ -63,4 +63,14 @@ $(document).ready(function ($) {
 		}
 	});
 
+	$("#menu-toggle").click(function() {
+
+		if($.cookie('menu-toggled') == 'true') {
+			$.cookie('menu-toggled', false);
+		} else {
+			$.cookie('menu-toggled', true);
+		}
+
+	});
+
 });

@@ -19,7 +19,7 @@
 
 <body>
 
-    <div id="wrapper">
+    <?php include_once 'includes/wrapper.php'; ?>
 
         <!-- Sidebar -->
         <?php
