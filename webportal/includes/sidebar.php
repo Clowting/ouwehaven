@@ -1,6 +1,6 @@
         <div id="sidebar-wrapper">
             <a class="btn btn-default" id="menu-toggle">
-                <i class="fa fa-lg fa-angle-right"></i>
+                <i class="fa fa-lg fa-angle-left"></i>
             </a>
             
             <ul class="sidebar-nav">

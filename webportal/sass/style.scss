@@ -42,6 +42,10 @@ a, button {
 			.sidebar-nav {
 				left: -250px;
 			}
+
+			#menu-toggle i {
+				@include transform(rotate(180deg));
+			}
 		}
 
 		#page-content-wrapper {
