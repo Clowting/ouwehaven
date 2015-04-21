@@ -88,6 +88,22 @@
 		return $transactions;
 	}
 
+	function getShips($mysqli, $memberID) {
+		$ships = array();
+		$sql = "SELECT s.ImgURL AS Afbeelding, s.Naam AS Naam, s.Lengte AS Lengte, s.Ligplaats_ID AS Ligplaats
+				FROM oh_members AS m, oh_member_ship AS ms, oh_ships AS s
+				WHERE m.ID = ms.Member_ID AND s.ID = ms.Ship_ID AND m.ID = " . $memberID;
+		$result = $mysqli->query($sql);
+
+		if($result) {
+			while($ship = $result->fetch_assoc()) {
+				array_push($ships, $ship);
+			}
+		}
+
+		return $ships;
+	}
+
 	function cleanInput($input) {
 		return preg_replace("/[^[:alnum:][:space:]]/ui", '', $input);
 	}

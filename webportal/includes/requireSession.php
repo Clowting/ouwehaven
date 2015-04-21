@@ -16,6 +16,8 @@
 		if ($result->num_rows == 0) {
 			header('Location: signup.php');
 		}
+
+		$memberID = $result->fetch_assoc()['ID'];
 	}
 	else {
 		header('Location: ../wp-login.php');

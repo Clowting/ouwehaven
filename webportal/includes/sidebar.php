@@ -12,6 +12,9 @@
                 <li>
                     <a href="/webportal">Dashboard</a>
                 </li>
+                <li>
+                    <a href="ships.php"><i class="fa fa-ship"></i> Schepen</a>
+                </li>
 
                 <?php if (isPenningmeester($roles)) { ?>
                 <li class="sidebarSub"><i class="fa fa-btc"></i> Penningmeester
