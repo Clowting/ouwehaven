@@ -40,7 +40,7 @@ a, button {
 			width: 250px;
 
 			.sidebar-nav {
-				left: -250px;
+				left: 0;
 			}
 
 			#menu-toggle i {
@@ -190,6 +190,10 @@ div.alert-form {
 
 			#sidebar-wrapper {
 				width: 0;
+
+				.sidebar-nav {
+					left: -250px;
+				}
 			}
 
 			#page-content-wrapper {
