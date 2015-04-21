@@ -5656,7 +5656,7 @@ a, button {
     #wrapper.toggled #sidebar-wrapper {
       width: 250px; }
       #wrapper.toggled #sidebar-wrapper .sidebar-nav {
-        left: 0; }
+        left: -250px; }
       #wrapper.toggled #sidebar-wrapper #menu-toggle i {
         -moz-transform: rotate(180deg);
         -ms-transform: rotate(180deg);
