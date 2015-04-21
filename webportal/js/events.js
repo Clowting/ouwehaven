@@ -3,7 +3,13 @@ $(document).ready(function ($) {
 	$("#signupForm").validate({
 		debug: false,
     	errorClass: 'alert alert-danger alert-form',
-    	validClass: 'alert alert-success alert-form',
+	    highlight: function (element, errorClass, validClass) {
+	        return false;  // ensure this function stops
+	    },
+	    unhighlight: function (element, errorClass, validClass) {
+	        return false;  // ensure this function stops
+	    },
+    	//validClass: 'alert alert-success alert-form',
     	errorElement: 'div',
 		rules: {
 			voornaam: {
@@ -57,6 +63,44 @@ $(document).ready(function ($) {
 				required: "Voer a.u.b. uw woonplaats in.",
 				minlength: "Voer a.u.b. minimaal 2 tekens in."
 			} 
+		},
+		submitHandler: function(form) { 
+			form.submit();
+		}
+	});
+
+	$("#addShipForm").validate({
+		debug: false,
+    	errorClass: 'alert alert-danger alert-form',
+	    highlight: function (element, errorClass, validClass) {
+	        return false;  // ensure this function stops
+	    },
+	    unhighlight: function (element, errorClass, validClass) {
+	        return false;  // ensure this function stops
+	    },
+    	//validClass: 'alert alert-success alert-form',
+    	errorElement: 'div',
+		rules: {
+			naam: {
+		    	required: true,
+		    	minlength: 2
+		    },
+		    lengte: {
+		    	required: true,
+		    	number: true,
+		    	minlength: 1
+		    }
+		},
+		messages: {
+			naam: {
+				required:  "Voer a.u.b. de naam van het schip in.",
+				minlength: "Voer a.u.b. minimaal 2 tekens in."
+			},
+			lengte: {
+				required:  "Voer a.u.b. de lengte van het schip in.",
+				number: "Voer a.u.b. een getal in.",
+				minlength: "Voer a.u.b. minimaal 1 teken in."
+			}
 		},
 		submitHandler: function(form) { 
 			form.submit();
