@@ -104,6 +104,22 @@
 		return $ships;
 	}
 
+	function getMoorings($mysqli) {
+		$moorings = array();
+		$sql = "SELECT *
+				FROM oh_moorings
+				ORDER BY ID";
+		$result = $mysqli->query($sql);
+
+		if($result) {
+			while($mooring = $result->fetch_assoc()) {
+				array_push($moorings, $mooring);
+			}
+		}
+
+		return $moorings;
+	}
+
 	function cleanInput($input) {
 		return preg_replace("/[^[:alnum:][:space:]]/ui", '', $input);
 	}
