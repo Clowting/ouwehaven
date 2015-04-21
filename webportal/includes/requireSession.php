@@ -7,17 +7,24 @@
 		$roles = $user->roles;
 		$userID = $user->ID;
 
-		$sql = "SELECT *
-				FROM oh_members
-				WHERE User_ID = " . $userID;
+		// Store member details in session
+		if(!isset($_SESSION['member_details'])) {
+			$sql = "SELECT *
+					FROM oh_members
+					WHERE User_ID = " . $userID;
 
-		$result = $mysqli->query($sql);
+			$result = $mysqli->query($sql);
 
-		if ($result->num_rows == 0) {
-			header('Location: signup.php');
+			if ($result->num_rows == 0) {
+				header('Location: signup.php');
+			}
+			else {
+				// Store details in session
+				$_SESSION['member_details'] = $result->fetch_assoc();
+			}
 		}
 
-		$memberID = $result->fetch_assoc()['ID'];
+		$memberID = $_SESSION['member_details']['id'];
 	}
 	else {
 		header('Location: ../wp-login.php');
