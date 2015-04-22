@@ -132,3 +132,12 @@
 		}
 		return false;
 	}
+
+	function validateNumber($input, $min, $max) {
+		if(isset($input) && !empty($input)) {
+			if ((strlen($input) >= $min) && (strlen($input) <= $max) && (($num = filter_var($input, FILTER_VALIDATE_FLOAT)) !== false)) {
+			    return true;
+			}
+		}
+		return false;
+	}

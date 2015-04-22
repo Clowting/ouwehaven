@@ -80,7 +80,7 @@
                             if(in_array($detectedImageType, $allowedImageTypes) || $imgURL == "") {
 
                                 if( validateInput($naam, 2, 128) &&
-                                    validateInput($lengte, 1, 16) &&
+                                    validateNumber($lengte, 1, 16) &&
                                     validateInput($ligplaats, 1, 11)) {
 
                                     $sql = "INSERT INTO oh_ships (Ligplaats_ID, Naam, Lengte, ImgURL)
@@ -88,7 +88,12 @@
 
                                     $insert = $mysqli->query($sql);
 
-                                    if($insert) {
+                                    $sql = "INSERT INTO oh_member_ship (Member_ID, Ship_ID)
+                                            VALUES ($memberID, " . mysqli_insert_id($mysqli) . ")";
+
+                                    $insertLink = $mysqli->query($sql);
+
+                                    if($insert && $insertLink) {
                                         echo '<div class="alert alert-success" role="alert">Het schip is succesvol toegevoegd!</div>';
                                         echo '<p>Klik <a href="ships.php">hier</a> om verder te gaan.</p>';
                                     } else {
