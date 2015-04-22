@@ -77,7 +77,7 @@
                             }
 
 
-                            if(in_array($detectedImageType, $allowedImageTypes) || $imgURL == "") {
+                            if(($detectedImageType != null && in_array($detectedImageType, $allowedImageTypes)) || $imgURL == "") {
 
                                 if( validateInput($naam, 2, 128) &&
                                     validateNumber($lengte, 1, 16) &&
