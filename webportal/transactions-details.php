@@ -50,84 +50,111 @@
 
                         <?php
 
-                            if(isset($_GET['id'])) {
-                                $transactie = getTransaction($mysqli, $_GET['id']);
+                            if(isset($_GET['id']) && is_numeric($_GET['id'])) {
+                                $dataManager->where('ID', $_GET['id']);
+                                $result = $dataManager->get('oh_transactions', 1);
 
-                                if($transactie !== false) {
-                                    echo '<div class="col-xs-12 col-md-7">';
+                                if($result !== false && !empty($result[0])) {
+                                    $transactie = $result[0];
+
+                                    if(isset($_GET['delete'])) {
+                                        $dataManager->where('ID', $transactie['ID']);
+                                        $result = $dataManager->delete('oh_transactions');
+
+                                        if($result) {
+                                            echo '<div class="alert alert-success"><strong>Succes!</strong> Transactie is succesvol verwijderd.</div>';
+
+                                            if($transactie['Code'] == 'C') {
+                                                echo '<a href="transactions.php" class="btn btn-default">Ga terug naar het overzicht</a>';
+                                            }
+                                            else {
+                                                echo '<a href="transactions-debet.php" class="btn btn-default">Ga terug naar het overzicht</a>';
+                                            }
+                                        }
+                                        else {
+                                            echo '<div class="alert alert-warning"><strong>Waarschuwing!</strong> Transactie kon niet verwijderd worden.</div>';
+
+                                            echo '<a href="transactions-details.php?id=' . $transactie['ID'] . '" class="btn btn-default">Ga terug naar de transactie</a>';
+                                        }
+                                    }
+                                    else {
+                                        echo '<div class="col-xs-12 col-md-7">';
                                         // Details
                                         echo '<h4>Details</h4>';
                                         echo '<div class="table-responsive">';
-                                            echo '<table class="table table-condensed">';
-                                                echo '<tr>';
-                                                    echo '<td>Transactie ID</td>';
-                                                    echo '<td>' . $transactie["ID"] . '</td>';
-                                                echo '</tr>';
+                                        echo '<table class="table table-condensed">';
+                                        echo '<tr>';
+                                        echo '<td>Transactie ID</td>';
+                                        echo '<td>' . $transactie["ID"] . '</td>';
+                                        echo '</tr>';
 
-                                                echo '<tr>';
-                                                    echo '<td>Rekeningnummer</td>';
-                                                    echo '<td>' . $transactie["Rekeningnummer"] . '</td>';
-                                                echo '</tr>';
+                                        echo '<tr>';
+                                        echo '<td>Rekeningnummer</td>';
+                                        echo '<td>' . $transactie["Rekeningnummer"] . '</td>';
+                                        echo '</tr>';
 
-                                                echo '<tr>';
-                                                    echo '<td>Rentedatum</td>';
-                                                    echo '<td>' . $transactie["Rentedatum"] . '</td>';
-                                                echo '</tr>';
+                                        echo '<tr>';
+                                        echo '<td>Rentedatum</td>';
+                                        echo '<td>' . $transactie["Rentedatum"] . '</td>';
+                                        echo '</tr>';
 
-                                                echo '<tr>';
-                                                    echo '<td>Boekdatum</td>';
-                                                    echo '<td>' . $transactie["Boekdatum"] . '</td>';
-                                                echo '</tr>';
+                                        echo '<tr>';
+                                        echo '<td>Boekdatum</td>';
+                                        echo '<td>' . $transactie["Boekdatum"] . '</td>';
+                                        echo '</tr>';
 
-                                                echo '<tr>';
-                                                    echo '<td>Boekcode</td>';
-                                                    echo '<td>' . $transactie["Boekcode"] . '</td>';
-                                                echo '</tr>';
+                                        echo '<tr>';
+                                        echo '<td>Boekcode</td>';
+                                        echo '<td>' . $transactie["Boekcode"] . '</td>';
+                                        echo '</tr>';
 
-                                                if(!empty($transactie["Mandaat_ID"])) {
-                                                    echo '<tr>';
-                                                        echo '<td>Mandaat ID</td>';
-                                                        echo '<td>' . $transactie["Mandaat_ID"] . '</td>';
-                                                    echo '</tr>';
-                                                }
-                                            echo '</table>';
+                                        if (!empty($transactie["Mandaat_ID"])) {
+                                            echo '<tr>';
+                                            echo '<td>Mandaat ID</td>';
+                                            echo '<td>' . $transactie["Mandaat_ID"] . '</td>';
+                                            echo '</tr>';
+                                        }
+                                        echo '</table>';
                                         echo '</div>';
 
                                         // Tegenrekeninghouder
                                         echo '<h4>Tegenrekeninghouder</h4>';
                                         echo '<div class="table-responsive">';
-                                            echo '<table class="table table-condensed">';
-                                                echo '<tr>';
-                                                    echo '<td>Houder</td>';
-                                                    echo '<td>' . $transactie["Naam_Ontvanger"] . '</td>';
-                                                echo '</tr>';
+                                        echo '<table class="table table-condensed">';
+                                        echo '<tr>';
+                                        echo '<td>Houder</td>';
+                                        echo '<td>' . $transactie["Naam_Ontvanger"] . '</td>';
+                                        echo '</tr>';
 
-                                                echo '<tr>';
-                                                    echo '<td>Rekeningnummer</td>';
-                                                    echo '<td>' . $transactie["Tegenrekening"] . '</td>';
-                                                echo '</tr>';
+                                        echo '<tr>';
+                                        echo '<td>Rekeningnummer</td>';
+                                        echo '<td>' . $transactie["Tegenrekening"] . '</td>';
+                                        echo '</tr>';
 
-                                                if(!empty($transactie["Tegenrekeninghouder_ID"])) {
-                                                    echo '<tr>';
-                                                        echo '<td>Tegenrekeninghouder ID</td>';
-                                                        echo '<td>' . $transactie["Tegenrekeninghouder_ID"] . '</td>';
-                                                    echo '</tr>';
-                                                }
-                                            echo '</table>';
-                                        echo '</div>';
-                                    echo '</div>';
-
-                                    echo '<div class="col-xs-12 col-md-5">';
-                                        if($transactie["Code"] == "C") {
-                                            echo '<h2 class="amount amount-credit align-right">&euro; ' . $transactie["Bedrag"] . ' <i class="fa fa-angle-up"></i></h2>';
+                                        if (!empty($transactie["Tegenrekeninghouder_ID"])) {
+                                            echo '<tr>';
+                                            echo '<td>Tegenrekeninghouder ID</td>';
+                                            echo '<td>' . $transactie["Tegenrekeninghouder_ID"] . '</td>';
+                                            echo '</tr>';
                                         }
-                                        else {
-                                            echo '<h2 class="amount amount-debit align-right">&euro; ' . $transactie["Bedrag"] . ' <i class="fa fa-angle-down"></i></h2>';
+                                        echo '</table>';
+                                        echo '</div>';
+                                        echo '</div>';
+
+                                        echo '<div class="col-xs-12 col-md-5">';
+                                        if ($transactie["Code"] == "C") {
+                                            echo '<h2 class="amount amount-credit align-right">&euro; ' . round($transactie["Bedrag"], 2) . ' <i class="fa fa-angle-up"></i></h2>';
+                                        } else {
+                                            echo '<h2 class="amount amount-debit align-right">&euro; ' . round($transactie["Bedrag"], 2) . ' <i class="fa fa-angle-down"></i></h2>';
                                         }
 
                                         echo '<h4>Omschrijving</h4>';
                                         echo '<p>' . $transactie["Omschrijving"] . '</p>';
-                                    echo '</div>';
+
+                                        echo '<h4>Verwijder transactie</h4>';
+                                        echo '<a href="transactions-details.php?id=' . $_GET['id'] . '&delete=1" class="btn btn-danger">Verwijderen</a>';
+                                        echo '</div>';
+                                    }
                                 }
                                 else {
                                     echo '<div class="alert alert-warning"><strong>Waarschuwing!</strong> Ongeldig transactie ID.</div>';
