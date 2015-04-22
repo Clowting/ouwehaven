@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d9778fae-520c-4dcc-8b93-b93ddffdf3ea" name="Default" comment="Added PHP Storm stuff">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webportal/config.codekit" afterPath="$PROJECT_DIR$/webportal/config.codekit" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webportal/includes/functions.php" afterPath="$PROJECT_DIR$/webportal/includes/functions.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webportal/transactions-debet.php" afterPath="$PROJECT_DIR$/webportal/transactions-debet.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webportal/transactions-details.php" afterPath="$PROJECT_DIR$/webportal/transactions-details.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webportal/transactions.php" afterPath="$PROJECT_DIR$/webportal/transactions.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webportal/sass/style.scss" afterPath="$PROJECT_DIR$/webportal/sass/style.scss" />
     </list>
     <ignored path="www.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -72,11 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="transactions-details.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="transactions-details.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webportal/transactions-details.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3589109" vertical-offset="420" max-vertical-offset="2865">
-              <caret line="57" column="79" selection-start-line="57" selection-start-column="79" selection-end-line="57" selection-end-column="79" />
+            <state vertical-scroll-proportion="-1.25" vertical-offset="420" max-vertical-offset="2865">
+              <caret line="30" column="10" selection-start-line="30" selection-start-column="10" selection-end-line="30" selection-end-column="10" />
               <folding>
                 <marker date="1429729164000" expanded="true" signature="3879:4008" placeholder="..." />
                 <marker date="1429729164000" expanded="true" signature="6034:6156" placeholder="..." />
@@ -109,11 +104,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.scss" pinned="false" current-in-tab="false">
+      <file leaf-file-name="style.scss" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webportal/sass/style.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.625" vertical-offset="0" max-vertical-offset="3570">
-              <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.16089109" vertical-offset="810" max-vertical-offset="3570">
+              <caret line="67" column="14" selection-start-line="67" selection-start-column="14" selection-end-line="67" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -134,11 +129,11 @@
       <list>
         <option value="$PROJECT_DIR$/webportal/ships-remove.php" />
         <option value="$PROJECT_DIR$/webportal/transactions-import.php" />
-        <option value="$PROJECT_DIR$/webportal/sass/style.scss" />
         <option value="$PROJECT_DIR$/webportal/includes/functions.php" />
         <option value="$PROJECT_DIR$/webportal/transactions.php" />
         <option value="$PROJECT_DIR$/webportal/transactions-debet.php" />
         <option value="$PROJECT_DIR$/webportal/transactions-details.php" />
+        <option value="$PROJECT_DIR$/webportal/sass/style.scss" />
       </list>
     </option>
   </component>
@@ -293,7 +288,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17984605" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17984605" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30392158" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -401,14 +396,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webportal/sass/style.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.625" vertical-offset="0" max-vertical-offset="3570">
-          <caret line="25" column="12" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/webportal/includes/functions.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-38.625" vertical-offset="3" max-vertical-offset="1350">
@@ -447,12 +434,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webportal/transactions-details.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3589109" vertical-offset="420" max-vertical-offset="2865">
-          <caret line="57" column="79" selection-start-line="57" selection-start-column="79" selection-end-line="57" selection-end-column="79" />
+        <state vertical-scroll-proportion="-1.25" vertical-offset="420" max-vertical-offset="2865">
+          <caret line="30" column="10" selection-start-line="30" selection-start-column="10" selection-end-line="30" selection-end-column="10" />
           <folding>
             <marker date="1429729164000" expanded="true" signature="3879:4008" placeholder="..." />
             <marker date="1429729164000" expanded="true" signature="6034:6156" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webportal/sass/style.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16089109" vertical-offset="810" max-vertical-offset="3570">
+          <caret line="67" column="14" selection-start-line="67" selection-start-column="14" selection-end-line="67" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>

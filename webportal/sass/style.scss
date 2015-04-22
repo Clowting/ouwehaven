@@ -65,7 +65,7 @@ a, button {
 }
 
 #sidebar-wrapper {
-	z-index: 1000;
+	z-index: 2000;
 	position: fixed;
 	left: 250px;
 	width: 0;
@@ -98,7 +98,7 @@ a, button {
 }
 
 #page-content-wrapper {
-	z-index: 2000;
+	z-index: 1000;
 	width: 100%;
 	position: absolute;
 	top: 32px;
