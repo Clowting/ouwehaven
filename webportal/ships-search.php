@@ -91,18 +91,17 @@ include_once 'includes/sidebar.php';
 
                         <thead>
                         <tr>
-                            <th>Afbeelding</th>
                             <th>Naam</th>
                             <th>Lengte (m)</th>
                             <th>Eigenaar</th>
-                            <th>Ligplaats</th>
+                            <th>Details</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         <?php
 
-                        $sql = "SELECT s.ID AS ID, s.ImgURL AS Afbeelding, s.Naam AS Naam, s.Lengte AS Lengte, m.Voornaam AS Voornaam, m.Tussenvoegsel AS Tussenvoegsel, m.Achternaam AS Achternaam, s.Ligplaats_ID AS Ligplaats
+                        $sql = "SELECT s.ID AS ID, s.Naam AS Naam, s.Lengte AS Lengte, m.Voornaam AS Voornaam, m.Tussenvoegsel AS Tussenvoegsel, m.Achternaam AS Achternaam
                                 FROM oh_members AS m, oh_member_ship AS ms, oh_ships AS s
                                 WHERE m.ID = ms.Member_ID AND s.ID = ms.Ship_ID";
 
@@ -115,12 +114,11 @@ include_once 'includes/sidebar.php';
                                 $eigenaar = $ship['Voornaam'] . ' ' . $ship['Achternaam'];
                             }
 
-                            echo '<tr>';
-                            echo '<td><img src="timthumb.php?src=' . $ship["Afbeelding"] . '&h=150&w=300"/></td>';
+                            echo '<tr>';;
                             echo '<td>' . $ship["Naam"] . '</td>';
                             echo '<td>' . round($ship["Lengte"], 2) . '</td>';
                             echo '<td>' . $eigenaar .'</td>';
-                            echo '<td><a href="moorings-details.php?id=' . $ship["Ligplaats_ID"] . '"><i class="fa fa-arrow-right"></i></a></td>';
+                            echo '<td><a href="ships-details.php?id=' . $ship["ID"] . '"><i class="fa fa-arrow-right"></i></a></td>';
                             echo '</tr>';
                         }
 

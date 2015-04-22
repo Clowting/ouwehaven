@@ -170,3 +170,20 @@ $(document).ready(function ($) {
     });
 
 });
+
+function generateMap(x, y) {
+    var map;
+    function initialize() {
+
+
+        var mapOptions = {
+            zoom: 18,
+            center: new google.maps.LatLng(x, y),
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+}
