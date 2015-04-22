@@ -65,7 +65,8 @@
                                 <tbody>
                                     <?php
 
-                                        $transactions = getTransactions($mysqli, 'D');
+                                        $dataManager->where('Code', 'D');
+                                        $transactions = $dataManager->get('oh_transactions');
 
                                         foreach($transactions as $transaction) {
                                             echo '<tr>';
