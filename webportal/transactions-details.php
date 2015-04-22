@@ -55,7 +55,7 @@
                                 $result = $dataManager->get('oh_transactions', 1);
 
                                 if($result !== false && !empty($result[0])) {
-                                    $transactie = $result[0];
+                                    $transactie = formatTransaction($result[0]);
 
                                     if(isset($_GET['delete'])) {
                                         $dataManager->where('ID', $transactie['ID']);

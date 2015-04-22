@@ -70,6 +70,8 @@
                                         $transactions = $dataManager->get('oh_transactions');
 
                                         foreach($transactions as $transaction) {
+                                            $transaction = formatTransaction($transaction);
+
                                             echo '<tr>';
                                                 echo '<td>' . $transaction["ID"] . '</td>';
                                                 echo '<td>' . $transaction["Boekdatum"] . '</td>';

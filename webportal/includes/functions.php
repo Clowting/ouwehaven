@@ -62,64 +62,6 @@
 		return $transaction;
 	}
 
-	function getTransaction($mysqli, $id) {
-		if(isValidID($mysqli, $id)) {
-			$sql = 'SELECT * FROM oh_transactions WHERE ID = "' . $id . '"';
-			$result = $mysqli->query($sql);
-
-			return formatTransaction($result->fetch_assoc());
-		}
-		
-		return false;
-	}
-
-	function getTransactions($mysqli, $code) {
-		$transactions = array();
-
-		$sql = 'SELECT * FROM oh_transactions WHERE Code = "' . $code . '"';
-		$result = $mysqli->query($sql);
-
-		if($result) {
-			while($transaction = $result->fetch_assoc()) {
-				array_push($transactions, formatTransaction($transaction));
-			}
-		}
-
-		return $transactions;
-	}
-
-	function getShips($mysqli, $memberID) {
-		$ships = array();
-		$sql = "SELECT s.ID AS ID, s.ImgURL AS Afbeelding, s.Naam AS Naam, s.Lengte AS Lengte, s.Ligplaats_ID AS Ligplaats
-				FROM oh_members AS m, oh_member_ship AS ms, oh_ships AS s
-				WHERE m.ID = ms.Member_ID AND s.ID = ms.Ship_ID AND m.ID = " . $memberID;
-		$result = $mysqli->query($sql);
-
-		if($result) {
-			while($ship = $result->fetch_assoc()) {
-				array_push($ships, $ship);
-			}
-		}
-
-		return $ships;
-	}
-
-	function getMoorings($mysqli) {
-		$moorings = array();
-		$sql = "SELECT *
-				FROM oh_moorings
-				ORDER BY ID";
-		$result = $mysqli->query($sql);
-
-		if($result) {
-			while($mooring = $result->fetch_assoc()) {
-				array_push($moorings, $mooring);
-			}
-		}
-
-		return $moorings;
-	}
-
 	function cleanInput($input) {
 		return preg_replace("/[^[:alnum:][:space:]]/ui", '', $input);
 	}
