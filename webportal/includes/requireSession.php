@@ -21,7 +21,7 @@
 			}
 		}
 
-		$memberID = $_SESSION['member_details']['ID'];
+		$memberID = $_SESSION['member_details'][0]['ID'];
 	}
 	else {
 		header('Location: ../wp-login.php');

@@ -52,7 +52,7 @@
                         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                             $naam = cleanInput($_POST['naam']);
-                            $lengte = cleanInput($_POST['lengte']);
+                            $lengte = $_POST['lengte'];
                             $ligplaats = cleanInput($_POST['ligplaats']);
                             $imgURL = "";
 
@@ -83,15 +83,21 @@
                                     validateNumber($lengte, 1, 16) &&
                                     validateInput($ligplaats, 1, 11)) {
 
-                                    $sql = "INSERT INTO oh_ships (Ligplaats_ID, Naam, Lengte, ImgURL)
-                                            VALUES ($ligplaats, '$naam', '$lengte', '$imgURL')";
+                                    $data = array(
+                                        'Ligplaats_ID' => $ligplaats,
+                                        'Naam' => $naam,
+                                        'Lengte' => $lengte,
+                                        'ImgURL' => $imgURL
+                                    );
 
-                                    $insert = $mysqli->query($sql);
+                                    $insert = $dataManager->insert('oh_ships', $data);
 
-                                    $sql = "INSERT INTO oh_member_ship (Member_ID, Ship_ID)
-                                            VALUES ($memberID, " . mysqli_insert_id($mysqli) . ")";
+                                    $data = array(
+                                        'Member_ID' => $memberID,
+                                        'Ship_ID' => $dataManager->getInsertId()
+                                    );
 
-                                    $insertLink = $mysqli->query($sql);
+                                    $insertLink = $dataManager->insert('oh_member_ship', $data);
 
                                     if($insert && $insertLink) {
                                         echo '<div class="alert alert-success" role="alert">Het schip is succesvol toegevoegd!</div>';
@@ -132,7 +138,7 @@
                                 <select class="form-control" name="ligplaats" id="ligplaats">
                                     <?php
 
-                                        $moorings = getMoorings($mysqli);
+                                        $moorings = $dataManager->get('oh_moorings');
 
                                         foreach($moorings as $mooring) {
                                             echo '<option value="' . $mooring["ID"] . '">' . $mooring["Naam"] . '</option>';
