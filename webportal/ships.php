@@ -53,8 +53,8 @@
 
                                 <thead>
                                     <tr>
-                                        <th colspan="2">Afbeelding</th>
-                                        <th colspan="2">Naam</th>
+                                        <th>Afbeelding</th>
+                                        <th>Naam</th>
                                         <th>Lengte (m)</th>
                                         <th>Ligplaats</th>
                                     </tr>
@@ -67,8 +67,8 @@
 
                                         foreach($ships as $ship) {
                                             echo '<tr>';
-                                                echo '<td colspan="2">' . $ship["Afbeelding"] . '</td>';
-                                                echo '<td colspan="2">' . $ship["Naam"] . '</td>';
+                                                echo '<td><img src="timthumb.php?src=' . $ship["Afbeelding"] . '&h=150&w=300"/></td>';
+                                                echo '<td>' . $ship["Naam"] . '</td>';
                                                 echo '<td>' . $ship["Lengte"] . '</td>';
                                                 echo '<td><a href="moorings-details.php?id=' . $ship["Ligplaats"] . '"><i class="fa fa-arrow-right"></i></a></td>';
                                             echo '</tr>';
