@@ -60,68 +60,33 @@
                                         $transactions_failed = 0;
 
                                         foreach($csv as $transactie) {
-                                            $rekeningnummer = $transactie[0];
-                                            $muntsoort = $transactie[1];
-                                            $rentedatum = $transactie[2];
-                                            $code = $transactie[3];
-                                            $bedrag = $transactie[4];
-                                            $tegenrekening = $transactie[5];
-                                            $naam_ontvanger = $transactie[6];
-                                            $boekdatum = $transactie[7];
-                                            $boekcode = $transactie[8];
-                                            $filler = $transactie[9];
-                                            $omschrijving = implode(" ", array(
-                                                                             $transactie[10],
-                                                                             $transactie[11],
-                                                                             $transactie[12],
-                                                                             $transactie[13],
-                                                                             $transactie[14],
-                                                                             $transactie[15]
-                                                                        ));
-                                            $end_to_end_id = $transactie[16];
-                                            $tegenrekeninghouder_id = $transactie[17];
-                                            $mandaat_id = $transactie[18];
+                                            $data = array(
+                                                'Rekeningnummer' => $transactie[0],
+                                                'Muntsoort' => $transactie[1],
+                                                'Rentedatum' => $transactie[2],
+                                                'Code' => $transactie[3],
+                                                'Bedrag' => $transactie[4],
+                                                'Tegenrekening' => $transactie[5],
+                                                'Naam_Ontvanger' => $transactie[6],
+                                                'Boekdatum' => $transactie[7],
+                                                'Boekcode' => $transactie[8],
+                                                'Filler' => $transactie[9],
+                                                'Omschrijving' => implode(" ", array(
+                                                                    $transactie[10],
+                                                                    $transactie[11],
+                                                                    $transactie[12],
+                                                                    $transactie[13],
+                                                                    $transactie[14],
+                                                                    $transactie[15]
+                                                                )),
+                                                'End_To_End_ID' => $transactie[16],
+                                                'Tegenrekeninghouder_ID' => $transactie[17],
+                                                'Mandaat_ID' => $transactie[18]
+                                            );
 
-                                            // SQL invoer statement
-                                            $sql = 'INSERT INTO oh_transactions ' .
-                                                    '(
-                                                        Rekeningnummer,
-                                                        Muntsoort,
-                                                        Rentedatum,
-                                                        Code,
-                                                        Bedrag,
-                                                        Tegenrekening,
-                                                        Naam_Ontvanger,
-                                                        Boekdatum,
-                                                        Boekcode,
-                                                        Filler,
-                                                        Omschrijving,
-                                                        End_To_End_ID,
-                                                        Tegenrekeninghouder_ID,
-                                                        Mandaat_ID
-                                                    ) ' .
-                                                    
-                                                    'VALUES (
-                                                        "' . $rekeningnummer . '",
-                                                        "' . $muntsoort . '",
-                                                        "' . $rentedatum . '",
-                                                        "' . $code . '",
-                                                        "' . $bedrag . '",
-                                                        "' . $tegenrekening . '",
-                                                        "' . $naam_ontvanger . '",
-                                                        "' . $boekdatum . '",
-                                                        "' . $boekcode . '",
-                                                        "' . $filler . '",
-                                                        "' . $omschrijving . '",
-                                                        "' . $end_to_end_id . '",
-                                                        "' . $tegenrekeninghouder_id . '",
-                                                        "' . $mandaat_id . '"
-                                                    )';
-                                            
+                                            $result = $dataManager->insert('oh_transactions', $data);
+
                                             // Voer SQL statement uit
-                                            $result = $mysqli->query($sql);
-                                            $transactions_count++;
-
                                             if($result) {
                                                 $transactions_success++;
                                             }
