@@ -1,8 +1,6 @@
 <?php
 
-	$mysqli = new mysqli('clowting.me', 'ouwehaven', '8UcYeurzZ2qDLDYsFzaFNbY6', 'ouwehaven');
+	require_once "DataManager.php";
 
-	if ($mysqli->connect_error) {
-	    die('Connect Error (' . $mysqli->connect_errno . ') '
-	            . $mysqli->connect_error);
-	}
+	// Set up a new datamanager
+	$datamanager = new DataManager();
