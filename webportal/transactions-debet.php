@@ -75,7 +75,7 @@
                                                 echo '<td>' . $transaction["Rekeningnummer"] . '</td>';
                                                 echo '<td>' . $transaction["Tegenrekening"] . '</td>';
                                                 echo '<td>' . $transaction["Naam_Ontvanger"] . '</td>';
-                                                echo '<td>&euro; ' . $transaction["Bedrag"] . '</td>';
+                                                echo '<td>&euro; ' . round($transaction["Bedrag"], 2) . '</td>';
                                                 echo '<td><a href="transactions-details.php?id=' . $transaction["ID"] . '"><i class="fa fa-arrow-right"></i></a></td>';
                                             echo '</tr>';
                                         }
