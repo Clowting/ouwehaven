@@ -20,7 +20,7 @@
                 <li class="sidebarSub"><i class="fa fa-btc"></i> Penningmeester
                     <ul>
                         <li>
-                            <a href="transactions.php">Transacties</a>
+                            <a href="transactions.php"><i class="fa fa-file-text"></i> Transacties</a>
                         </li>
                     </ul>
                 </li>

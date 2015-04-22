@@ -12,6 +12,7 @@
 
 // Variables
 $black: #000;
+$dark_grey: lighten($black, 10);
 $color_mountain_mist_approx: #999999;
 $white: #fff;
 $white_20: rgba(255,255,255,0.2);
@@ -145,12 +146,18 @@ a, button {
 	}
 
 	.sidebarSub {
+		background: $dark_grey;
 		color: $color_mountain_mist_approx;
 		font-weight: 600;
 
 		ul {
 			list-style: none;
 			font-weight: 400;
+			padding-left: 0;
+
+			li {
+				text-indent: 40px;
+			}
 		}
 	}
 }
