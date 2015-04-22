@@ -9,18 +9,15 @@
 
 		// Store member details in session
 		if(!isset($_SESSION['member_details'])) {
-			$sql = "SELECT *
-					FROM oh_members
-					WHERE User_ID = " . $userID;
+			$dataManager->where('User_ID', $userID);
+			$user = $dataManager->get('oh_members', 1);
 
-			$result = $mysqli->query($sql);
-
-			if ($result->num_rows == 0) {
+			if ($dataManager->count == 0) {
 				header('Location: signup.php');
 			}
 			else {
 				// Store details in session
-				$_SESSION['member_details'] = $result->fetch_assoc();
+				$_SESSION['member_details'] = $user;
 			}
 		}
 

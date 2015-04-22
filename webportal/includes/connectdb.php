@@ -1,6 +1,6 @@
 <?php
 
-	require_once "DataManager.php";
+	require_once "MysqliDb.php";
 
 	// Set up a new datamanager
-	$datamanager = new DataManager();
+	$dataManager = new MysqliDb('clowting.me', 'ouwehaven', '8UcYeurzZ2qDLDYsFzaFNbY6', 'ouwehaven');
