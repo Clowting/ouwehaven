@@ -66,6 +66,7 @@
                                     <?php
 
                                         $dataManager->where('Code', 'C');
+                                        $dataManager->orderBy('ID', 'DESC');
                                         $transactions = $dataManager->get('oh_transactions');
 
                                         foreach($transactions as $transaction) {
