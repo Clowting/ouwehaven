@@ -1,6 +1,6 @@
 $(document).ready(function ($) {
 
-	$("#signupForm").validate({
+	$("#signupForm, #changeDetailsForm").validate({
 		debug: false,
     	errorClass: 'alert alert-danger alert-form',
 	    highlight: function (element, errorClass, validClass) {

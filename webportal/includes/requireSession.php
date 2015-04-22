@@ -17,11 +17,11 @@
 			}
 			else {
 				// Store details in session
-				$_SESSION['member_details'] = $user;
+				$_SESSION['member_details'] = $user[0];
 			}
 		}
 
-		$memberID = $_SESSION['member_details'][0]['ID'];
+		$memberID = $_SESSION['member_details']['ID'];
 	}
 	else {
 		header('Location: ../wp-login.php');

@@ -39,44 +39,44 @@
                         <div class="page-header">
                             <h1>Instellingen <small>Persoonlijke gegevens</small></h1>
                         </div>
-                        <p>Op deze pagina vindt u een overzicht van uw gegevens.</p>
+                        <p>Op deze pagina vindt u een overzicht van uw gegevens. U kunt hier ook uw gegevens direct veranderen.</p>
 
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                        <?php
 
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Boekdatum</th>
-                                        <th>Rekeningnummer</th>
-                                        <th>Tegenrekening</th>
-                                        <th>Houder tegenrekening</th>
-                                        <th colspan="2">Bedrag</th>
-                                    </tr>
-                                </thead>
+                            $details = $_SESSION['member_details'];
 
-                                <tbody>
-                                    <?php
+                            print_r($details);
 
-                                        $transactions = getTransactions($mysqli, 'C');
+                        ?>
 
-                                        foreach($transactions as $transaction) {
-                                            echo '<tr>';
-                                                echo '<td>' . $transaction["ID"] . '</td>';
-                                                echo '<td>' . $transaction["Boekdatum"] . '</td>';
-                                                echo '<td>' . $transaction["Rekeningnummer"] . '</td>';
-                                                echo '<td>' . $transaction["Tegenrekening"] . '</td>';
-                                                echo '<td>' . $transaction["Naam_Ontvanger"] . '</td>';
-                                                echo '<td>&euro; ' . $transaction["Bedrag"] . '</td>';
-                                                echo '<td><a href="transactions-details.php?id=' . $transaction["ID"] . '"><i class="fa fa-arrow-right"></i></a></td>';
-                                            echo '</tr>';
-                                        }
+                        <form id="changeDetailsForm" role="form" method="POST">
+                            <div class="form-group">
+                                <label for="voornaam">Voornaam:</label>
+                                <input type="text" class="form-control" name="voornaam" value="<?php echo $details['Voornaam']; ?>" required data-progression="" data-helper="Vul hier uw voornaam in.">
+                            </div>
+                            <div class="form-group">
+                                <label for="tussenvoegsel">Tussenvoegsel:</label>
+                                <input type="text" class="form-control" name="tussenvoegsel" value="<?php echo $details['Tussenvoegsel']; ?>" data-progression="" data-helper="Vul hier uw tussenvoegsel in indien u die heeft.">
+                            </div>
+                            <div class="form-group">
+                                <label for="achternaam">Achternaam:</label>
+                                <input type="text" class="form-control" name="achternaam" value="<?php echo $details['Achternaam']; ?>" required data-progression="" data-helper="Vul hier uw achternaam in.">
+                            </div>
+                            <div class="form-group">
+                                <label for="adres">Adres:</label>
+                                <input type="text" class="form-control" name="adres" value="<?php echo $details['Adres']; ?>" required data-progression="" data-helper="Vul hier uw straat en huisnummer in.">
+                            </div>
+                            <div class="form-group">
+                                <label for="postcode">Postcode:</label>
+                                <input type="text" class="form-control" name="postcode" value="<?php echo $details['Postcode']; ?>" required maxlength="7" data-progression="" data-helper="Vul hier uw postcode in.">
+                            </div>
+                            <div class="form-group">
+                                <label for="woonplaats">Woonplaats:</label>
+                                <input type="text" class="form-control" name="woonplaats" value="<?php echo $details['Woonplaats']; ?>" required data-progression="" data-helper="Vul hier uw woonplaats in.">
+                            </div>
 
-                                    ?>
-                                </tbody>
-
-                            </table>
-                        </div>
+                            <button type="submit" class="btn btn-primary">Opslaan</button>
+                        </form>
                     </div>
                 </div>
             </div>
