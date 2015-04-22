@@ -90,7 +90,7 @@
 
 	function getShips($mysqli, $memberID) {
 		$ships = array();
-		$sql = "SELECT s.ImgURL AS Afbeelding, s.Naam AS Naam, s.Lengte AS Lengte, s.Ligplaats_ID AS Ligplaats
+		$sql = "SELECT s.ID AS ID, s.ImgURL AS Afbeelding, s.Naam AS Naam, s.Lengte AS Lengte, s.Ligplaats_ID AS Ligplaats
 				FROM oh_members AS m, oh_member_ship AS ms, oh_ships AS s
 				WHERE m.ID = ms.Member_ID AND s.ID = ms.Ship_ID AND m.ID = " . $memberID;
 		$result = $mysqli->query($sql);
