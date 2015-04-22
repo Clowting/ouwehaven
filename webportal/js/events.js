@@ -107,6 +107,53 @@ $(document).ready(function ($) {
 		}
 	});
 
+    $("#searchShipForm").validate({
+        debug: false,
+        errorClass: 'alert alert-danger alert-form',
+        highlight: function (element, errorClass, validClass) {
+            return false;  // ensure this function stops
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            return false;  // ensure this function stops
+        },
+        //validClass: 'alert alert-success alert-form',
+        errorElement: 'div',
+        rules: {
+            naam: {
+                required: false,
+                minlength: 2
+            },
+            minLengte: {
+                required: false,
+                number: true,
+                minlength: 1,
+                min: 1
+            },
+            maxLengte: {
+                required: false,
+                number: true,
+                minlength: 1
+            }
+        },
+        messages: {
+            naam: {
+                minlength: "Voer a.u.b. minimaal 2 tekens in."
+            },
+            minLengte: {
+                number: "Voer a.u.b. een getal in.",
+                minlength: "Voer a.u.b. minimaal 1 teken in.",
+                min: "Voer a.u.b. een lengte van minimaal 1 in."
+            },
+            maxLengte: {
+                number: "Voer a.u.b. een getal in.",
+                minlength: "Voer a.u.b. minimaal 1 teken in."
+            }
+        },
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
+
 	$("#menu-toggle").click(function() {
 
 		if($.cookie('menu-toggled') == 'true') {

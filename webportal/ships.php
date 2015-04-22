@@ -45,7 +45,7 @@
                             <li role="presentation" class="active"><a href="ships.php">Mijn schepen</a></li>
                             <li role="presentation"><a href="ships-add.php">Schip toevoegen</a></li>
                             <li role="presentation"><a href="ships-remove.php">Schip verwijderen</a></li>
-                            <li role="presentation"><a href="#">Zoek schip</a></li>
+                            <li role="presentation"><a href="ships-search.php">Zoek schip</a></li>
                         </ul>
 
                         <div class="table-responsive">
