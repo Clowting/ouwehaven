@@ -45,7 +45,52 @@
 
                             $details = $_SESSION['member_details'];
 
-                            print_r($details);
+                            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                                $voornaam = cleanInput($_POST['voornaam']);
+                                $tussenvoegsel = cleanInput($_POST['tussenvoegsel']);
+                                $achternaam = cleanInput($_POST['achternaam']);
+                                $adres = cleanInput($_POST['adres']);
+                                $postcode = cleanInput($_POST['postcode']);
+                                $woonplaats = cleanInput($_POST['woonplaats']);
+
+                                if( validateInput($voornaam, 2, 64) &&
+                                    validateInput($achternaam, 2, 64) &&
+                                    validateInput($adres, 4, 128) &&
+                                    validateInput($postcode, 6, 7) &&
+                                    validateInput($woonplaats, 2, 128)) {
+
+                                    $data = array(
+                                        'User_ID' => $userID,
+                                        'Voornaam' => $voornaam,
+                                        'Achternaam' => $achternaam,
+                                        'Adres' => $adres,
+                                        'Postcode' => $postcode,
+                                        'Woonplaats' => $woonplaats
+                                    );
+
+                                    if(validateInput($tussenvoegsel, 1, 16)) {
+                                        $data['Tussenvoegsel'] = $tussenvoegsel;
+                                    }
+
+                                    $dataManager->where('ID', $details['ID']);
+                                    $update = $dataManager->update('oh_members', $data);
+
+                                    if($update) {
+                                        echo '<div class="alert alert-success" role="alert">Uw gegevens zijn bijgewerkt.</div>';
+
+                                        // Update session variable
+                                        $_SESSION['member_details'] = $data;
+                                        $details = $data;
+                                    }
+                                    else {
+                                        echo '<div class="alert alert-danger" role="alert">Uw gegevens konden niet worden gewijzigd.</div>';
+                                    }
+
+                                }
+                                else {
+                                    echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof niet alle gegevens zijn ingevuld...</div>';
+                                }
+                            }
 
                         ?>
 
