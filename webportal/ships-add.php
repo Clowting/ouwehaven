@@ -44,7 +44,7 @@
                         <ul class="nav nav-tabs">
                             <li role="presentation"><a href="ships.php">Mijn schepen</a></li>
                             <li role="presentation" class="active"><a href="ships-add.php">Schip toevoegen</a></li>
-                            <li role="presentation"><a href="#">Schip verwijderen</a></li>
+                            <li role="presentation"><a href="ships-remove.php">Schip verwijderen</a></li>
                             <li role="presentation"><a href="#">Zoek schip</a></li>
                         </ul>
 
