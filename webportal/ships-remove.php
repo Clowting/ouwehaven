@@ -57,22 +57,38 @@ include_once 'includes/sidebar.php';
 
                     if (validateNumber($id, 1, 11)) {
 
-                        $sql = "DELETE FROM oh_member_ship
-                                        WHERE Ship_ID=" . $id;
+                        $dataManager->where('Ship_ID', $id);
+                        $ms = $dataManager->get('oh_member_ship', 1);
 
-                        $removeLink = $mysqli->query($sql);
+                        if($ms[0]['Member_ID'] == $memberID) {
 
+                            $dataManager->where('ID', $id);
+                            $ship = $dataManager->get('oh_ships', 1);
 
-                        $sql = "DELETE FROM oh_ships
-                                        WHERE ID=" . $id;
+                            if(!empty($ship[0]['ImgURL'])) {
+                                $path = $_SERVER['DOCUMENT_ROOT'] . $ship[0]['ImgURL'];
+                                if(file_exists($path)) {
+                                    $removeImage = unlink($path);
+                                }
 
-                        $remove = $mysqli->query($sql);
+                            }
 
-                        if ($remove && $removeLink) {
-                            echo '<div class="alert alert-success" role="alert">Het schip is succesvol verwijderd!</div>';
-                            echo '<p>Klik <a href="ships.php">hier</a> om verder te gaan.</p>';
+                            $dataManager->where('Ship_ID', $id);
+                            $removeLink = $dataManager->delete('oh_member_ship');
+
+                            $dataManager->where('ID', $id);
+                            $remove = $dataManager->delete('oh_ships');
+
+                            if ($remove && $removeLink) {
+                                echo '<div class="alert alert-success" role="alert">Het schip is succesvol verwijderd!</div>';
+                                echo '<p>Klik <a href="ships.php">hier</a> om verder te gaan.</p>';
+                            } else {
+                                echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
+                                echo '<p>Klik <a href="ships-remove.php">hier</a> om het opnieuw te proberen.</p>';
+                            }
+
                         } else {
-                            echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
+                            echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof u iemand anders zijn schip probeert te verwijderen.</div>';
                             echo '<p>Klik <a href="ships-remove.php">hier</a> om het opnieuw te proberen.</p>';
                         }
 
@@ -85,11 +101,16 @@ include_once 'includes/sidebar.php';
                     ?>
                     <form role="form" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="ID">Kies een ligplaats:</label>
+                            <label for="ID">Kies een schip om te verwijderen:</label>
                             <select class="form-control" name="ID" id="ID">
                                 <?php
 
-                                $ships = getShips($mysqli, $memberID);
+                                $sql = "SELECT s.ID AS ID, s.ImgURL AS Afbeelding, s.Naam AS Naam, s.Lengte AS Lengte, s.Ligplaats_ID AS Ligplaats
+                                        FROM oh_members AS m, oh_member_ship AS ms, oh_ships AS s
+                                        WHERE m.ID = ms.Member_ID AND s.ID = ms.Ship_ID AND m.ID = ?";
+                                $params = array($memberID);
+
+                                $ships = $dataManager->rawQuery($sql, $params);
 
                                 foreach ($ships as $ship) {
                                     echo '<option value="' . $ship["ID"] . '">' . $ship["Naam"] . '</option>';
@@ -98,7 +119,7 @@ include_once 'includes/sidebar.php';
                                 ?>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-default">Verzenden
+                        <button type="submit" class="btn btn-default">Verwijder
                         </button>
                     </form>
                 <?php

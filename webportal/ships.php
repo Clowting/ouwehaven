@@ -63,13 +63,18 @@
                                 <tbody>
                                     <?php
 
-                                        $ships = getShips($mysqli, $memberID);
+                                        $sql = "SELECT s.ID AS ID, s.ImgURL AS Afbeelding, s.Naam AS Naam, s.Lengte AS Lengte, s.Ligplaats_ID AS Ligplaats
+                                                FROM oh_members AS m, oh_member_ship AS ms, oh_ships AS s
+                                                WHERE m.ID = ms.Member_ID AND s.ID = ms.Ship_ID AND m.ID = ?";
+                                        $params = array($memberID);
+
+                                        $ships = $dataManager->rawQuery($sql, $params);
 
                                         foreach($ships as $ship) {
                                             echo '<tr>';
                                                 echo '<td><img src="timthumb.php?src=' . $ship["Afbeelding"] . '&h=150&w=300"/></td>';
                                                 echo '<td>' . $ship["Naam"] . '</td>';
-                                                echo '<td>' . $ship["Lengte"] . '</td>';
+                                                echo '<td>' . round($ship["Lengte"], 2) . '</td>';
                                                 echo '<td><a href="moorings-details.php?id=' . $ship["Ligplaats"] . '"><i class="fa fa-arrow-right"></i></a></td>';
                                             echo '</tr>';
                                         }
