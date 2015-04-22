@@ -9,13 +9,10 @@
 		$roles = $user->roles;
 		$userID = $user->ID;
 
-        $sql = "SELECT *
-                FROM oh_members
-                WHERE User_ID = " . $userID;
+        $dataManager->where('User_ID', $userID);
+        $user = $dataManager->get('oh_members', 1);
 
-        $result = $mysqli->query($sql);
-
-        if ($result->num_rows > 0) {
+        if ($dataManager->count > 0) {
             header('Location: /webportal');
         }
 	} else {
@@ -62,16 +59,20 @@
                 validateInput($postcode, 6, 7) &&
                 validateInput($woonplaats, 2, 128)) {
 
-                if(validateInput($tussenvoegsel, 1, 16)) {
-                    $sql = "INSERT INTO oh_members (User_ID, Voornaam, Tussenvoegsel, Achternaam, Adres, Postcode, Woonplaats)
-                            VALUES ($userID, '$voornaam', '$tussenvoegsel', '$achternaam', '$adres', '$postcode', '$woonplaats')";
+                $data = array(
+                    'User_ID' => $userID,
+                    'Voornaam' => $voornaam,
+                    'Achternaam' => $achternaam,
+                    'Adres' => $adres,
+                    'Postcode' => $postcode,
+                    'Woonplaats' => $woonplaats
+                );
 
-                } else {
-                    $sql = "INSERT INTO oh_members (User_ID, Voornaam, Achternaam, Adres, Postcode, Woonplaats)
-                            VALUES ($userID, '$voornaam', '$achternaam', '$adres', '$postcode', '$woonplaats')";
+                if(validateInput($tussenvoegsel, 1, 16)) {
+                    $data['Tussenvoegsel'] = $tussenvoegsel;
                 }
 
-                $insert = $mysqli->query($sql);
+                $insert = $dataManager->insert('oh_members', $data);
 
                 if($insert) {
                     echo '<div class="alert alert-success" role="alert">Bedankt voor het aanvullen van de gegevens, ze zijn succesvol verwerkt!</div>';
