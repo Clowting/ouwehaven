@@ -49,7 +49,7 @@ include_once 'includes/sidebar.php';
                 </ul>
 
                 <form class="clearfix horizontalSearchForm" id="searchShipForm" role="form" method="POST" enctype="multipart/form-data">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="naam">Naam schip:</label>
                         <input type="text" class="form-control" name="naam">
                     </div>
@@ -67,13 +67,17 @@ include_once 'includes/sidebar.php';
                             ?>
                         </select>
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-1">
                         <label for="minLengte">Lengte (min):</label>
                         <input type="number" class="form-control" name="minLengte">
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-1">
                         <label for="maxLengte">Lengte (max):</label>
                         <input type="number" class="form-control" name="maxLengte">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="naamEigenaar">Naam eigenaar:</label>
+                        <input type="text" class="form-control" name="naamEigenaar">
                     </div>
                     <div class="col-md-1">
                         <button type="submit" class="btn btn-default ">Zoeken</button>
@@ -90,6 +94,7 @@ include_once 'includes/sidebar.php';
                             <th>Afbeelding</th>
                             <th>Naam</th>
                             <th>Lengte (m)</th>
+                            <th>Eigenaar</th>
                             <th>Ligplaats</th>
                         </tr>
                         </thead>
@@ -97,13 +102,24 @@ include_once 'includes/sidebar.php';
                         <tbody>
                         <?php
 
-                        $ships = $dataManager->get('oh_ships');
+                        $sql = "SELECT s.ID AS ID, s.ImgURL AS Afbeelding, s.Naam AS Naam, s.Lengte AS Lengte, m.Voornaam AS Voornaam, m.Tussenvoegsel AS Tussenvoegsel, m.Achternaam AS Achternaam, s.Ligplaats_ID AS Ligplaats
+                                FROM oh_members AS m, oh_member_ship AS ms, oh_ships AS s
+                                WHERE m.ID = ms.Member_ID AND s.ID = ms.Ship_ID";
+
+                        $ships = $dataManager->rawQuery($sql);
 
                         foreach($ships as $ship) {
+                            if(!empty($ship['Tussenvoegsel'])) {
+                                $eigenaar = $ship['Voornaam'] . ' ' . $ship['Tussenvoegsel'] . ' ' . $ship['Achternaam'];
+                            } else {
+                                $eigenaar = $ship['Voornaam'] . ' ' . $ship['Achternaam'];
+                            }
+
                             echo '<tr>';
-                            echo '<td><img src="timthumb.php?src=' . $ship["ImgURL"] . '&h=150&w=300"/></td>';
+                            echo '<td><img src="timthumb.php?src=' . $ship["Afbeelding"] . '&h=150&w=300"/></td>';
                             echo '<td>' . $ship["Naam"] . '</td>';
                             echo '<td>' . round($ship["Lengte"], 2) . '</td>';
+                            echo '<td>' . $eigenaar .'</td>';
                             echo '<td><a href="moorings-details.php?id=' . $ship["Ligplaats_ID"] . '"><i class="fa fa-arrow-right"></i></a></td>';
                             echo '</tr>';
                         }
