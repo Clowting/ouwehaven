@@ -37,7 +37,7 @@
 
     <div class="container signup">
     	<div class="row text-center">
-    		<h2>Welkom bij het webportal van <?php echo SITE_TITLE; ?></h1>
+    		<h2>Welkom bij het webportal van <?php echo SITE_TITLE; ?></h2>
     		<small>Voor u verder kunt gaan hebben we een aantal extra gegevens van u nodig.</small>
     	</div>
 
