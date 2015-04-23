@@ -1,5 +1,7 @@
 <?php
 
+require_once '../includes/connectdb.php';
+
 //Alle gegevens moeten uit een database worden gehaald
 $date = "01/01/1980";
 $name = "Henk";
