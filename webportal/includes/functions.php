@@ -12,6 +12,10 @@
 		return in_array('penningmeester', $roles);
 	}
 
+    function isHavenmeester($roles) {
+        return in_array('havenmeester', $roles);
+    }
+
 	function isValidID($mysqli, $id) {
 		if(is_numeric($id)) {
 			$sql = 'SELECT * FROM oh_transactions WHERE ID = "' . $id . '"';

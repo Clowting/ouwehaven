@@ -80,11 +80,9 @@
                             if(($detectedImageType != null && in_array($detectedImageType, $allowedImageTypes)) || $imgURL == "") {
 
                                 if( validateInput($naam, 2, 128) &&
-                                    validateNumber($lengte, 1, 16) &&
-                                    validateInput($ligplaats, 1, 11)) {
+                                    validateNumber($lengte, 1, 16)) {
 
                                     $data = array(
-                                        'Ligplaats_ID' => $ligplaats,
                                         'Naam' => $naam,
                                         'Lengte' => $lengte,
                                         'ImgURL' => $imgURL
@@ -132,20 +130,6 @@
                             <div class="form-group">
                                 <label for="afbeelding">Kies een afbeelding:</label>
                                 <input type="file" name="afbeelding" id="afbeelding">
-                            </div>
-                            <div class="form-group">
-                                <label for="ligplaats">Kies een ligplaats:</label>
-                                <select class="form-control" name="ligplaats" id="ligplaats">
-                                    <?php
-
-                                        $moorings = $dataManager->get('oh_moorings');
-
-                                        foreach($moorings as $mooring) {
-                                            echo '<option value="' . $mooring["ID"] . '">' . $mooring["Naam"] . '</option>';
-                                        }
-
-                                    ?>
-                                </select>
                             </div>
                             <button type="submit" class="btn btn-default">Verzenden
                             </button>

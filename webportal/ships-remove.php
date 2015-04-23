@@ -105,7 +105,7 @@ include_once 'includes/sidebar.php';
                             <select class="form-control" name="ID" id="ID">
                                 <?php
 
-                                $sql = "SELECT s.ID AS ID, s.ImgURL AS Afbeelding, s.Naam AS Naam, s.Lengte AS Lengte, s.Ligplaats_ID AS Ligplaats
+                                $sql = "SELECT s.ID AS ID, s.ImgURL AS Afbeelding, s.Naam AS Naam, s.Lengte AS Lengte
                                         FROM oh_members AS m, oh_member_ship AS ms, oh_ships AS s
                                         WHERE m.ID = ms.Member_ID AND s.ID = ms.Ship_ID AND m.ID = ?";
                                 $params = array($memberID);

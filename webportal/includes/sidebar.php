@@ -19,7 +19,16 @@
                     <a href="settings.php"><i class="fa fa-cog"></i> Instellingen</a>
                 </li>
 
-                <?php if (isPenningmeester($roles)) { ?>
+                <?php if (isHavenmeester($roles)) { ?>
+                <li class="sidebarSub"><i class="fa fa-list-ul"></i> Havenmeester
+                    <ul>
+                        <li>
+                            <a href="reservations.php"><i class="fa fa-clock-o"></i> Reserveringen</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <?php } if (isPenningmeester($roles)) { ?>
                 <li class="sidebarSub"><i class="fa fa-btc"></i> Penningmeester
                     <ul>
                         <li>

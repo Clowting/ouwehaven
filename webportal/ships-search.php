@@ -15,7 +15,7 @@ require_once 'includes/connectdb.php';
 
     ?>
 
-    <title><?php echo SITE_TITLE; ?> - Schepen - Mijn schepen</title>
+    <title><?php echo SITE_TITLE; ?> - Schepen - Zoeken</title>
 
 </head>
 
@@ -49,38 +49,42 @@ include_once 'includes/sidebar.php';
                 </ul>
 
                 <form class="clearfix horizontalSearchForm" id="searchShipForm" role="form" method="POST" enctype="multipart/form-data">
-                    <div class="form-group col-md-3">
-                        <label for="naam">Naam schip:</label>
-                        <input type="text" class="form-control" name="naam">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="ligplaats">Kies een ligplaats:</label>
-                        <select class="form-control" name="ligplaats" id="ligplaats">
-                            <?php
+                    <div class="col-md-12">
+                        <div class="form-group col-md-8">
+                            <label for="naam">Naam schip:</label>
+                            <input type="text" class="form-control" name="naam">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="haven">Kies een haven:</label>
+                            <select class="form-control" name="haven" id="haven">
+                                <?php
 
-                            $moorings = $dataManager->get('oh_moorings');
+                                $harbors = $dataManager->get('oh_harbors');
 
-                            foreach($moorings as $mooring) {
-                                echo '<option value="' . $mooring["ID"] . '">' . $mooring["Naam"] . '</option>';
-                            }
+                                foreach($harbors as $harbor) {
+                                    echo '<option value="' . $harbor["ID"] . '">' . $harbor["Naam"] . '</option>';
+                                }
 
-                            ?>
-                        </select>
+                                ?>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group col-md-1">
-                        <label for="minLengte">Lengte (min):</label>
-                        <input type="number" class="form-control" name="minLengte">
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="maxLengte">Lengte (max):</label>
-                        <input type="number" class="form-control" name="maxLengte">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="naamEigenaar">Naam eigenaar:</label>
-                        <input type="text" class="form-control" name="naamEigenaar">
-                    </div>
-                    <div class="col-md-1">
-                        <button type="submit" class="btn btn-default ">Zoeken</button>
+                    <div class="col-md-12">
+                        <div class="form-group col-md-3">
+                            <label for="minLengte">Lengte (min):</label>
+                            <input type="number" class="form-control" name="minLengte">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="maxLengte">Lengte (max):</label>
+                            <input type="number" class="form-control" name="maxLengte">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="naamEigenaar">Naam eigenaar:</label>
+                            <input type="text" class="form-control" name="naamEigenaar">
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" class="btn btn-default ">Zoeken</button>
+                        </div>
                     </div>
                 </form>
 
