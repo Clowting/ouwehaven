@@ -43,9 +43,9 @@
 
                     <ul class="nav nav-tabs">
                         <li role="presentation" class="active"><a href="reservations.php">In afwachting</a></li>
-                        <li role="presentation"><a href="#">123</a></li>
-                        <li role="presentation"><a href="#">456</a></li>
-                        <li role="presentation"><a href="#">789</a></li>
+                        <li role="presentation"><a href="reservations-accepted.php">Geaccepteerd</a></li>
+                        <li role="presentation"><a href="reservations-denied.php">Geweigerd</a></li>
+                        <li role="presentation"><a href="reservations-new.php">Nieuw</a></li>
                     </ul>
 
                     <div class="table-responsive">
@@ -53,17 +53,39 @@
 
                             <thead>
                             <tr>
-                                <th>1</th>
-                                <th>2</th>
-                                <th>3</th>
-                                <th>4</th>
+                                <th>Lid</th>
+                                <th>Schip</th>
+                                <th>Van</th>
+                                <th>Tot</th>
+                                <th>Beoordeel</th>
                             </tr>
                             </thead>
 
                             <tbody>
-                            <?php
+                                <?php
+                                $dataManager->join("oh_ships s", "s.ID=mr.Schip_ID", "LEFT");
+                                $dataManager->join("oh_members m", "m.ID=mr.Lid_ID", "LEFT");
+                                $dataManager->where("mr.Status", 0);
+                                $reservations = $dataManager->get('oh_mooring_reservations mr', NULL, 's.Naam, m.Voornaam, m.Tussenvoegsel, m.Achternaam, mr.Lid_ID, mr.Ligplaats_ID, mr.Aankomstdatum, mr.Vertrekdatum');
 
-                            ?>
+                                    foreach($reservations as $reservation) {
+
+                                        if(!empty($reservation['Tussenvoegsel'])) {
+                                            $lid = $reservation['Voornaam'] . ' ' . $reservation['Tussenvoegsel'] . ' ' . $reservation['Achternaam'];
+                                        } else {
+                                            $lid = $reservation['Voornaam'] . ' ' . $reservation['Achternaam'];
+                                        }
+
+                                        echo '<tr>';
+                                            echo '<td>' . $lid . '</td>';
+                                            echo '<td>' . $reservation["Naam"] . '</td>';
+                                            echo '<td>' . $reservation["Aankomstdatum"] . '</td>';
+                                            echo '<td>' . $reservation["Vertrekdatum"] . '</td>';
+                                            echo '<td><a href="reservations-details.php?lidID=' . $reservation["Lid_ID"] . '&ligplaatID=' . $reservation["Ligplaats_ID"] . '"><i class="fa fa-arrow-right"></i></a></td>';
+                                        echo '</tr>';
+
+                                    }
+                                ?>
                             </tbody>
 
                         </table>
