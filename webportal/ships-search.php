@@ -6,7 +6,7 @@ require_once 'includes/functions.php';
 require_once 'includes/connectdb.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 
 <head>
     <?php
