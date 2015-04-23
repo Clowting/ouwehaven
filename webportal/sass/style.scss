@@ -61,8 +61,10 @@ img {
 				left: 0;
 			}
 
-			#menu-toggle i {
-				@include transform(rotate(180deg));
+			#menu-toggle {
+				i {
+					@include transform(rotate(0deg));
+				}
 			}
 		}
 
@@ -102,6 +104,10 @@ img {
 
 		&:hover {
 			right: -35px;
+		}
+
+	  	i {
+			@include transform(rotate(180deg));
 		}
 	}
 }
@@ -224,6 +230,12 @@ div.alert-form {
 				.sidebar-nav {
 					left: -250px;
 				}
+
+			  	#menu-toggle {
+				  	i {
+						@include transform(rotate(180deg));
+					}
+				}
 			}
 
 			#page-content-wrapper {
@@ -238,6 +250,12 @@ div.alert-form {
 
 		.sidebar-nav {
 			left: 0;
+		}
+
+		#menu-toggle {
+			i {
+				@include transform(rotate(0deg));
+			}
 		}
 	}
 
