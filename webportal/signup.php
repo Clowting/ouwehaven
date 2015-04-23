@@ -22,7 +22,7 @@
 	}
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 
 <head>
     <?php
