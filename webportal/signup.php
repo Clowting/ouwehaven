@@ -15,8 +15,10 @@
         if ($dataManager->count > 0) {
             header('Location: /webportal');
         }
-	} else {
-		header('Location: ../wp-login.php');
+	}
+    else {
+        add_filter('login_redirect', '/webportal', 10, 3);
+        auth_redirect();
 	}
 ?>
 <!DOCTYPE html>

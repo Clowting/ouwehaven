@@ -24,5 +24,6 @@
 		$memberID = $_SESSION['member_details']['ID'];
 	}
 	else {
-		header('Location: ../wp-login.php');
+        add_filter('login_redirect', '/webportal', 10, 3);
+		auth_redirect();
 	}
