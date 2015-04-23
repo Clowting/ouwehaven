@@ -43,8 +43,8 @@
 
                     <ul class="nav nav-tabs">
                         <li role="presentation" class="active"><a href="reservations.php">In afwachting</a></li>
-                        <li role="presentation"><a href="reservations-accepted.php">Geaccepteerd</a></li>
                         <li role="presentation"><a href="reservations-denied.php">Geweigerd</a></li>
+                        <li role="presentation"><a href="reservations-approved.php">Geaccepteerd</a></li>
                         <li role="presentation"><a href="reservations-new.php">Nieuw</a></li>
                     </ul>
 
@@ -70,11 +70,7 @@
 
                                     foreach($reservations as $reservation) {
 
-                                        if(!empty($reservation['Tussenvoegsel'])) {
-                                            $lid = $reservation['Voornaam'] . ' ' . $reservation['Tussenvoegsel'] . ' ' . $reservation['Achternaam'];
-                                        } else {
-                                            $lid = $reservation['Voornaam'] . ' ' . $reservation['Achternaam'];
-                                        }
+                                        $lid = generateName($reservation['Voornaam'], $reservation['Tussenvoegsel'], $reservation['Achternaam']);
 
                                         echo '<tr>';
                                             echo '<td>' . $lid . '</td>';

@@ -66,6 +66,14 @@
 		return $transaction;
 	}
 
+    function generateName($voornaam, $tussenvoegel, $achternaam) {
+        if(!empty($tussenvoegel)) {
+            return $voornaam . ' ' . $tussenvoegel . ' ' . $achternaam;
+        } else {
+            return $voornaam . ' ' . $achternaam;
+        }
+    }
+
 	function cleanInput($input) {
 		return preg_replace("/[^[:alnum:][:space:]]/ui", '', $input);
 	}
