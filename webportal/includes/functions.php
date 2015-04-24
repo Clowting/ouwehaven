@@ -66,6 +66,14 @@
 		return $transaction;
 	}
 
+    function generateName($voornaam, $tussenvoegel, $achternaam) {
+        if(!empty($tussenvoegel)) {
+            return $voornaam . ' ' . $tussenvoegel . ' ' . $achternaam;
+        } else {
+            return $voornaam . ' ' . $achternaam;
+        }
+    }
+
 	function cleanInput($input) {
 		return preg_replace("/[^[:alnum:][:space:]]/ui", '', $input);
 	}
@@ -87,3 +95,8 @@
 		}
 		return false;
 	}
+
+    function validateDate($date) {
+        $d = DateTime::createFromFormat('Y-m-d', $date);
+        return $d && $d->format('Y-m-d') == $date;
+    }

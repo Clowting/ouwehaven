@@ -34,6 +34,9 @@
                         <li>
                             <a href="transactions.php"><i class="fa fa-file-text"></i> Transacties</a>
                         </li>
+                        <li>
+                            <a href="balances.php"><i class="fa fa-euro"></i> Saldi</a>
+                        </li>
                     </ul>
                 </li>
 

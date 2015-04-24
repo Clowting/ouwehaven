@@ -112,11 +112,8 @@ require_once 'includes/connectdb.php';
                             $ships = $dataManager->rawQuery($sql);
 
                             foreach($ships as $ship) {
-                                if(!empty($ship['Tussenvoegsel'])) {
-                                    $eigenaar = $ship['Voornaam'] . ' ' . $ship['Tussenvoegsel'] . ' ' . $ship['Achternaam'];
-                                } else {
-                                    $eigenaar = $ship['Voornaam'] . ' ' . $ship['Achternaam'];
-                                }
+
+                                $eigenaar = generateName($ship['Voornaam'], $ship['Tussenvoegsel'], $ship['Achternaam']);
 
                                 echo '<tr>';;
                                 echo '<td>' . $ship["Naam"] . '</td>';
