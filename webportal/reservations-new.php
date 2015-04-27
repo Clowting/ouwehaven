@@ -51,85 +51,74 @@ include_once 'includes/sidebar.php';
                 <?php
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-                    $naam = cleanInput($_POST['naam']);
-                    $lengte = $_POST['lengte'];
-                    $ligplaats = cleanInput($_POST['ligplaats']);
-                    $imgURL = "";
+                    $haven = cleanInput($_POST['haven']);
+                    $member = cleanInput($_POST['member']);
+                    $schip = cleanInput($_POST['schip']);
 
-                    if(isset($_FILES['afbeelding']['tmp_name']) && !empty($_FILES['afbeelding']['tmp_name'])) {
-                        $tmp_name = $_FILES['afbeelding']['tmp_name'];
-                        $name = $_FILES['afbeelding']['name'];
+                    if( validateNumber($haven, 1, 11) &&
+                        validateNumber($member, 1, 11) &&
+                        validateNumber($schip, 1, 11)) {
 
-                        $allowedImageTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF);
-                        $detectedImageType = exif_imagetype($tmp_name);
+                        $data = array(
+                            'Lid_ID' => $member,
+                            'Schip_ID' => $schip
+                        );
 
-                        $shipsDir = "/webportal/images/ships";
-                        $ext = pathinfo($name, PATHINFO_EXTENSION);
-                        $imageName = sha1($naam . $memberID . time()) . '.' . $ext;
-                        $fileUploaded = move_uploaded_file($tmp_name, $_SERVER['DOCUMENT_ROOT'] . "$shipsDir/$imageName");
+                        $insert = $dataManager->insert('oh_ships', $data);
 
-                        if($fileUploaded) {
-
-                            $imgURL = "$shipsDir/$imageName";
-
-                        }
-
-                    }
-
-
-                    if(($detectedImageType != null && in_array($detectedImageType, $allowedImageTypes)) || $imgURL == "") {
-
-                        if( validateInput($naam, 2, 128) &&
-                            validateNumber($lengte, 1, 16)) {
-
-                            $data = array(
-                                'Naam' => $naam,
-                                'Lengte' => $lengte,
-                                'ImgURL' => $imgURL
-                            );
-
-                            $insert = $dataManager->insert('oh_ships', $data);
-
-                            $data = array(
-                                'Member_ID' => $memberID,
-                                'Ship_ID' => $dataManager->getInsertId()
-                            );
-
-                            $insertLink = $dataManager->insert('oh_member_ship', $data);
-
-                            if($insert && $insertLink) {
-                                echo '<div class="alert alert-success" role="alert">Het schip is succesvol toegevoegd!</div>';
-                                echo '<p>Klik <a href="ships.php">hier</a> om verder te gaan.</p>';
-                            } else {
-                                echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
-                                echo '<p>Klik <a href="ships-add.php">hier</a> om het opnieuw te proberen.</p>';
-                            }
-
+                        if($insert) {
+                            echo '<div class="alert alert-success" role="alert">De reservatie is succesvol toegevoegd!</div>';
+                            echo '<p>Klik <a href="ships.php">hier</a> om verder te gaan.</p>';
                         } else {
-                            echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof niet alle gegevens zijn ingevuld...</div>';
+                            echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
                             echo '<p>Klik <a href="ships-add.php">hier</a> om het opnieuw te proberen.</p>';
                         }
 
                     } else {
-                        echo '<div class="alert alert-danger" role="alert">De afbeelding die je probeert up te loaden is geen geldig type. PNG, JPEG en GIF zijn geldig.</div>';
+                        echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof niet alle gegevens zijn ingevuld...</div>';
                         echo '<p>Klik <a href="ships-add.php">hier</a> om het opnieuw te proberen.</p>';
                     }
 
-
                 } else {
                     ?>
-                    <form id="addShipForm" role="form" method="POST" enctype="multipart/form-data">
+                    <form id="addReservationForm" role="form" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="naam">Naam schip:</label>
-                            <input type="text" class="form-control" name="naam">
+                            <label for="haven">Kies een haven:</label>
+                            <select class="form-control" name="haven" id="haven">
+                                <option value="" selected disabled></option>
+                                <?php
+
+                                $harbors = $dataManager->get('oh_harbors');
+
+                                foreach($harbors as $harbor) {
+                                    echo '<option value="' . $harbor["ID"] . '">' . $harbor["Naam"] . '</option>';
+                                }
+
+                                ?>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="lengte">Lengte:</label>
-                            <input type="number" class="form-control" name="lengte">
+                            <label for="eigenaar">Kies een eigenaar:</label>
+                            <select class="form-control" name="eigenaar" id="eigenaar">
+                                <option value="" selected disabled></option>
+                                <?php
+
+                                $members = $dataManager->get('oh_members');
+
+                                foreach($members as $member) {
+                                    $eigenaar = generateName($member['Voornaam'], $member['Tussenvoegsel'], $member['Achternaam']);
+
+                                    echo '<option value="' . $member["ID"] . '">' . $eigenaar . '</option>';
+                                }
+
+                                ?>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="afbeelding">Kies een afbeelding:</label>
-                            <input type="file" name="afbeelding" id="afbeelding">
+                            <label for="schip">Kies een schip:</label>
+                            <select disabled class="form-control" name="schip" id="schip">
+
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-default">Verzenden
                         </button>

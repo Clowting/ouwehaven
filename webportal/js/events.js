@@ -154,6 +154,25 @@ $(document).ready(function ($) {
         }
     });
 
+    $("#addReservationForm #eigenaar").on('change', function() {
+
+        var eigenaarID = $("#eigenaar option:selected").val();
+        var data = {'eigenaarID':eigenaarID};
+
+        $.ajax({
+            url: './loadMembersShips.php',
+            data: data,
+            success: function(result) {
+                $('#schip').html(result);
+                if(result != "") {
+                    $('#schip').attr('disabled', false);
+                } else {
+                    $('#schip').attr('disabled', true);
+                }
+            }
+        });
+    });
+
 	$("#menu-toggle").click(function() {
 
 		if($.cookie('menu-toggled') == 'true') {
