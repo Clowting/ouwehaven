@@ -114,7 +114,7 @@
 
                         <div class="col-md-7">
                             <h4>Wijzig gegevens</h4>
-                            
+
                             <form id="changeBalanceForm" role="form" method="POST">
                                 <div class="form-group">
                                     <label for="date">Meetdatum:</label>
