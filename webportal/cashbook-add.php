@@ -30,15 +30,24 @@ require_once 'includes/connectdb.php';
 	     todayHighlight: true
         });
 
-     //Javascript for the table
-     //Maybe beter to add this in functions in a global file
-        $('#next').click(function(){
-        	$('#tbl > tbody:first').append ('<tr><td>'+ $('#desc').val() 
-                	+'</td><td>'+ $('#amount').val() +'</td><td>'
-                	+ $('#date').val() +'</td><td><i class="fa fa-trash-o"></i></td></tr>');
-        	$('#addEntriesToCashBookForm')[0].reset();
-        	});        
-    });	
+
+        $( "#addEntriesToCashBookForm" ).validate({
+        	  rules: {
+        	    amount: {
+        	      number: true
+        	    }
+        	  }
+        	});
+
+//      //Javascript for the table
+//      //Maybe beter to add this in functions in a global file
+//         $('#next').click(function(){
+//         	$('#tbl > tbody:first').append ('<tr><td>'+ $('#desc').val() 
+//                 	+'</td><td>'+ $('#amount').val() +'</td><td>'
+//                 	+ $('#date').val() +'</td><td><i class="fa fa-trash-o"></i></td></tr>');
+//         	$('#addEntriesToCashBookForm')[0].reset();
+//         	});        
+     });	
 	</script>
 
     <title><?php echo SITE_TITLE; ?> - Kasboek </title>
@@ -98,7 +107,8 @@ include_once 'includes/sidebar.php';
                 
                 if($insert) {
                     echo '<div class="alert alert-success" role="alert">Bedankt voor het aanvullen van de gegevens, ze zijn succesvol verwerkt!</div>';
-                    echo '<p>Klik <a href="/webportal">hier</a> om verder te gaan.</p>';
+                    echo '<p>Klik <a href="/webportal">hier</a> om naar de hoofdpagina te gaan.</p>';
+                    echo "<p>Of klik <a href=".$_SERVER['REQUEST_URI'].">hier</a> om nog een bedrag toe te voegen.";
                 } else {
                     echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
                     echo "<p>Klik <a href=".$_SERVER['REQUEST_URI'].">hier</a> om het opnieuw te proberen.</p>";
@@ -122,7 +132,7 @@ include_once 'includes/sidebar.php';
                         
                         <div align="left"  class="form-group col-md-10">
                         	<label for="amount">Bedrag:</label>
-                        	<input type="text" class="form-control" name="amount" id="amount required data-progression="" data-helper="Vul hier uw bedrag in.">
+                        	<input type="text" class="form-control" name="amount" id="amount" number required data-progression="" data-helper="Vul hier uw bedrag in.">
                         </div>
 
 
@@ -142,7 +152,7 @@ include_once 'includes/sidebar.php';
                     </div>
                     <div class="form-group col-md-12">
                         <label for="amount">Van:</label>
-                        <input type="text" class="form-control" name="sender" id="sender" required data-progression="" data-helper="Vul hier uw beschrijving in.>
+                        <input type="text" class="form-control" name="sender" id="sender" required  data-progression="" data-helper="Vul hier uw beschrijving in.>
                     </div>
                     
                     <!-- Misschien moet van en voor een dropdown menu worden waar eventueel iets aan kan worden toegevoegd, dit om verschillende namen tegen te gaan -->
@@ -151,10 +161,13 @@ include_once 'includes/sidebar.php';
                         <input type="text" class="form-control" name="receiver" id="receiver" required data-progression="" data-helper="Vul hier uw beschrijving in.>
                     </div>
                     <div class="col-md-2">
-                        <button type="button" id="next" class="btn btn-default " name="next" value="next"  >Volgende</button>
-                        &nbsp;
+                       
                         <button type="submit" class="btn btn-default " name="add" value="add" id="add">Opslaan</button>
                     </div>
+                </form>
+                <?php 
+                        }
+                ?>
 
                 <hr/>
                 
@@ -165,7 +178,6 @@ include_once 'includes/sidebar.php';
                             <tr>
                                 <th>Beschrijving</th>
                                 <th width="10%">Bedrag</th>
-                                <th width="10%">Debet/Credit</th>
                                 <th width="10%">Datum</th>
                                 <th>Van</th>
                                 <th>Voor</th>
@@ -174,6 +186,30 @@ include_once 'includes/sidebar.php';
                             </thead>
                             
                             <tbody>
+                            
+                            <?php
+
+                            $sql = "SELECT * FROM oh_cashbook";
+
+                            $entries = $dataManager->rawQuery($sql);
+
+                            foreach($entries as $e) {
+                            	
+                            	
+                            	$date = DateTime::createFromFormat('Y-m-d', $e['Datum']);
+                            	
+                            	
+                                echo '<tr>';
+                                echo '<td>' . $e["Beschrijving"] . '</td>';
+                                echo '<td> &euro;' . $e['Bedrag'] . '</td>';
+                                echo '<td>' . $date->format('d/m/Y') .'</td>';
+                                echo '<td>'.$e['Afzender'].'</td>';
+                                echo '<td>'.$e['Ontvanger'].'</td>';
+                                
+                                echo '</tr>';
+                            }
+
+                            ?>
 
                             </tbody>
                 	</table>
@@ -182,10 +218,6 @@ include_once 'includes/sidebar.php';
             </div>
         </div>
     </div>
-                    </form>
-                <?php 
-                        }
-                ?>
 
 <!-- /#page-content-wrapper -->
 
