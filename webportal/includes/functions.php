@@ -27,18 +27,20 @@
 		return false;
 	}
 
-	function toDate($value) {
-		$day = substr($value, 6, 2);
-		$month = substr($value, 4, 2);
-		$year = substr($value, 0, 4);
+	function toTimestamp($value) {
+		$date = DateTime::createFromFormat('Ymd', $value);
 
-		return $day . '-' . $month . '-' . $year;
+        return $date->getTimestamp();
 	}
 
+    function toDate($timestamp) {
+        return date("d-m-Y", $timestamp);
+    }
+
 	function formatTransaction($transaction) {
-		// Datums omzetten
-		$transaction["Rentedatum"] = toDate($transaction["Rentedatum"]);
-		$transaction["Boekdatum"] = toDate($transaction["Boekdatum"]);
+        // Timestamps omzetten
+        $transaction["Rentedatum"] = toDate($transaction["Rentedatum"]);
+        $transaction["Boekdatum"] = toDate($transaction["Boekdatum"]);
 
 		// Boekcode omzetten
 		$boekcodes = array(

@@ -44,6 +44,7 @@
                         <ul class="nav nav-tabs">
                             <li role="presentation"><a href="transactions.php">Credit</a></li>
                             <li role="presentation"><a href="transactions-debet.php">Debet</a></li>
+                            <li role="presentation"><a href="transactions-sort.php">Rubriceer</a></li>
                             <li role="presentation" class="active"><a href="transactions-import.php">Importeer transacties</a></li>
                             <li role="presentation"><a href="transactions-search.php">Zoek transactie</a></li>
                         </ul>
@@ -63,12 +64,12 @@
                                             $data = array(
                                                 'Rekeningnummer' => $transactie[0],
                                                 'Muntsoort' => $transactie[1],
-                                                'Rentedatum' => $transactie[2],
+                                                'Rentedatum' => toTimestamp($transactie[2]),
                                                 'Code' => $transactie[3],
                                                 'Bedrag' => $transactie[4],
                                                 'Tegenrekening' => $transactie[5],
                                                 'Naam_Ontvanger' => $transactie[6],
-                                                'Boekdatum' => $transactie[7],
+                                                'Boekdatum' => toTimestamp($transactie[7]),
                                                 'Boekcode' => $transactie[8],
                                                 'Filler' => $transactie[9],
                                                 'Omschrijving' => implode(" ", array(
