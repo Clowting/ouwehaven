@@ -14,6 +14,8 @@
 
     ?>
 
+    <script src="js/jquery.xdomainajax.js"></script>
+    <script src="js/getShipLocation.js"></script>
     <title><?php echo SITE_TITLE; ?> - Schepen - Details</title>
 
 </head>
@@ -49,9 +51,8 @@
                     <?php
 
                         if(isset($_GET['id']) && is_numeric($_GET['id'])) {
-                            $dataManager->join("oh_moorings m", "s.Ligplaats_ID=m.ID", "LEFT");
-                            $dataManager->where('s.ID', $_GET['id']);
-                            $result = $dataManager->get('oh_ships s', 1, 's.Naam, s.Lengte, s.ImgURL, m.Breedtegraad, m.Lengtegraad');
+                            $dataManager->where('ID', $_GET['id']);
+                            $result = $dataManager->get('oh_ships');
 
                             if($result !== false && !empty($result[0])) {
                                 $ship = $result[0];
@@ -68,15 +69,14 @@
 
                                     echo '<tr>';
                                     echo '<td>Lengte</td>';
-                                    echo '<td>' . $ship["Lengte"] . 'm</td>';
+                                    echo '<td>' . round($ship["Lengte"], 3) . 'm</td>';
                                     echo '</tr>';
 
                                     echo '</table>';
                                     echo '</div>';
 
                                     echo '<h4>Locatie</h4>';
-                                    echo '<div id="map-canvas"></div>';
-                                    echo '<script>generateMap(' . $ship["Breedtegraad"] . ',' . $ship["Lengtegraad"] . ')</script>';
+                                    echo '<div id="map-canvas" data-trackingid="' . $ship["TrackingID"] . '"></div>';
 
                                 echo '</div>';
 
