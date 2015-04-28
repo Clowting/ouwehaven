@@ -120,6 +120,14 @@ include_once 'includes/sidebar.php';
 
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="van">Van:</label>
+                            <input type="text" value="<?php echo date("d/m/Y") ?>" class="form-control formDate" name="van" id="van">
+                        </div>
+                        <div class="form-group">
+                            <label for="tot">Tot:</label>
+                            <input type="text" value="<?php echo date("d/m/Y") ?>" class="form-control formDate" name="tot" id="tot">
+                        </div>
                         <button type="submit" class="btn btn-default">Verzenden
                         </button>
                     </form>

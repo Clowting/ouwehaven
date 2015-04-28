@@ -11,6 +11,9 @@
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
 
+    <!-- CSS for Bootstrap Datepicker -->
+    <link rel="stylesheet" href="css/bootstrap-datepicker3.min.css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -24,5 +27,11 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="//maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+    <!-- Javascript for Bootstrap Datepicker -->
+    <script src="js/bootstrap-datepicker.min.js"></script>
+    <script src="js/bootstrap-datepicker.nl.min.js" charset="UTF-8"></script>
+
+    <!-- Custom JS -->
     <script src="js/events.js"></script>
     

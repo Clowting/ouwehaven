@@ -154,6 +154,22 @@ $(document).ready(function ($) {
         }
     });
 
+    $('.formDate').datepicker({
+        todayBtn: "linked",
+        format: "dd/mm/yyyy",
+        language: "nl",
+        calendarWeeks: true,
+        todayHighlight: true
+    });
+
+    $( "#addEntriesToCashBookForm" ).validate({
+        rules: {
+            amount: {
+                number: true
+            }
+        }
+    });
+
     $("#addReservationForm #eigenaar").on('change', function() {
 
         var eigenaarID = $("#eigenaar option:selected").val();
