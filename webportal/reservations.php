@@ -77,7 +77,7 @@
                                             echo '<td>' . $reservation["Naam"] . '</td>';
                                             echo '<td>' . $reservation["Aankomstdatum"] . '</td>';
                                             echo '<td>' . $reservation["Vertrekdatum"] . '</td>';
-                                            echo '<td><a href="reservations-details.php?lidID=' . $reservation["Lid_ID"] . '&ligplaatID=' . $reservation["Ligplaats_ID"] . '"><i class="fa fa-arrow-right"></i></a></td>';
+                                            echo '<td><a href="reservations-details.php?lidID=' . $reservation["Lid_ID"] . '&ligplaatsID=' . $reservation["Ligplaats_ID"] . '"><i class="fa fa-arrow-right"></i></a></td>';
                                         echo '</tr>';
 
                                     }

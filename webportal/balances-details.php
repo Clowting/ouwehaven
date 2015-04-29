@@ -60,7 +60,7 @@
                                         if(
                                             isset($_POST['date']) &&
                                             isset($_POST['balance']) &&
-                                            validateDate($_POST['date']) &&
+                                            validateDate($_POST['date'], 'Y-m-d') &&
                                             is_numeric($_POST['balance'])
                                         ) {
 

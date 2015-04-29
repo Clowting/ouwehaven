@@ -76,6 +76,16 @@
         }
     }
 
+    function translateReservationStatus($status) {
+        if($status == 0) {
+            return "In afwachting";
+        } else if ($status == 1) {
+            return "Geweigerd";
+        } else if($status == 2) {
+            return "Geaccepteerd";
+        }
+    }
+
 	function cleanInput($input) {
 		return preg_replace("/[^[:alnum:][:space:].]/ui", '', $input);
 	}
@@ -98,7 +108,7 @@
 		return false;
 	}
 
-    function validateDate($date) {
-        $d = DateTime::createFromFormat('Y-m-d', $date);
-        return $d && $d->format('Y-m-d') == $date;
+    function validateDate($date, $format) {
+        $d = DateTime::createFromFormat($format, $date);
+        return $d && $d->format($format) == $date;
     }

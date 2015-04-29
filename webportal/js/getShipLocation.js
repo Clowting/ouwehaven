@@ -15,20 +15,20 @@ $(document).ready(function ($) {
                     cleanCoords.push(coord.replace(/[^0-9\.]/g, ''));
                 });
 
-                generateMap(cleanCoords[0], cleanCoords[1]);
+                generateMap(cleanCoords[0], cleanCoords[1], 13);
             }
         });
     }
 
 });
 
-function generateMap(x, y) {
+function generateMap(x, y, zoom) {
     function initialize() {
 
         var myLatlng =  new google.maps.LatLng(x, y);
 
         var mapOptions = {
-            zoom: 13,
+            zoom: zoom,
             center: myLatlng,
             mapTypeId: google.maps.MapTypeId.HYBRID
         };
