@@ -39,7 +39,7 @@
                         <div class="page-header">
                             <h1>Rubrieken <small>Wijzigen</small></h1>
                         </div>
-                        <p>Op deze pagina kunt u rubrieken toevoegen en wijzigen.</p>
+                        <p>Op deze pagina kunt u een rubriek wijzigen.</p>
 
                         <ul class="nav nav-tabs">
                             <li role="presentation"><a href="categories.php">Overzicht</a></li>
@@ -86,23 +86,22 @@
                                                     echo '<div class="alert alert-danger" role="alert">U gebruikte een ongeldig formulier of stuurde onjuiste gegevens. Probeer het opnieuw.</div>';
                                                 }
                                             }
+
+                                            $dataManager->where('ID', $_GET['id']);
+                                            $category = $dataManager->getOne('oh_categories');
+
+                                            if($dataManager->count > 0) {
+                                                echo '<form role="form" method="post">';
+                                                    echo '<div class="form-group">';
+                                                        echo '<label for="name">Naam:</label>';
+                                                        echo '<input type="text" class="form-control" value="' . $category['Naam'] . '" name="name" id="name">';
+                                                    echo '</div>';
+
+                                                    echo '<button type="submit" class="btn btn-default">Wijzigen</button>';
+                                                echo '</form>';
+                                            }
                                             else {
-                                                $dataManager->where('ID', $_GET['id']);
-                                                $category = $dataManager->getOne('oh_categories');
-
-                                                if($dataManager->count > 0) {
-                                                    echo '<form role="form" method="post">';
-                                                        echo '<div class="form-group">';
-                                                            echo '<label for="name">Naam:</label>';
-                                                            echo '<input type="text" class="form-control" value="' . $category['Naam'] . '" name="name" id="name">';
-                                                        echo '</div>';
-
-                                                        echo '<button type="submit" class="btn btn-default">Wijzigen</button>';
-                                                    echo '</form>';
-                                                }
-                                                else {
-                                                    echo '<div class="alert alert-danger" role="alert">U heeft mogelijk op een ongeldige link geklikt.</div>';
-                                                }
+                                                echo '<div class="alert alert-danger" role="alert">U heeft mogelijk op een ongeldige link geklikt.</div>';
                                             }
                                         }
                                         elseif($_GET['action'] == "delete") {
