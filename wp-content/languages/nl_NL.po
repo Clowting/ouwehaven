@@ -5864,7 +5864,7 @@ msgstr "<strong>MISLUKT</strong>: Geen gebruikersnaam opgegeven."
 msgid "<strong>ERROR</strong>: The password field is empty."
 msgstr "<strong>MISLUKT</strong>: Geen wachtwoord opgegeven."
 
-#: wp-includes/wp-db.php:2835
+#: wp-includes/wp-db.php:2949
 msgid "<strong>ERROR</strong>: WordPress %1$s requires MySQL %2$s or higher"
 msgstr "<strong>MISLUKT:</strong> WordPress %1$s vereist MySQL %2$s of hoger"
 
