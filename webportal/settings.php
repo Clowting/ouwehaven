@@ -1,7 +1,6 @@
 <?php
     require_once 'includes/globals.php';
 	require_once 'includes/requireSession.php';
-    require_once 'includes/requirePenningmeester.php';
 	require_once 'includes/functions.php';
     require_once 'includes/connectdb.php';
 ?>
