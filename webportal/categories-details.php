@@ -15,7 +15,7 @@
 
     ?>
 
-    <title><?php echo SITE_TITLE; ?> - Transacties - Rubriceer</title>
+    <title><?php echo SITE_TITLE; ?> - Rubrieken</title>
 
 </head>
 
@@ -37,16 +37,13 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="page-header">
-                            <h1>Transacties <small>Rubriceer</small></h1>
+                            <h1>Rubrieken <small>Toon rubriek</small></h1>
                         </div>
-                        <p>Op deze pagina vindt u een overzicht van de transacties.</p>
+                        <p>Op deze pagina vindt u een overzicht van de transacties in deze rubriek.</p>
 
                         <ul class="nav nav-tabs">
-                            <li role="presentation"><a href="transactions.php">Credit</a></li>
-                            <li role="presentation"><a href="transactions-debet.php">Debet</a></li>
-                            <li role="presentation" class="active"><a href="transactions-sort.php">Rubriceer</a></li>
-                            <li role="presentation"><a href="transactions-import.php">Importeer transacties</a></li>
-                            <li role="presentation"><a href="transactions-search.php">Zoek transactie</a></li>
+                            <li role="presentation" class="active"><a href="categories.php">Overzicht</a></li>
+                            <li role="presentation"><a href="categories-add.php">Rubriek toevoegen</a></li>
                         </ul>
 
                         <div class="table-responsive">
@@ -54,9 +51,10 @@
 
                                 <?php
 
-                                    if(isset($_GET['year']) && !empty($_GET['year'])) {
-                                        if(is_numeric($_GET['year'])) {
-                                            $dataManager->where('YEAR(FROM_UNIXTIME(Boekdatum)) = ' . $_GET['year']);
+                                    if(isset($_GET['id']) && !empty($_GET['id'])) {
+                                        if(is_numeric($_GET['id'])) {
+                                            $dataManager->where('Categorie_ID = ' . $_GET['id']);
+                                            $dataManager->orderBy('ID', 'DESC');
                                             $transactions = $dataManager->get('oh_transactions');
 
                                             if($dataManager->count > 0) {
@@ -86,7 +84,7 @@
                                                 echo '</tbody>';
                                             }
                                             else {
-                                                echo '<div class="alert alert-danger" role="alert">U heeft mogelijk op een ongeldige link geklikt.</div>';
+                                                echo '<div class="alert alert-info" role="alert">Er zijn geen transacties gevonden in deze rubriek.</div>';
                                             }
                                         }
                                         else {
@@ -94,35 +92,15 @@
                                         }
                                     }
                                     else {
-                                        $dataManager->groupBy('YEAR(FROM_UNIXTIME(Boekdatum))');
-                                        $dataManager->orderBy('ID', 'DESC');
-                                        $transactions = $dataManager->get('oh_transactions', null, 'COUNT(*) AS Aantal, YEAR(FROM_UNIXTIME(Boekdatum)) AS Jaar');
-
-                                        echo '<thead>';
-                                            echo '<tr>';
-                                                echo '<th>Jaar</th>';
-                                                echo '<th>Aantal transacties</th>';
-                                                echo '<th>Bekijk transacties</th>';
-                                            echo '</tr>';
-                                        echo '</thead>';
-
-                                        echo '<tbody>';
-                                            foreach ($transactions as $transaction) {
-                                                $transaction = formatTransaction($transaction);
-
-                                                echo '<tr>';
-                                                    echo '<td>' . $transaction["Jaar"] . '</td>';
-                                                    echo '<td>' . $transaction["Aantal"] . '</td>';
-                                                    echo '<td><a href="?year=' . $transaction["Jaar"] . '"><i class="fa fa-arrow-right"></i></a></td>';
-                                                echo '</tr>';
-                                            }
-                                        echo '</tbody>';
+                                        echo '<div class="alert alert-danger" role="alert">U heeft mogelijk op een ongeldige link geklikt.</div>';
                                     }
 
                                 ?>
 
                             </table>
                         </div>
+
+                        <a href="categories.php" class="btn btn-default">Ga terug naar het overzicht</a>
                     </div>
                 </div>
             </div>

@@ -77,7 +77,7 @@
     }
 
 	function cleanInput($input) {
-		return preg_replace("/[^[:alnum:][:space:]]/ui", '', $input);
+		return preg_replace("/[^[:alnum:][:space:].]/ui", '', $input);
 	}
 
 	function validateInput($input, $min, $max) {

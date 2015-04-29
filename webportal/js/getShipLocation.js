@@ -2,23 +2,24 @@ $(document).ready(function ($) {
     var mapCanvas = $('#map-canvas');
     var trackingID = mapCanvas.attr('data-trackingid');
 
-    $.ajax({
-        url: 'http://www.marinetraffic.com/en/ais/details/ships/shipid:' + trackingID,
-        type: 'GET',
-        success: function(res) {
-            var location = $(res.responseText).find("span:contains('Latitude / Longitude:')").next().text();
-            var coords =  location.split(' / ');
-            var cleanCoords = [];
+    if(trackingID != null) {
+        $.ajax({
+            url: 'http://www.marinetraffic.com/en/ais/details/ships/shipid:' + trackingID,
+            type: 'GET',
+            success: function(res) {
+                var location = $(res.responseText).find("span:contains('Latitude / Longitude:')").next().text();
+                var coords =  location.split(' / ');
+                var cleanCoords = [];
 
-            $.each(coords, function(index, coord) {
-                cleanCoords.push(coord.replace(/[^0-9\.]/g, ''));
-            });
+                $.each(coords, function(index, coord) {
+                    cleanCoords.push(coord.replace(/[^0-9\.]/g, ''));
+                });
 
-            console.log(cleanCoords);
+                generateMap(cleanCoords[0], cleanCoords[1]);
+            }
+        });
+    }
 
-            generateMap(cleanCoords[0], cleanCoords[1]);
-        }
-    });
 });
 
 function generateMap(x, y) {
