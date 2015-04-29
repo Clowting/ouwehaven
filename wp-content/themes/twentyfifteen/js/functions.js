@@ -167,15 +167,16 @@
 		 * happier systemengineer, and happier systemengineer means happier
 		 * programmer, and a happier programmer means the client is happier :D
 		 */
-		alert("hoi");
 		$("#harbors").change(function() {
 			var id = $(this).val();
 			var dataString = 'ID=' + id;
+			alert(dataString);
 
 			$.ajax({
 				type : "POST",
-				url : "/wp-content/themes/twentyfifteen/content-mooring.php",
+				url : "/wp-content/themes/twentyfifteen/functions.php",
 				data : dataString,
+			
 				cache : false,
 				success : function(html) {
 					$("#moorings").html(html);

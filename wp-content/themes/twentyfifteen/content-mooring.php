@@ -5,10 +5,6 @@ global $wpdb;
  */
 
 ?>
-<script>
-
-</script>
-
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
@@ -38,7 +34,7 @@ the_content ();
 	if ($_POST ['ID']) {
 		$id = $_POST ['ID'];
 		$result = $wpdb->get_results ( "SELECT * FROM oh_moorings WHERE Haven_ID == $id" );
-		
+		var_dump($result);
 		if ($result != null) {
 			?>
 			<thead>
