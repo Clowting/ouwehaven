@@ -14,41 +14,6 @@ require_once 'includes/connectdb.php';
     include_once 'includes/head.php';
 
     ?>
-    
-    <!-- CSS for Bootstrap Datepicker -->
-	<link rel="stylesheet" href="css/bootstrap-datepicker3.min.css">
-	<!-- Javascript for Bootstrap Datepicker -->
-	<script src="js/bootstrap-datepicker.min.js"></script>
-	<script src="js/bootstrap-datepicker.nl.min.js" charset="UTF-8"></script>
-	<script>
-    $(document).ready(function () {
-        $('#date').datepicker({
-         todayBtn: "linked",
-	     format: "dd/mm/yyyy",
-	     language: "nl",
-	     calendarWeeks: true,
-	     todayHighlight: true
-        });
-
-
-        $( "#addEntriesToCashBookForm" ).validate({
-        	  rules: {
-        	    amount: {
-        	      number: true
-        	    }
-        	  }
-        	});
-
-//      //Javascript for the table
-//      //Maybe beter to add this in functions in a global file
-//         $('#next').click(function(){
-//         	$('#tbl > tbody:first').append ('<tr><td>'+ $('#desc').val() 
-//                 	+'</td><td>'+ $('#amount').val() +'</td><td>'
-//                 	+ $('#date').val() +'</td><td><i class="fa fa-trash-o"></i></td></tr>');
-//         	$('#addEntriesToCashBookForm')[0].reset();
-//         	});        
-     });	
-	</script>
 
     <title><?php echo SITE_TITLE; ?> - Kasboek </title>
 </head>
@@ -148,7 +113,7 @@ include_once 'includes/sidebar.php';
                     
                     <div class="form-group col-md-12">
                         <label for="date">Datum uitgevoerd:</label>
-                        <input type="text" value="<?php echo date("d/m/Y") ?>" class="form-control" name="date" id="date">
+                        <input type="text" value="<?php echo date("d/m/Y") ?>" class="form-control formDate" name="date" id="date">
                     </div>
                     <div class="form-group col-md-12">
                         <label for="amount">Van:</label>
