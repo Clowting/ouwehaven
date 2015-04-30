@@ -52,31 +52,74 @@ include_once 'includes/sidebar.php';
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     $haven = cleanInput($_POST['haven']);
-                    $member = cleanInput($_POST['member']);
+                    $eigenaar = cleanInput($_POST['eigenaar']);
                     $schip = cleanInput($_POST['schip']);
 
+                    $nu = new DateTime();
+                    $van = DateTime::createFromFormat('d/m/Y', $_POST['van']);
+                    $tot = DateTime::createFromFormat('d/m/Y', $_POST['tot']);
+
+                    $nu = $nu->format('Y-m-d');
+                    $vanDatum = $van->format('Y-m-d');
+                    $totDatum = $tot->format('Y-m-d');
+
                     if( validateNumber($haven, 1, 11) &&
-                        validateNumber($member, 1, 11) &&
-                        validateNumber($schip, 1, 11)) {
+                        validateNumber($eigenaar, 1, 11) &&
+                        validateNumber($schip, 1, 11) &&
+                        validateDate($vanDatum, 'Y-m-d') &&
+                        validateDate($totDatum, 'Y-m-d') &&
+                        $vanDatum >= $nu &&
+                        $totDatum > $nu &&
+                        $vanDatum < $totDatum) {
 
-                        $data = array(
-                            'Lid_ID' => $member,
-                            'Schip_ID' => $schip
-                        );
+                        $sql = "SELECT *
 
-                        $insert = $dataManager->insert('oh_ships', $data);
+                                FROM oh_moorings
 
-                        if($insert) {
-                            echo '<div class="alert alert-success" role="alert">De reservatie is succesvol toegevoegd!</div>';
-                            echo '<p>Klik <a href="ships.php">hier</a> om verder te gaan.</p>';
+                                WHERE oh_moorings.ID NOT IN (
+                                    SELECT Ligplaats_ID
+                                    FROM oh_mooring_reservations
+                                    WHERE
+                                        (Aankomstdatum BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)) OR
+                                        (Vertrekdatum BETWEEN CAST(? AS DATE) AND CAST(? AS DATE))
+                                    )
+
+                                    AND Haven_ID = ?
+
+                                LIMIT 1
+                                ";
+                        $params = array($vanDatum, $totDatum, $vanDatum, $totDatum, $haven);
+
+                        $ligplaatsen = $dataManager->rawQuery($sql, $params);
+                        if(count($ligplaatsen) != 0) {
+
+                            $ligplaatsID = $ligplaatsen[0]['ID'];
+
+                            $data = array(
+                                'Lid_ID' => $eigenaar,
+                                'Ligplaats_ID' => $ligplaatsID,
+                                'Schip_ID' => $schip,
+                                'Aankomstdatum' => $vanDatum,
+                                'Vertrekdatum' => $totDatum,
+                                'Status' => '2'
+                            );
+
+                            $insert = $dataManager->insert('oh_mooring_reservations', $data);
+
+                            if ($insert) {
+                                echo '<div class="alert alert-success" role="alert">De reservatie is succesvol toegevoegd!</div>';
+                                echo '<p>Klik <a href="reservations.php">hier</a> om verder te gaan.</p>';
+                            } else {
+                                echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
+                                echo '<p>Klik <a href="reservations-new.php">hier</a> om het opnieuw te proberen.</p>';
+                            }
                         } else {
-                            echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
-                            echo '<p>Klik <a href="ships-add.php">hier</a> om het opnieuw te proberen.</p>';
+                            echo '<div class="alert alert-warning" role="alert">Er zijn geen ligplaatsen meer beschikbaar op de ingegeven datum.</div>';
+                            echo '<p>Klik <a href="reservations-new.php">hier</a> om het opnieuw te proberen.</p>';
                         }
-
                     } else {
                         echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof niet alle gegevens zijn ingevuld...</div>';
-                        echo '<p>Klik <a href="ships-add.php">hier</a> om het opnieuw te proberen.</p>';
+                        echo '<p>Klik <a href="reservations-new.php">hier</a> om het opnieuw te proberen.</p>';
                     }
 
                 } else {
