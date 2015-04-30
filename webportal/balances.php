@@ -66,7 +66,7 @@
 
                                         foreach($balances as $balance) {
                                             echo '<tr>';
-                                                echo '<td>' . date("d-m-Y", strtotime($balance["Datum"])) . '</td>';
+                                                echo '<td>' . date("d/m/Y", strtotime($balance["Datum"])) . '</td>';
                                                 echo '<td>' . (($balance["Startmeting"] == 1) ? "Ja" : "Nee") . '</td>';
                                                 echo '<td>&euro; ' . round($balance["Saldo"], 2) . '</td>';
                                                 echo '<td><a href="balances-details.php?id=' . $balance["ID"] . '"><i class="fa fa-arrow-right"></i></a></td>';

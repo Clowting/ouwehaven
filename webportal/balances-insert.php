@@ -52,11 +52,12 @@
                                 if(
                                     isset($_POST['date']) &&
                                     isset($_POST['balance']) &&
-                                    validateDate($_POST['date']) &&
+                                    validateDate($_POST['date'], "d/m/Y") &&
                                     is_numeric($_POST['balance'])
                                 ) {
 
-                                    $datum = $_POST['date'];
+                                    $date = DateTime::createFromFormat("d/m/Y", $_POST['date']);
+                                    $datum = $date->format("Y-m-d");
                                     $saldo = $_POST['balance'];
                                     $startmeting = ((isset($_POST['start']) && $_POST['start'] == 'on') ? 1 : 0);
 
@@ -85,12 +86,12 @@
                         <form role="form" method="post">
                             <div class="form-group">
                                 <label for="date">Meetdatum:</label>
-                                <input type="date" name="date" id="date">
+                                <input class="form-control formDate" type="text" name="date" id="date">
                             </div>
 
                             <div class="form-group">
                                 <label for="balance">Saldo:</label>
-                                &euro; <input type="number" min="0" step="1" name="balance" id="balance">
+                                &euro; <input class="form-control" type="number" min="0" step="1" name="balance" id="balance">
                             </div>
 
                             <div class="form-group">
