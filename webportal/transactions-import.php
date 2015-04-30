@@ -71,14 +71,14 @@
                                                 'Boekdatum' => toTimestamp($transactie[7]),
                                                 'Boekcode' => $transactie[8],
                                                 'Filler' => $transactie[9],
-                                                'Omschrijving' => implode(" ", array(
+                                                'Omschrijving' => trim(implode(" ", array(
                                                                     $transactie[10],
                                                                     $transactie[11],
                                                                     $transactie[12],
                                                                     $transactie[13],
                                                                     $transactie[14],
                                                                     $transactie[15]
-                                                                )),
+                                                                ))),
                                                 'End_To_End_ID' => $transactie[16],
                                                 'Tegenrekeninghouder_ID' => $transactie[17],
                                                 'Mandaat_ID' => $transactie[18]
