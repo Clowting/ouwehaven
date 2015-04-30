@@ -59,15 +59,19 @@ include_once 'includes/sidebar.php';
                     $dataManager->join("oh_harbors h", "h.ID=mo.Haven_ID", "LEFT");
                     $dataManager->where("mr.Lid_ID", $_GET['lidID']);
                     $dataManager->where("mr.Ligplaats_ID", $_GET['ligplaatsID']);
-                    $result = $dataManager->getOne('oh_mooring_reservations mr', 's.Naam AS SchipNaam, s.Lengte, m.Voornaam, m.Tussenvoegsel, m.Achternaam, h.Naam AS HavenNaam, h.Breedtegraad, h.Lengtegraad, mo.Nummer, mr.Aankomstdatum, mr.Vertrekdatum');
+                    $result = $dataManager->getOne('oh_mooring_reservations mr', 's.Naam AS SchipNaam, s.Lengte, m.Voornaam, m.Tussenvoegsel, m.Achternaam, h.Naam AS HavenNaam, h.Breedtegraad, h.Lengtegraad, mo.Nummer, mr.Status, mr.Aankomstdatum, mr.Vertrekdatum');
 
                     if ($result) {
 
                         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             if (isset($_POST['btnApprove'])) {
-                                $data = Array (
+                                $data = Array(
                                     'Status' => '2'
+                                );
+                            } else if (isset($_POST['btnPending'])) {
+                                $data = Array(
+                                    'Status' => '0'
                                 );
                             } else if(isset($_POST['btnDeny'])) {
                                 $data = Array (
@@ -153,6 +157,7 @@ include_once 'includes/sidebar.php';
                             echo '<form id="processReservationForm" role="form" method="POST" enctype="multipart/form-data">';
                                 echo '<div class="btn-group">';
                                     echo '<button type="submit" name="btnApprove" class="btn btn-success">Goedkeuren</button>';
+                                    echo '<button type="submit" name="btnPending" class="btn btn-warning">Afwachten</button>';
                                     echo '<button type="submit" name="btnDeny" class="btn btn-danger">Afkeuren</button>';
                                 echo '</div>';
                             echo '</form>';

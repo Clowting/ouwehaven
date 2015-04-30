@@ -52,6 +52,7 @@
 
                             $naam = cleanInput($_POST['naam']);
                             $lengte = $_POST['lengte'];
+                            $trackingID = preg_replace('/\D/', '', $_POST['trackingID']);
                             $ligplaats = cleanInput($_POST['ligplaats']);
                             $imgURL = "";
 
@@ -84,7 +85,8 @@
                                     $data = array(
                                         'Naam' => $naam,
                                         'Lengte' => $lengte,
-                                        'ImgURL' => $imgURL
+                                        'ImgURL' => $imgURL,
+                                        'TrackingID' => $trackingID
                                     );
 
                                     $insert = $dataManager->insert('oh_ships', $data);
@@ -125,6 +127,10 @@
                             <div class="form-group">
                                 <label for="lengte">Lengte:</label>
                                 <input type="number" class="form-control" name="lengte">
+                            </div>
+                            <div class="form-group">
+                                <label for="trackingID">Ship ID (Marine Traffic):</label>
+                                <input type="number" class="form-control" name="trackingID">
                             </div>
                             <div class="form-group">
                                 <label for="afbeelding">Kies een afbeelding:</label>
