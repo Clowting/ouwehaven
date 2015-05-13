@@ -15,7 +15,7 @@
 
     ?>
 
-    <title><?php echo SITE_TITLE; ?> - Transacties - Credit</title>
+    <title><?php echo SITE_TITLE; ?> - Financieel jaarverslag - Controleren</title>
 
 </head>
 
