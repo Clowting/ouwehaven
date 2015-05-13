@@ -112,3 +112,10 @@
         $d = DateTime::createFromFormat($format, $date);
         return $d && $d->format($format) == $date;
     }
+    
+    //Used in cashbook.php to delete a row in the table
+    function deleteTableRow(){
+    	
+    }
+    
+    

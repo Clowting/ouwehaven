@@ -37,10 +37,18 @@ include_once 'includes/sidebar.php';
             <div class="col-lg-12">
                 <div class="page-header">
                     <h1>Kasboek <small>Voeg toe</small></h1>
+                    
+                    
                 </div>
+
                 <p>Op deze pagina kunt u gegevens in het kasboek zetten, deze worden direct opgeslagen wanneer u op volgende drukt</p>
                 <p>Wanneer u meerdere kasboek gegevens wilt invoeren, kunt u kiezen voor "nog 1 toevoegen, wanneer u klaar bent kunt u weer op volgende drukken om verder te gaan</p>
-
+                                
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" ><a href="ships.php">Alle Kasboektransacties</a></li>
+                        <li role="presentation" class="active"><a href="ships-add.php">Voeg toe aan Kasboek</a></li>
+                        <li role="presentation"><a href="ships-remove.php">Kasboek transactie verwijderen</a></li>
+                    </ul>
                      <?php
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         	
@@ -55,7 +63,7 @@ include_once 'includes/sidebar.php';
             
             if( validateInput($desc, 2, 64) &&
                 validateInput($amount, 2, 64) &&
-                validateInput($date, 2, 64) &&
+                validateDate($date, Y-m-d) &&
             	validateInput($sender, 2, 50) &&
             	validateInput($receiver, 2, 50) &&
             	validateInput($code, 1, 2))  {
@@ -116,13 +124,13 @@ include_once 'includes/sidebar.php';
                         <input type="text" value="<?php echo date("d/m/Y") ?>" class="form-control formDate" name="date" id="date">
                     </div>
                     <div class="form-group col-md-12">
-                        <label for="amount">Van:</label>
+                        <label for="sender">Van:</label>
                         <input type="text" class="form-control" name="sender" id="sender" required  data-progression="" data-helper="Vul hier uw beschrijving in.>
                     </div>
                     
                     <!-- Misschien moet van en voor een dropdown menu worden waar eventueel iets aan kan worden toegevoegd, dit om verschillende namen tegen te gaan -->
                     <div class="form-group col-md-12">
-                        <label for="amount">Voor:</label>
+                        <label for="receiver">Voor:</label>
                         <input type="text" class="form-control" name="receiver" id="receiver" required data-progression="" data-helper="Vul hier uw beschrijving in.>
                     </div>
                     <div class="col-md-2">
@@ -136,49 +144,7 @@ include_once 'includes/sidebar.php';
 
                 <hr/>
                 
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover" id="tbl">
 
-                            <thead>
-                            <tr>
-                                <th>Beschrijving</th>
-                                <th width="10%">Bedrag</th>
-                                <th width="10%">Datum</th>
-                                <th>Van</th>
-                                <th>Voor</th>
-                                <th>   </th>
-                            </tr>
-                            </thead>
-                            
-                            <tbody>
-                            
-                            <?php
-
-                            $sql = "SELECT * FROM oh_cashbook";
-
-                            $entries = $dataManager->rawQuery($sql);
-
-                            foreach($entries as $e) {
-                            	
-                            	
-                            	$date = DateTime::createFromFormat('Y-m-d', $e['Datum']);
-                            	
-                            	
-                                echo '<tr>';
-                                echo '<td>' . $e["Beschrijving"] . '</td>';
-                                echo '<td> &euro;' . $e['Bedrag'] . '</td>';
-                                echo '<td>' . $date->format('d/m/Y') .'</td>';
-                                echo '<td>'.$e['Afzender'].'</td>';
-                                echo '<td>'.$e['Ontvanger'].'</td>';
-                                
-                                echo '</tr>';
-                            }
-
-                            ?>
-
-                            </tbody>
-                	</table>
-                </div>
                 </div>
             </div>
         </div>
