@@ -275,7 +275,7 @@ msgstr "no-subset"
 msgid "Add widgets here to appear in your sidebar."
 msgstr "Widgets toevoegen zodat ze verschijnen in de sidebar."
 
-#. #-#-#-#-#  twentyfifteen.pot (Twenty Fifteen 1.1)  #-#-#-#-#
+#. #-#-#-#-#  twentyfifteen.pot (Twenty Fifteen 1.2)  #-#-#-#-#
 #. Author URI of the plugin/theme
 #: footer.php:25
 msgid "https://wordpress.org/"
