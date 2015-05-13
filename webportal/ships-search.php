@@ -49,23 +49,9 @@ require_once 'includes/connectdb.php';
 
                     <form class="clearfix horizontalSearchForm" id="searchShipForm" role="form" method="POST" enctype="multipart/form-data">
                         <div class="col-md-12">
-                            <div class="form-group col-md-8">
+                            <div class="form-group col-md-12">
                                 <label for="naam">Naam schip:</label>
                                 <input type="text" class="form-control" name="naam">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="haven">Kies een haven:</label>
-                                <select class="form-control" name="haven" id="haven">
-                                    <?php
-
-                                    $harbors = $dataManager->get('oh_harbors');
-
-                                    foreach($harbors as $harbor) {
-                                        echo '<option value="' . $harbor["ID"] . '">' . $harbor["Naam"] . '</option>';
-                                    }
-
-                                    ?>
-                                </select>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -104,20 +90,51 @@ require_once 'includes/connectdb.php';
                             <tbody>
                             <?php
 
-                            $sql = "SELECT s.ID AS ID, s.Naam AS Naam, s.Lengte AS Lengte, m.Voornaam AS Voornaam, m.Tussenvoegsel AS Tussenvoegsel, m.Achternaam AS Achternaam
-                                    FROM oh_members AS m, oh_member_ship AS ms, oh_ships AS s
-                                    WHERE m.ID = ms.Member_ID AND s.ID = ms.Ship_ID";
+                            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-                            $ships = $dataManager->rawQuery($sql);
+                                $naamSchip = cleanInput($_POST['naam']);
+                                $minLengte = $_POST['minLengte'];
+                                $maxLengte = $_POST['maxLengte'];
+                                $naamEigenaar = $_POST['naamEigenaar'];
 
-                            foreach($ships as $ship) {
+                                if(validateInput($naamSchip, 2, 128)) {
+                                    $dataManager->orWhere('Naam', '%' . $naamSchip . '%', 'LIKE');
+                                }
+
+                                if(validateNumber($minLengte, 1, 16) && validateNumber($maxLengte, 1, 16)) {
+                                    $dataManager->orWhere('Lengte', Array($minLengte, $maxLengte), 'BETWEEN');
+                                } else if (validateNumber($minLengte, 1, 16)) {
+                                    $dataManager->orWhere('Lengte', $minLengte, '>=');
+                                } else if (validateNumber($maxLengte, 1, 16)) {
+                                    $dataManager->orWhere('Lengte', $maxLengte, '<=');
+                                }
+
+                                if(validateInput($naamEigenaar, 2, 512)) {
+                                    $naamArray = explode(' ', $naamEigenaar);
+                                    array_walk($naamArray, function(&$value) {
+                                        $value = '%' . $value . '%';
+                                    });
+
+                                    foreach ($naamArray as $naam) {
+                                        $dataManager->orWhere('Voornaam', $naam, 'LIKE');
+                                        $dataManager->orWhere('Achternaam', $naam, 'LIKE');
+                                        $dataManager->orWhere('Tussenvoegsel', $naam, 'LIKE');
+                                    }
+                                }
+
+                            }
+
+                            $ships = $dataManager->get('oh_search_ship');
+                            print_r($ships);
+
+                            foreach ($ships as $ship) {
 
                                 $eigenaar = generateName($ship['Voornaam'], $ship['Tussenvoegsel'], $ship['Achternaam']);
 
                                 echo '<tr>';;
                                 echo '<td>' . $ship["Naam"] . '</td>';
                                 echo '<td>' . round($ship["Lengte"], 2) . '</td>';
-                                echo '<td>' . $eigenaar .'</td>';
+                                echo '<td>' . $eigenaar . '</td>';
                                 echo '<td><a href="ships-details.php?id=' . $ship["ID"] . '"><i class="fa fa-arrow-right"></i></a></td>';
                                 echo '</tr>';
                             }
