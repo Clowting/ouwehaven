@@ -54,6 +54,7 @@
                                     <tr>
                                         <th>Naam</th>
                                         <th>Lengte (m)</th>
+                                        <th>Aanpassen</th>
                                         <th>Details</th>
                                     </tr>
                                 </thead>
@@ -72,6 +73,7 @@
                                             echo '<tr>';
                                                 echo '<td>' . $ship["Naam"] . '</td>';
                                                 echo '<td>' . round($ship["Lengte"], 2) . '</td>';
+                                                echo '<td><a href="ships-edit.php?id=' . $ship["ID"] . '"><i class="fa fa-cog"></i></a></td>';
                                                 echo '<td><a href="ships-details.php?id=' . $ship["ID"] . '"><i class="fa fa-arrow-right"></i></a></td>';
                                             echo '</tr>';
                                         }

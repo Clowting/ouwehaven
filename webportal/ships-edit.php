@@ -92,12 +92,20 @@
                                                 validateNumber($lengte, 1, 16)
                                             ) {
 
-                                                $data = array(
-                                                    'Naam' => $naam,
-                                                    'Lengte' => $lengte,
-                                                    'ImgURL' => $imgURL,
-                                                    'TrackingID' => $trackingID
-                                                );
+                                                if(imgURL == "") {
+                                                    $data = array(
+                                                        'Naam' => $naam,
+                                                        'Lengte' => $lengte,
+                                                        'TrackingID' => $trackingID
+                                                    );
+                                                } else {
+                                                    $data = array(
+                                                        'Naam' => $naam,
+                                                        'Lengte' => $lengte,
+                                                        'ImgURL' => $imgURL,
+                                                        'TrackingID' => $trackingID
+                                                    );
+                                                }
 
                                                 $dataManager->where("ID", 2);
                                                 $update = $dataManager->update('oh_ships', $data);
