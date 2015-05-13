@@ -125,7 +125,6 @@ require_once 'includes/connectdb.php';
                             }
 
                             $ships = $dataManager->get('oh_search_ship');
-                            print_r($ships);
 
                             foreach ($ships as $ship) {
 
