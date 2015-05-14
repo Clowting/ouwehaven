@@ -22,6 +22,16 @@ html, body {
 	height: 100%;
 }
 
+#page-selection {
+
+	width: 100%;
+
+	.bootpag {
+		@extend .pagination;
+		display: inline-block;
+	}
+}
+
 h4 {
   margin-top: 20px;
 }
