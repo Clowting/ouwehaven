@@ -1,17 +1,13 @@
 $(document).ready(function ($) {
 
-    var shipData;
+    requestShips();
 
     $('button').click(function(e) {
         e.preventDefault();
-        loadShips();
-
+        requestShips();
     });
 
-    function loadShips() {
-        var $form = $('#searchShipForm'),
-            url = $form.attr('action');
-
+    function requestShips() {
         var postData = {
             naam: $('#naam').val(),
             minLengte: $('#minLengte').val(),
@@ -22,25 +18,48 @@ $(document).ready(function ($) {
 
         $.ajax({
             type: "post",
-            url: url,
+            url: "searchShip.php",
             data: postData,
             success: function(data) {
-                shipData = $.parseJSON(data);
+                data = $.parseJSON(data);
+                console.log(data);
+                var toAppend = "";
+
+                for(var i = 0; i < 50 && i < data.length; i++) {
+                    toAppend +=
+                        '<tr>' +
+                        '<td>' + data[i]['Naam'] + '</td>' +
+                        '<td>' + data[i]['Lengte'] + '</td>' +
+                        '<td>' + data[i]['Voornaam'] + '</td>' +
+                        '<td><a href="ships-details.php?id=' + data[i]['ID'] + '"><i class="fa fa-arrow-right"></i></a></td>' +
+                        '</tr>';
+                }
+                $("#ship-content").html(toAppend);
+
+                $('#page-selection').bootpag({
+                    total: Math.ceil(data.length/50),
+                    page: 1,
+                    maxVisible: 5
+                }).on('page', function(event, num) {
+                    toAppend = "";
+
+                    for(var i = num*50-50; i < num*50 && i < data.length; i++) {
+                        toAppend +=
+                            '<tr>' +
+                            '<td>' + data[i]['Naam'] + '</td>' +
+                            '<td>' + data[i]['Lengte'] + '</td>' +
+                            '<td>' + data[i]['Voornaam'] + '</td>' +
+                            '<td><a href="ships-details.php?id=' + data[i]['ID'] + '"><i class="fa fa-arrow-right"></i></a></td>' +
+                            '</tr>';
+                    }
+
+                    $("#ship-content").html(toAppend);
+
+                });
             }
-        })
+        });
     }
 
-    var pageCount = Math.ceil(shipData.length/50);
 
-    $('#page-selection').bootpag({
-        total: pageCount,
-        page: 1,
-        maxVisible: 5
-    }).on('page', function(event, num) {
-
-        $("#ship-content").html(
-            "Page " + num
-        );
-    });
 
 });
