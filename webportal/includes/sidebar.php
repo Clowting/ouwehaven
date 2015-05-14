@@ -40,6 +40,9 @@
                         <li>
                             <a href="balances.php"><i class="fa fa-euro"></i> Saldi</a>
                         </li>
+                        <li>
+                            <a href="financial-year.php"><i class="fa fa-euro"></i> Financieel jaarverslag</a>
+                        </li>
                     </ul>
                 </li>
 
