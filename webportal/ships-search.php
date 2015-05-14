@@ -51,21 +51,21 @@ require_once 'includes/connectdb.php';
                         <div class="col-md-12">
                             <div class="form-group col-md-12">
                                 <label for="naam">Naam schip:</label>
-                                <input type="text" class="form-control" name="naam">
+                                <input type="text" class="form-control" id="naam" name="naam">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group col-md-3">
                                 <label for="minLengte">Lengte (min):</label>
-                                <input type="number" class="form-control" name="minLengte">
+                                <input type="number" class="form-control" id="minLengte" name="minLengte">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="maxLengte">Lengte (max):</label>
-                                <input type="number" class="form-control" name="maxLengte">
+                                <input type="number" class="form-control" id="maxLengte" name="maxLengte">
                             </div>
                             <div class="form-group col-md-5">
                                 <label for="naamEigenaar">Naam eigenaar:</label>
-                                <input type="text" class="form-control" name="naamEigenaar">
+                                <input type="text" class="form-control" id="naamEigenaar" name="naamEigenaar">
                             </div>
                             <div class="col-md-1">
                                 <button type="submit" class="btn btn-default ">Zoeken</button>
@@ -87,62 +87,15 @@ require_once 'includes/connectdb.php';
                             </tr>
                             </thead>
 
-                            <tbody>
-                            <?php
-
-                            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-                                $naamSchip = cleanInput($_POST['naam']);
-                                $minLengte = $_POST['minLengte'];
-                                $maxLengte = $_POST['maxLengte'];
-                                $naamEigenaar = $_POST['naamEigenaar'];
-
-                                if(validateInput($naamSchip, 2, 128)) {
-                                    $dataManager->orWhere('Naam', '%' . $naamSchip . '%', 'LIKE');
-                                }
-
-                                if(validateNumber($minLengte, 1, 16) && validateNumber($maxLengte, 1, 16)) {
-                                    $dataManager->orWhere('Lengte', Array($minLengte, $maxLengte), 'BETWEEN');
-                                } else if (validateNumber($minLengte, 1, 16)) {
-                                    $dataManager->orWhere('Lengte', $minLengte, '>=');
-                                } else if (validateNumber($maxLengte, 1, 16)) {
-                                    $dataManager->orWhere('Lengte', $maxLengte, '<=');
-                                }
-
-                                if(validateInput($naamEigenaar, 2, 512)) {
-                                    $naamArray = explode(' ', $naamEigenaar);
-                                    array_walk($naamArray, function(&$value) {
-                                        $value = '%' . $value . '%';
-                                    });
-
-                                    foreach ($naamArray as $naam) {
-                                        $dataManager->orWhere('Voornaam', $naam, 'LIKE');
-                                        $dataManager->orWhere('Achternaam', $naam, 'LIKE');
-                                        $dataManager->orWhere('Tussenvoegsel', $naam, 'LIKE');
-                                    }
-                                }
-
-                            }
-
-                            $ships = $dataManager->get('oh_search_ship');
-
-                            foreach ($ships as $ship) {
-
-                                $eigenaar = generateName($ship['Voornaam'], $ship['Tussenvoegsel'], $ship['Achternaam']);
-
-                                echo '<tr>';;
-                                echo '<td>' . $ship["Naam"] . '</td>';
-                                echo '<td>' . round($ship["Lengte"], 2) . '</td>';
-                                echo '<td>' . $eigenaar . '</td>';
-                                echo '<td><a href="ships-details.php?id=' . $ship["ID"] . '"><i class="fa fa-arrow-right"></i></a></td>';
-                                echo '</tr>';
-                            }
-
-                            ?>
+                            <tbody id="ship-content">
+                            <tr>
+                                <td colspan="4">Schepen worden geladen...</td>
+                            </tr>
                             </tbody>
 
                         </table>
                     </div>
+                    <div class="text-center" id="page-selection"></div>
                 </div>
             </div>
         </div>
@@ -153,6 +106,7 @@ require_once 'includes/connectdb.php';
     <!-- /#wrapper -->
 
     <!-- Footer -->
+    <script src="js/pagination.js"></script>
     <?php
 
         include_once 'includes/footer.php';
