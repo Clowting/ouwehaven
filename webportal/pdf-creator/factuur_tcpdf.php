@@ -56,6 +56,7 @@ $html =
 
 <table cellspacing="0" cellpadding="1" border="0">
     <tr>
+
         <td width="10%">Naam:</td>
         <td>$name</td>
     </tr>

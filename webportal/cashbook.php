@@ -13,12 +13,13 @@ require_once 'includes/connectdb.php';
 
     include_once 'includes/head.php';
 
+
     ?>
 
     <title><?php echo SITE_TITLE; ?> - Kasboek </title>
     
 <!--           <script type="text/javascript"> --> 
-<!-- //            $(document).ready(function(){ -->
+<!-- //             -->
  
                
 <!-- //                $("#searchCashBook").on('input', function(){ -->
@@ -40,8 +41,6 @@ require_once 'includes/connectdb.php';
 <!-- //            }); -->
 	<!--       </script> -->
 
-    
-    
 </head>
 
 <body>
@@ -71,9 +70,9 @@ include_once 'includes/sidebar.php';
                 <p>Wanneer u meerdere kasboek gegevens wilt invoeren, kunt u kiezen voor "nog 1 toevoegen, wanneer u klaar bent kunt u weer op volgende drukken om verder te gaan</p>
                                 
                     <ul class="nav nav-tabs">
-                        <li role="presentation" class="active"><a href="ships.php">Alle Kasboektransacties</a></li>
-                        <li role="presentation" ><a href="ships-add.php">Voeg toe aan Kasboek</a></li>
-                        <li role="presentation"><a href="ships-remove.php">Kasboek transactie verwijderen</a></li>
+                        <li role="presentation" class="active"><a href="cashbook.php">Alle Kasboektransacties</a></li>
+                        <li role="presentation" ><a href="cashbook-add.php">Voeg toe aan Kasboek</a></li>
+                        
                     </ul>
                      <?php
 
@@ -115,7 +114,7 @@ include_once 'includes/sidebar.php';
                     </div>
                     <div class="col-md-2">
                        
-                        <button type="submit" class="btn btn-default " name="add" value="add" id="add">Zoeken</button>
+                        <button type="submit" class="btn btn-default " name="search" value="search" id="search">Zoeken</button>
                     </div>
                 </form>
                 <?php 
@@ -125,6 +124,7 @@ include_once 'includes/sidebar.php';
                 <hr/>
                 
                 <div class="table-responsive">
+                	<form id="toPDFForm" method="POST" action="pdf-creator/cashbookPDF.php">
                     <table class="table table-striped table-hover" id="foundEntries">
 
                             <thead>
@@ -135,7 +135,7 @@ include_once 'includes/sidebar.php';
                                 <th>Code</th>
                                 <th>Van</th>
                                 <th>Voor</th>
-                                <th width="5%"></th>
+                                <th width="5%"><button type="submit" class="btn btn-default">Maken PDF</button></th>
                                 
                             </tr>
                             </thead>
@@ -144,7 +144,7 @@ include_once 'includes/sidebar.php';
                             
                             <?php
                             
-                            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search']) ) {
                             	
                             	if($_POST['date'] != null){
                             		$newDate = DateTime::createFromFormat('d/m/Y', $_POST['date']);
@@ -157,12 +157,17 @@ include_once 'includes/sidebar.php';
 					            $receiver = cleanInput($_POST['receiver']);
 					            $code = cleanInput($_POST['code']);
 					            
-					            $sql = "SELECT * FROM oh_cashbook WHERE Beschrijving = '".$desc."' OR Datum ='".$date."' OR Afzender ='".$sender."' OR Ontvanger ='".$receiver."' OR Code ='".$code."'";
+					            $sql = "SELECT * FROM oh_cashbook 
+										WHERE Beschrijving = '".$desc."' 
+										OR Datum ='".$date."' OR Afzender ='".$sender."' 
+										OR Ontvanger ='".$receiver."' OR Code ='".$code."'
+										ORDER BY Datum DESC";
 					            
 					            $result = $dataManager->rawQuery($sql);
 					            
-					            
+					            $i = 0;
 					            foreach($result as $res){
+					            	$i++;
 					            	$resultDate = DateTime::createFromFormat('Y-m-d', $res['Datum']);
 					            	$resDate = $resultDate->format('d/m/Y');
 					            	$oldCode = (string)$res['Code'];
@@ -175,15 +180,15 @@ include_once 'includes/sidebar.php';
 					            		$code = "Debet";
 					            	}
 					            	
-					            	echo '<tr>';
-					            	echo '<td>'.$res['Beschrijving'].'</td>';
-					            	echo '<td>'.$resDate.'</td>';
-					            	echo '<td>'.$res['Bedrag'].'</td>';
-					            	echo '<td>'.$code.'</td>';
-					            	echo '<td>'.$res['Afzender'].'</td>';
-					            	echo '<td>'.$res['Ontvanger'].'</td>';
-					            	echo '<td> <a href="hoi.php"><i class="fa fa-trash-o fa-lg"></i></a> 
-										&nbsp;<a href="hoi.php"><i class="fa fa-pencil fa-lg"></i></a></td>';
+					            	echo '<tr id="'.$res['ID'].'">';
+					            	echo '<td><input type="hidden"  name="'.$i.'[desc]" value="'.$res['Beschrijving'].'"</input>'.$res['Beschrijving'].'</td>';
+					            	echo '<td><input type="hidden"  name="'.$i.'[date]" value="'.$resDate.'"</input>'.$resDate.'</td>';
+					            	echo '<td><input type="hidden"  name="'.$i.'[amount]" value="&euro;'.$res['Bedrag'].'"</input>&euro; '.$res['Bedrag'].'</td>';
+					            	echo '<td><input type="hidden"  name="'.$i.'[code]" value="'.$code.'"</input>'.$code.'</td>';
+					            	echo '<td><input type="hidden"  name="'.$i.'[sender]" value="'.$res['Afzender'].'"</input>'.$res['Afzender'].'</td>';
+					            	echo '<td><input type="hidden"  name="'.$i.'[receiver]" value="'.$res['Ontvanger'].'"</input>'.$res['Ontvanger'].'</td>';
+					            	echo '<td> <a class="btn" id="delete" value="delete"><i class="fa fa-trash-o "> Verwijderen</i></a> 
+										<a class="btn id="edit" value="edit" href="hoi.php"><i class="fa fa-pencil "> Bewerken</i></a></td>';
 					            }
 
 					            
@@ -193,6 +198,7 @@ include_once 'includes/sidebar.php';
 
                             </tbody>
                 	</table>
+                	</form>
                 </div>
                 </div>
             </div>
