@@ -61,7 +61,7 @@ include_once 'includes/sidebar.php';
             
             if( validateInput($desc, 2, 64) &&
                 validateInput($amount, 2, 64) &&
-                validateInput($date, 2, 64) &&
+                validateDate($date, 'Y-m-d') &&
             	validateInput($sender, 2, 50) &&
             	validateInput($receiver, 2, 50) &&
             	validateInput($code, 1, 2))  {
