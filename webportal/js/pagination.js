@@ -1,65 +1,62 @@
 $(document).ready(function ($) {
 
-    requestShips();
+    var pageCount;
 
     $('button').click(function(e) {
         e.preventDefault();
-        requestShips();
+        searchShips();
     });
 
-    function requestShips() {
+    function searchShips() {
+        loadShips(1);
+        $(document).ajaxStop(function() {
+            $('#page-selection').twbsPagination({
+                totalPages: pageCount,
+                visiblePages: 5,
+                first: 'Begin',
+                prev: '<',
+                next: '>',
+                last: 'Eind',
+                onPageClick: function (event, page) {
+                    loadShips(page);
+                }
+            });
+        });
+    }
+
+    function loadShips(page) {
+        $("#ship-content").html('<tr><td colspan="4">Schepen worden geladen...</td></tr>');
         var postData = {
             naam: $('#naam').val(),
             minLengte: $('#minLengte').val(),
             maxLengte: $('#maxLengte').val(),
-            naamEigenaar: $('#naamEigenaar').val()
-
+            naamEigenaar: $('#naamEigenaar').val(),
+            page: page
         };
 
         $.ajax({
             type: "post",
             url: "searchShip.php",
             data: postData,
-            success: function(data) {
+            success: function (data) {
                 data = $.parseJSON(data);
-                console.log(data);
                 var toAppend = "";
+                pageCount = Math.ceil(data['totalCount']/50);
 
-                for(var i = 0; i < 50 && i < data.length; i++) {
+                $.each(data['items'], function (index, value) {
                     toAppend +=
                         '<tr>' +
-                        '<td>' + data[i]['Naam'] + '</td>' +
-                        '<td>' + data[i]['Lengte'] + '</td>' +
-                        '<td>' + data[i]['Voornaam'] + '</td>' +
-                        '<td><a href="ships-details.php?id=' + data[i]['ID'] + '"><i class="fa fa-arrow-right"></i></a></td>' +
+                        '<td>' + value['Naam'] + '</td>' +
+                        '<td>' + value['Lengte'] + '</td>' +
+                        '<td>' + value['Voornaam'] + '</td>' +
+                        '<td><a href="ships-details.php?id=' + value['ID'] + '"><i class="fa fa-arrow-right"></i></a></td>' +
                         '</tr>';
-                }
+                });
+
                 $("#ship-content").html(toAppend);
 
-                $('#page-selection').bootpag({
-                    total: Math.ceil(data.length/50),
-                    page: 1,
-                    maxVisible: 5
-                }).on('page', function(event, num) {
-                    toAppend = "";
-
-                    for(var i = num*50-50; i < num*50 && i < data.length; i++) {
-                        toAppend +=
-                            '<tr>' +
-                            '<td>' + data[i]['Naam'] + '</td>' +
-                            '<td>' + data[i]['Lengte'] + '</td>' +
-                            '<td>' + data[i]['Voornaam'] + '</td>' +
-                            '<td><a href="ships-details.php?id=' + data[i]['ID'] + '"><i class="fa fa-arrow-right"></i></a></td>' +
-                            '</tr>';
-                    }
-
-                    $("#ship-content").html(toAppend);
-
-                });
             }
         });
     }
-
-
 
 });

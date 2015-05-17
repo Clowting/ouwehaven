@@ -89,7 +89,7 @@ require_once 'includes/connectdb.php';
 
                             <tbody id="ship-content">
                             <tr>
-                                <td colspan="4">Schepen worden geladen...</td>
+                                <td colspan="4">Zoek hierboven naar schepen.</td>
                             </tr>
                             </tbody>
 

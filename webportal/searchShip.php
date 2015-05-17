@@ -8,6 +8,7 @@ $naamSchip = cleanInput($_POST['naam']);
 $minLengte = $_POST['minLengte'];
 $maxLengte = $_POST['maxLengte'];
 $naamEigenaar = $_POST['naamEigenaar'];
+$page = $_POST['page'];
 
 if(validateInput($naamSchip, 2, 128)) {
     $dataManager->orWhere('Naam', '%' . $naamSchip . '%', 'LIKE');
@@ -34,4 +35,14 @@ if(validateInput($naamEigenaar, 2, 512)) {
     }
 }
 
-echo json_encode($dataManager->get('oh_search_ship'));
+$data = $dataManager->get('oh_search_ship');
+$totalCount = $dataManager->count;
+$result = array();
+
+for($i = $page*50-50; $i < $page*50 && $i < $totalCount; $i++) {
+    $result['items'][] = $data[$i];
+}
+
+$result['totalCount'] = $totalCount;
+
+echo json_encode($result);
