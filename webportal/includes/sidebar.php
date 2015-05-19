@@ -16,6 +16,9 @@
                     <a href="ships.php"><i class="fa fa-ship"></i> Schepen</a>
                 </li>
                 <li>
+                    <a href="reservations-request.php"><i class="fa fa-clock-o"></i> Reserveren</a>
+                </li>
+                <li>
                     <a href="settings.php"><i class="fa fa-cog"></i> Instellingen</a>
                 </li>
 
@@ -52,7 +55,8 @@
                         <!-- Admin pagina's komen hier. -->
                     </ul>
                 </li>
-                
                 <?php } ?>
+                
+                <li class="sidebarSub"><a href="<?php echo wp_logout_url( get_permalink() ); ?>"><i class="fa fa-eject"></i> Uitloggen</a></li>
             </ul>
         </div>
