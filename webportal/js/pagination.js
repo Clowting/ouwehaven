@@ -10,7 +10,9 @@ $(document).ready(function ($) {
     function searchShips() {
         loadShips(1);
         $(document).ajaxStop(function() {
-            $('#page-selection').twbsPagination({
+            $('#pagination').remove();
+            $('#page-selection').html('<ul id="pagination"></ul>');
+            $('#pagination').twbsPagination({
                 totalPages: pageCount,
                 visiblePages: 5,
                 first: 'Begin',

@@ -95,7 +95,9 @@ require_once 'includes/connectdb.php';
 
                         </table>
                     </div>
-                    <div class="text-center" id="page-selection"></div>
+                    <div class="text-center" id="page-selection">
+                        <ul id="pagination"></ul>
+                    </div>
                 </div>
             </div>
         </div>
