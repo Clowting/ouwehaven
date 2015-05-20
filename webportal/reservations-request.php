@@ -44,7 +44,6 @@ include_once 'includes/sidebar.php';
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     $haven = cleanInput($_POST['haven']);
-                    $eigenaar = cleanInput($_POST['eigenaar']);
                     $schip = cleanInput($_POST['schip']);
 
                     $nu = new DateTime();
