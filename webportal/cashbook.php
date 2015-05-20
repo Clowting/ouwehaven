@@ -71,7 +71,7 @@ include_once 'includes/sidebar.php';
                                 
                     <ul class="nav nav-tabs">
                         <li role="presentation" class="active"><a href="cashbook.php">Alle Kasboektransacties</a></li>
-                        <li role="presentation" ><a href="cashbook-add.php">Voeg toe aan Kasboek</a></li>
+                        <li role="presentation"><a href="cashbook-add.php">Voeg toe aan Kasboek</a></li>
                         
                     </ul>
                      <?php
@@ -82,20 +82,18 @@ include_once 'includes/sidebar.php';
                     
                     <div class="form-group col-md-8">
                         <label for="desc">Beschrijving:</label>
-                        <input type="text" class="form-control" name="desc" id="desc" data-progression="" data-helper="Vul hier uw beschrijving in.">
+                        <input type="text" class="form-control" name="desc" id="desc">
                     </div>
                    
-                            <div class="form-group col-md-2">
-                                <label for="code">Debet/Credit:</label>
-                                <select class="form-control" name="code" id="code">
-                                	<option value=""> </option>
-                                    <option value="D">Debet</option>
-                                    <option value="C">Credit</option>                               
-                                </select>
-                            </div>
-                    	
-                  
-                    
+                    <div class="form-group col-md-2">
+                        <label for="code">Debet/Credit:</label>
+                        <select class="form-control" name="code" id="code">
+                            <option value=""> </option>
+                            <option value="D">Debet</option>
+                            <option value="C">Credit</option>
+                        </select>
+                    </div>
+
                     <div class="form-group col-md-2">
                         <label for="date">Datum uitgevoerd:</label>
                         <input type="text" value="" class="form-control formDate" name="date" id="date">
@@ -104,16 +102,17 @@ include_once 'includes/sidebar.php';
                     
                     <div class="form-group col-md-5">
                         <label for="sender">Van:</label>
-                        <input type="text" class="form-control" name="sender" id="sender"  data-progression="" data-helper="Vul hier uw beschrijving in.>
+                        <input type="text" class="form-control" name="sender" id="sender">
                     </div>
                     
                     <!-- Misschien moet van en voor een dropdown menu worden waar eventueel iets aan kan worden toegevoegd, dit om verschillende namen tegen te gaan -->
+
                     <div class="form-group col-md-5">
                         <label for="receiver">Voor:</label>
-                        <input type="text" class="form-control" name="receiver" id="receiver"  data-progression="" data-helper="Vul hier uw beschrijving in.>
+                        <input type="text" class="form-control" name="receiver" id="receiver">
                     </div>
+
                     <div class="col-md-2">
-                       
                         <button type="submit" class="btn btn-default " name="search" value="search" id="search">Zoeken</button>
                     </div>
                 </form>

@@ -42,8 +42,8 @@ include_once 'includes/sidebar.php';
                 <p>Wanneer u meerdere kasboek gegevens wilt invoeren, kunt u kiezen voor "nog 1 toevoegen, wanneer u klaar bent kunt u weer op volgende drukken om verder te gaan</p>
                 
                     <ul class="nav nav-tabs">
-                        <li role="presentation" class="active"><a href="cashbook.php">Alle Kasboektransacties</a></li>
-                        <li role="presentation" ><a href="cashbook-add.php">Voeg toe aan Kasboek</a></li>
+                        <li role="presentation"><a href="cashbook.php">Alle Kasboektransacties</a></li>
+                        <li role="presentation" class="active"><a href="cashbook-add.php">Voeg toe aan Kasboek</a></li>
                         
                     </ul>
 
