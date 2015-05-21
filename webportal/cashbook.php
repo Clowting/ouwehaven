@@ -186,8 +186,10 @@ include_once 'includes/sidebar.php';
 					            	echo '<td><input type="hidden"  name="'.$i.'[code]" value="'.$code.'"</input>'.$code.'</td>';
 					            	echo '<td><input type="hidden"  name="'.$i.'[sender]" value="'.$res['Afzender'].'"</input>'.$res['Afzender'].'</td>';
 					            	echo '<td><input type="hidden"  name="'.$i.'[receiver]" value="'.$res['Ontvanger'].'"</input>'.$res['Ontvanger'].'</td>';
-					            	echo '<td> <a class="btn" id="delete" value="delete"><i class="fa fa-trash-o "> Verwijderen</i></a> 
-										<a class="btn id="edit" value="edit" href="hoi.php"><i class="fa fa-pencil "> Bewerken</i></a></td>';
+					            	echo '<td>';
+                                    echo '<a class="btn" id="delete" value="delete"><i class="fa fa-trash-o "></i> Verwijderen</a>';
+                                    echo '<a class="btn id="edit" value="edit" href="hoi.php"><i class="fa fa-pencil "></i> Bewerken</a>';
+                                    echo '</td>';
 					            }
 
 					            
