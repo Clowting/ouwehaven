@@ -60,7 +60,7 @@ include_once 'includes/sidebar.php';
             $code = cleanInput($_POST['code']);
             
             if( validateInput($desc, 2, 64) &&
-                validateInput($amount, 2, 64) &&
+                validateInput($amount, 1, 32) &&
                 validateDate($date, 'Y-m-d') &&
             	validateInput($sender, 2, 50) &&
             	validateInput($receiver, 2, 50) &&

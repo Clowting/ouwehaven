@@ -163,10 +163,28 @@ $(document).ready(function ($) {
     });
 
     $( "#addEntriesToCashBookForm" ).validate({
+        debug: false,
+        errorClass: 'alert alert-danger alert-form',
+        highlight: function (element, errorClass, validClass) {
+            return false;  // ensure this function stops
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            return false;  // ensure this function stops
+        },
+        //validClass: 'alert alert-success alert-form',
+        errorElement: 'div',
         rules: {
             amount: {
                 number: true
             }
+        },
+        messages: {
+            amount: {
+                number: "Voer a.u.b. een geldig bedrag in."
+            }
+        },
+        submitHandler: function(form) {
+            form.submit();
         }
     });
 
