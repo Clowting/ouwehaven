@@ -6,7 +6,6 @@ if(isset($_POST)){
 	$result = $_POST;
 }
 
-var_dump($result);
 
 $header = '
 	<table border="0" width=100%>
