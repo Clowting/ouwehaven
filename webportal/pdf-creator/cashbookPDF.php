@@ -8,17 +8,16 @@ if(isset($_POST)){
 
 
 $header = '
-	<table border="0" width=100%>
+	<table cellspacing="0" width="100%">
 		<tr>
 			<td><img src="images/logo.png" width="126px" /></td>
-		    <td class="header" align="right"> Printed on:' . $date . '</td>
+		    <td class="header" align="right"> Printed on: ' . $date . '</td>
 		</tr>
 	</table>
 		';
 
 $html = ' <h1>Rapport Kasgegevens</h1>
-		<br/><br/>
-           <table border ="1" width ="100%">                            
+           <table cellspacing="0" width="100%">
 		     <thead>
                <tr>
                  <th width="30%">Beschrijving</th>
@@ -39,15 +38,15 @@ foreach ( $result as $res ) {
 	$html.='<td>' . $res['code'] . '</td>';
 	$html.='<td>' . $res['sender'] . '</td>';
 	$html.='<td>' . $res['receiver'] . '</td>';
-	
+	$html.='</tr>';
 }
 
-$html.='</tr></tbody></table>';
+$html.='</tbody></table>';
 
 
 include ("mpdf60/mpdf.php");
 
-$mpdf = new mPDF ( 'c', 'A4', '', '', 20, 20, 30, 20, 10, 10 );
+$mpdf = new mPDF ( 'c', 'A4', '', '', 15, 15, 30, 20, 10, 10 );
 $mpdf->SetHeader ( $header );
 $mpdf->SetDisplayMode ( 'fullpage' );
 

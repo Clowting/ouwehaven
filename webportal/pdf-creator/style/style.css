@@ -4,16 +4,33 @@ body {
 	font-family: "Arial";
 }
 
-h1 { //
-	color: orange;
+h1 {
+    font-size: 20px;
 	text-align: left;
 	font-family: "Arial";
+    margin-bottom: 10px;
 }
 
 table {
-	border-color: blue;
+    font-size: 13px;
 	font-family: "Arial";
 	table-layout: fixed;
+}
+
+table td {
+    border: none;
+    padding: 10px 5px;
+    border-bottom: 1px solid #999;
+}
+
+table tr:nth-child(even) td {
+    background: #F5F5F5;
+}
+
+thead th {
+    text-align: left;
+    padding: 10px 5px;
+    border-bottom: 2px solid #000;
 }
 
 p {
