@@ -170,6 +170,8 @@ include_once 'includes/sidebar.php';
 					            	$resultDate = DateTime::createFromFormat('Y-m-d', $res['Datum']);
 					            	$resDate = $resultDate->format('d/m/Y');
 					            	$oldCode = (string)$res['Code'];
+
+                                    $amount = number_format((float)$res['Bedrag'], 2, '.', '');
 					            	
 					           
 					            	
@@ -182,7 +184,7 @@ include_once 'includes/sidebar.php';
 					            	echo '<tr id="'.$res['ID'].'">';
 					            	echo '<td><input type="hidden"  name="'.$i.'[desc]" value="'.$res['Beschrijving'].'"</input>'.$res['Beschrijving'].'</td>';
 					            	echo '<td><input type="hidden"  name="'.$i.'[date]" value="'.$resDate.'"</input>'.$resDate.'</td>';
-					            	echo '<td><input type="hidden"  name="'.$i.'[amount]" value="&euro;'.$res['Bedrag'].'"</input>&euro; '.$res['Bedrag'].'</td>';
+					            	echo '<td><input type="hidden"  name="'.$i.'[amount]" value="&euro;'.$amount.'"</input>&euro; '.$amount.'</td>';
 					            	echo '<td><input type="hidden"  name="'.$i.'[code]" value="'.$code.'"</input>'.$code.'</td>';
 					            	echo '<td><input type="hidden"  name="'.$i.'[sender]" value="'.$res['Afzender'].'"</input>'.$res['Afzender'].'</td>';
 					            	echo '<td><input type="hidden"  name="'.$i.'[receiver]" value="'.$res['Ontvanger'].'"</input>'.$res['Ontvanger'].'</td>';
