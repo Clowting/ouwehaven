@@ -5,6 +5,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <!-- FavIcon -->
+    <link rel="icon" type="image/icon" href="images/favicon.ico" />
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
