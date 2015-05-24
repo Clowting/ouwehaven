@@ -21,7 +21,7 @@ require_once 'includes/connectdb.php';
 	    	var n = $('div#selectInvoiceRule').length + 1;
 	        
 	        if( 10 < n ) {
-	            alert('Stop it!');
+	            alert('Stop met spelen, terug aan het werk!');
 	            return false;
 	        }
 	        var selectBox = $('<div class="form-group col-md-6" id="selectInvoiceRule"><label for="invoiceRule' + n + '">Extra Factuurregel <span class="number">' + n + '</span></label> <select class="form-control" name="invoiceRule[]" value="" id="invoiceRule' + n + '">	<?php $sql = 'SELECT * FROM oh_price_category';$result = $dataManager->rawQuery($sql);foreach($result as $res){echo '<option value="'.$res['ID'].'">'.$res['Naam'].'</option>';}?></select> <a href="#" class="remove-box">Remove</a></div>');
@@ -81,22 +81,34 @@ include_once 'includes/sidebar.php';
 							
 							$member = cleanInput ( $_POST ['member'] );
 							$date = $newDate->format ( 'Y-m-d' );
-							$amount = cleanInput ( $_POST ['amount'] );
+							$rules = serialize($_POST['invoiceRules']);
 							
-							if (validateInput ( $desc, 2, 64 ) && validateInput ( $amount, 1, 32 ) && validateDate ( $date, 'Y-m-d' )) {
+							if (validateInput ( $member, 2, 64 ) &&  validateDate ( $date, 'Y-m-d' )) {
 								
 								$data = array (
-										'Beschrijving' => $desc,
+										'Lid_ID' => $member,
 										'Datum' => $date,
-										'Bedrag' => $amount 
 								);
 								
-								$insert = $dataManager->insert ( 'oh_cashbook', $data );
+								$insert = $dataManager->insert ( 'oh_invoices', $data );
 								
 								if ($insert) {
+									
+									$getID = 'SELECT ID FROM oh_invoices WHERE Lid_ID = '.$member.' AND Datum = '.$date.'';
+									var_dump($getID);
+									
+									$ID = $dataManager->rawQuery($getID);
+									
+									if($ID != null){
+										$insert2 = 'INSERT INTO oh_invoices_rule(Factuur_ID, Categorie_ID, Aantal, Bedrag) VALUES()';
+									}
+									
 									echo '<div class="alert alert-success" role="alert">Bedankt voor het aanvullen van de gegevens, ze zijn succesvol verwerkt!</div>';
 									echo '<p>Klik <a href="/webportal">hier</a> om naar de hoofdpagina te gaan.</p>';
-									echo "<p>Of klik <a href=" . $_SERVER ['REQUEST_URI'] . ">hier</a> om nog een bedrag toe te voegen.";
+									echo "<p>Of klik <a href=" . $_SERVER ['REQUEST_URI'] . ">hier</a> om nog een factuur toe te voegen.";
+									
+									
+									
 								} else {
 									echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
 									echo "<p>Klik <a href=" . $_SERVER ['REQUEST_URI'] . ">hier</a> om het opnieuw te proberen.</p>";
@@ -120,7 +132,7 @@ include_once 'includes/sidebar.php';
 									$result = $dataManager->rawQuery($sql);
 									
 									foreach($result as $res){
-										echo '<option value="'.$res['ID'].'">'.$res['Voornaam'].' '.$res['Tussenvoegsel'].' '.$res['Achternaam'].'</option>';
+										echo '<option value="'.$res['ID'].'" id="member">'.$res['Voornaam'].' '.$res['Tussenvoegsel'].' '.$res['Achternaam'].'</option>';
 									}
 								?>
 	                        </select>
@@ -151,6 +163,8 @@ include_once 'includes/sidebar.php';
                         
                         
 						</div>
+						
+					
 
 					</form>
 					
