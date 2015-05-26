@@ -128,11 +128,12 @@ include_once 'includes/sidebar.php';
 
                         <select class="form-control" name="selectMember" id="selectMember">
                             <?php
-                            $sql = 'SELECT ID, Voornaam, Tussenvoegsel, Achternaam FROM oh_members';
-                            $result = $dataManager->rawQuery($sql);
+                            $members = $dataManager->get('oh_members');
 
-                            foreach ($result as $res) {
-                                echo '<option value="' . $res['ID'] . '" id="member">' . $res['Voornaam'] . ' ' . $res['Tussenvoegsel'] . ' ' . $res['Achternaam'] . '</option>';
+                            foreach($members as $member) {
+                                $eigenaar = generateName($member['Voornaam'], $member['Tussenvoegsel'], $member['Achternaam']);
+
+                                echo '<option value="' . $member["ID"] . '">' . $eigenaar . '</option>';
                             }
                             ?>
                         </select>
