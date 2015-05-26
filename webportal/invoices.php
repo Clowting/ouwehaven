@@ -24,7 +24,7 @@ require_once 'includes/connectdb.php';
 	            alert('Stop met spelen, terug aan het werk!');
 	            return false;
 	        }
-	        var selectBox = $('<div class="form-group col-md-6" id="selectInvoiceRule"><label for="invoiceRule' + n + '">Extra Factuurregel <span class="number">' + n + '</span></label> <select class="form-control" name="invoiceRule[]" value="" id="invoiceRule' + n + '">	<?php $sql = 'SELECT * FROM oh_price_category';$result = $dataManager->rawQuery($sql);foreach($result as $res){echo '<option value="'.$res['ID'].'">'.$res['Naam'].'</option>';}?></select> <a href="#" class="remove-box">Remove</a></div>');
+	        var selectBox = $('<div class="form-group col-md-7" id="selectInvoiceRule"><label for="invoiceRule' + n + '">Extra Factuurregel <span class="number">' + n + '</span></label> <select class="form-control" name="invoiceRule[]" value="" id="invoiceRule' + n + '">	<?php $sql = 'SELECT * FROM oh_price_category';$result = $dataManager->rawQuery($sql);foreach($result as $res){echo '<option value="'.$res['ID'].'">'.$res['Naam'].'</option>';}?></select> <a href="#" class="remove-box">Remove</a></div>');
 	       
 	        selectBox.hide();
 	        $('#addInvoice div#selectInvoiceRule:last').after(selectBox);
@@ -97,10 +97,10 @@ include_once 'includes/sidebar.php';
 									$getID = 'SELECT ID FROM oh_invoices WHERE Lid_ID = '.$member.' AND Datum = '.$date.'';
 									var_dump($getID);
 									
-									$ID = $dataManager->rawQuery($getID);
+									$factuur = $dataManager->rawQuery($getID);
 									
-									if($ID != null){
-										$insert2 = 'INSERT INTO oh_invoices_rule(Factuur_ID, Categorie_ID, Aantal, Bedrag) VALUES()';
+									if($factuur != null){
+										$insert2 = 'INSERT INTO oh_invoices_rule(Factuur_ID, Categorie_ID, Aantal, Bedrag) VALUES($factuur, )';
 									}
 									
 									echo '<div class="alert alert-success" role="alert">Bedankt voor het aanvullen van de gegevens, ze zijn succesvol verwerkt!</div>';
@@ -147,7 +147,7 @@ include_once 'includes/sidebar.php';
 							<button type="button" class="btn btn-default " name="add" id="add">Voeg extra regel toe</button>
 						</div>
 						
-						<div class="form-group col-md-4" id="selectInvoiceRule">
+						<div class="form-group col-md-7" id="selectInvoiceRule">
 							<label for="invoiceRule1">FactuurRegel 1</label> 
 							
 						<select class="form-control" name="invoiceRules[]" id="invoiceRule1" class="form-control">
@@ -156,14 +156,17 @@ include_once 'includes/sidebar.php';
 								$result = $dataManager->rawQuery($sql);
 								
 								foreach($result as $res){
-									echo '<option value="'.$res['ID'].'">'.$res['Naam'].'</option>';
+									echo '<option value="'.$res['ID'].'" id="Categorie_ID">'.$res['Naam'].'</option>';
 								}
 							?>
                         </select>
                         
                         
 						</div>
-						
+						                    <div class="col-md-2">
+                       
+                        <button type="submit" class="btn btn-default " name="submit" value="submit" id="submit">Opslaan</button>
+                    </div>
 					
 
 					</form>
