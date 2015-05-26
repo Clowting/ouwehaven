@@ -18,29 +18,6 @@ require_once 'includes/connectdb.php';
 
     <title><?php echo SITE_TITLE; ?> - Kasboek </title>
     
-<!--           <script type="text/javascript"> --> 
-<!-- //             -->
- 
-               
-<!-- //                $("#searchCashBook").on('input', function(){ -->
-<!-- //                      var desc=$("#desc").val(); -->
-<!-- //                      var date=$("#date").val(); -->
-<!-- //                      var code=$("#code").val(); -->
-<!-- //                      var receiver=$("#receiver").val(); -->
-<!-- //                      var sender=$("#sender").val(); -->
-<!-- //                      $.ajax({ -->
-<!-- //                         type:"post", -->
-                       
-<!-- //                         data: {desc: desc, date: date, code: code, receiver: receiver, sender: sender}, -->
-<!-- //                         //data:"desc="+desc+"date="+date+"code="+code+"receiver="+receiver+"sender="+sender, -->
-<!-- //                         success:function(data){ -->
-<!-- //                               $("#foundEntries").html(data); -->
-<!-- //                         } -->
-<!-- //                      }); -->
-<!-- //                }); -->
-<!-- //            }); -->
-	<!--       </script> -->
-
 </head>
 
 <body>
@@ -61,7 +38,7 @@ include_once 'includes/sidebar.php';
         <div class="row">
             <div class="col-lg-12">
                 <div class="page-header">
-                    <h1>Kasboek <small>Voeg toe</small></h1>
+                    <h1>Kasboek <small>Zoeken</small></h1>
                     
                     
                 </div>
@@ -113,7 +90,7 @@ include_once 'includes/sidebar.php';
                     </div>
 
                     <div class="col-md-2">
-                        <button type="submit" class="btn btn-default " name="search" value="search" id="search">Zoeken</button>
+                        <button type="submit" class="btn btn-default" id="search">Zoeken</button>
                     </div>
                 </form>
                 <?php 
@@ -124,7 +101,7 @@ include_once 'includes/sidebar.php';
                 
                 <div class="table-responsive">
                 	<form id="toPDFForm" method="POST" action="pdf-creator/cashbookPDF.php">
-                    <table class="table table-striped table-hover" id="foundEntries">
+                    <table class="table table-striped table-hover" id="cashbookEntriesTable">
 
                             <thead>
                             <tr>
@@ -139,70 +116,17 @@ include_once 'includes/sidebar.php';
                             </tr>
                             </thead>
                             
-                            <tbody>
+                            <tbody id="cashbookEntries">
                             
-                            <?php
-                            
-                            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search']) ) {
-                            	
-                            	if($_POST['date'] != null){
-                            		$newDate = DateTime::createFromFormat('d/m/Y', $_POST['date']);
-                            		$date = $newDate->format('Y-m-d');
-                            	}
-                            	
-               
-					            $desc = cleanInput($_POST['desc']);
-					            $sender = cleanInput($_POST['sender']);
-					            $receiver = cleanInput($_POST['receiver']);
-					            $code = cleanInput($_POST['code']);
-					            
-					            $sql = "SELECT * FROM oh_cashbook 
-										WHERE Beschrijving = '".$desc."' 
-										OR Datum ='".$date."' OR Afzender ='".$sender."' 
-										OR Ontvanger ='".$receiver."' OR Code ='".$code."'
-										ORDER BY Datum DESC";
-					            
-					            $result = $dataManager->rawQuery($sql);
-					            
-					            $i = 0;
-					            foreach($result as $res){
-					            	$i++;
-					            	$resultDate = DateTime::createFromFormat('Y-m-d', $res['Datum']);
-					            	$resDate = $resultDate->format('d/m/Y');
-					            	$oldCode = (string)$res['Code'];
 
-                                    $amount = number_format((float)$res['Bedrag'], 2, '.', '');
-					            	
-					           
-					            	
-					            	if(strcmp($oldCode,"D")){
-					            		$code = "Credit";
-					            	}else{
-					            		$code = "Debet";
-					            	}
-					            	
-					            	echo '<tr id="'.$res['ID'].'">';
-					            	echo '<td><input type="hidden"  name="'.$i.'[desc]" value="'.$res['Beschrijving'].'"</input>'.$res['Beschrijving'].'</td>';
-					            	echo '<td><input type="hidden"  name="'.$i.'[date]" value="'.$resDate.'"</input>'.$resDate.'</td>';
-					            	echo '<td><input type="hidden"  name="'.$i.'[amount]" value="&euro;'.$amount.'"</input>&euro; '.$amount.'</td>';
-					            	echo '<td><input type="hidden"  name="'.$i.'[code]" value="'.$code.'"</input>'.$code.'</td>';
-					            	echo '<td><input type="hidden"  name="'.$i.'[sender]" value="'.$res['Afzender'].'"</input>'.$res['Afzender'].'</td>';
-					            	echo '<td><input type="hidden"  name="'.$i.'[receiver]" value="'.$res['Ontvanger'].'"</input>'.$res['Ontvanger'].'</td>';
-					            	echo '<td>';
-                                    echo '<a class="btn" id="delete" value="delete"><i class="fa fa-trash-o "></i> Verwijderen</a>';
-                                    echo '<a class="btn id="edit" value="edit" href="hoi.php"><i class="fa fa-pencil "></i> Bewerken</a>';
-                                    echo '</td>';
-					            }
-
-					            
-                            }
-
-                            ?>
 
                             </tbody>
                 	</table>
                 	</form>
                 </div>
+                    <div class="text-center" id="page-selection">
+                        <ul id="pagination"></ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -214,6 +138,7 @@ include_once 'includes/sidebar.php';
 <!-- /#wrapper -->
 
 <!-- Footer -->
+        <script src="js/cashbook-pagination.js"></script>
 <?php
 
 include_once 'includes/footer.php';
