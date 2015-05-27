@@ -223,6 +223,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/images\/zee.jpg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 6.83563e+06,
+		"inputAbbreviatedPath": "\/images\/zee.jpg",
+		"outputAbbreviatedPath": "\/images\/zee.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/includes\/connectdb.php": {
 		"fileType": 8192,
 		"ignore": 0,

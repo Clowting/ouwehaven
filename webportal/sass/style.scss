@@ -32,12 +32,17 @@ html, body {
 	}
 }
 
+h1 {
+	margin-bottom: 30px;
+}
+
 h4 {
-  margin-top: 20px;
+	margin-top: 20px;
 }
 
 p {
-  line-height: 25px;
+	line-height: 25px;
+	margin-bottom: 30px;
 }
 
 a, button {
@@ -45,12 +50,13 @@ a, button {
 }
 
 img {
-  width: 100%;
+	width: 100%;
+	border: 1px solid $text-color;
 }
 
 #map-canvas {
-  height: 480px;
-  margin-bottom: 25px;
+	height: 480px;
+	margin-bottom: 25px;
 }
 
 .align-right {
