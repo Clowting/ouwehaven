@@ -4,14 +4,14 @@ $(document).ready(function ($) {
 
     $('button').click(function(e) {
         e.preventDefault();
+        $('#pagination').remove();
+        $('#page-selection').html('<ul id="pagination"></ul>');
         searchShips();
     });
 
     function searchShips() {
         loadShips(1);
         $(document).ajaxStop(function() {
-            $('#pagination').remove();
-            $('#page-selection').html('<ul id="pagination"></ul>');
             $('#pagination').twbsPagination({
                 totalPages: pageCount,
                 visiblePages: 5,
