@@ -28,6 +28,9 @@
                         <li>
                             <a href="reservations.php"><i class="fa fa-clock-o"></i> Reserveringen</a>
                         </li>
+                        <li>
+                            <a href="members-add.php"><i class="fa fa-users "></i> Leden</a>
+                        </li>
                     </ul>
                 </li>
 

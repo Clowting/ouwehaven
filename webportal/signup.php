@@ -3,6 +3,7 @@
 	include_once '../wp-config.php';
     require_once 'includes/connectdb.php';
     require_once 'includes/functions.php';
+    require_once 'includes/iban.php';
 
 	if(is_user_logged_in()) {
 		$user = wp_get_current_user();
@@ -54,6 +55,7 @@
             $adres = cleanInput($_POST['adres']);
             $postcode = cleanInput($_POST['postcode']);
             $woonplaats = cleanInput($_POST['woonplaats']);
+            $iban = str_replace(' ', '', cleanInput($_POST['iban']));
 
             if( validateInput($voornaam, 2, 64) &&
                 validateInput($achternaam, 2, 64) &&
@@ -72,6 +74,14 @@
 
                 if(validateInput($tussenvoegsel, 1, 16)) {
                     $data['Tussenvoegsel'] = $tussenvoegsel;
+                }
+
+                if(!empty($iban)) {
+                    if (verify_iban($iban)) {
+                        $data['IBAN'] = $iban;
+                    } else {
+                        echo '<div class="alert alert-warning" role="alert">Het IBAN nummer kon niet worden gevalideerd.</div>';
+                    }
                 }
 
                 $insert = $dataManager->insert('oh_members', $data);
@@ -97,28 +107,32 @@
     		<form id="signupForm" role="form" method="POST">
     			<div class="form-group">
                     <label for="voornaam">Voornaam:</label>
-    				<input type="text" class="form-control" name="voornaam" required data-progression="" data-helper="Vul hier uw voornaam in.">
+    				<input type="text" class="form-control" name="voornaam">
     			</div>
     			<div class="form-group">
     				<label for="tussenvoegsel">Tussenvoegsel:</label>
-    				<input type="text" class="form-control" name="tussenvoegsel" data-progression="" data-helper="Vul hier uw tussenvoegsel in indien u die heeft.">
+    				<input type="text" class="form-control" name="tussenvoegsel">
     			</div>
     			<div class="form-group">
     				<label for="achternaam">Achternaam:</label>
-    				<input type="text" class="form-control" name="achternaam" required data-progression="" data-helper="Vul hier uw achternaam in.">
+    				<input type="text" class="form-control" name="achternaam">
     			</div>
     			<div class="form-group">
     				<label for="adres">Adres:</label>
-    				<input type="text" class="form-control" name="adres" required data-progression="" data-helper="Vul hier uw straat en huisnummer in.">
+    				<input type="text" class="form-control" name="adres">
     			</div>
     			<div class="form-group">
     				<label for="postcode">Postcode:</label>
-    				<input type="text" class="form-control" name="postcode" required maxlength="7" data-progression="" data-helper="Vul hier uw postcode in.">
+    				<input type="text" class="form-control" name="postcode">
     			</div>
     			<div class="form-group">
     				<label for="woonplaats">Woonplaats:</label>
-    				<input type="text" class="form-control" name="woonplaats" required data-progression="" data-helper="Vul hier uw woonplaats in.">
+    				<input type="text" class="form-control" name="woonplaats">
     			</div>
+                <div class="form-group">
+                    <label for="iban">IBAN:</label>
+                    <input type="text" class="form-control" name="iban">
+                </div>
     			<button type="submit" class="btn btn-default">Verzenden
     			</button>
     		</form>
