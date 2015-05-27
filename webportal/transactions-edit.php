@@ -45,7 +45,6 @@
                             <li role="presentation"><a href="transactions.php">Credit</a></li>
                             <li role="presentation"><a href="transactions-debet.php">Debet</a></li>
                             <li role="presentation"><a href="transactions-import.php">Importeer transacties</a></li>
-                            <li role="presentation"><a href="transactions-search.php">Zoek transactie</a></li>
                         </ul>
 
                         <div class="table-responsive">
