@@ -133,7 +133,7 @@
                     <label for="iban">IBAN:</label>
                     <input type="text" class="form-control" name="iban">
                 </div>
-    			<button type="submit" class="btn btn-default">Verzenden
+    			<button type="submit" class="btn btn-primary">Verzenden
     			</button>
     		</form>
     	</div>

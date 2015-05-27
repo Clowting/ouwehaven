@@ -68,7 +68,7 @@ require_once 'includes/connectdb.php';
                                 <input type="text" class="form-control" id="naamEigenaar" name="naamEigenaar">
                             </div>
                             <div class="col-md-1">
-                                <button type="submit" class="btn btn-default ">Zoeken</button>
+                                <button type="submit" class="btn btn-primary ">Zoeken</button>
                             </div>
                         </div>
                     </form>

@@ -133,7 +133,7 @@ include_once 'includes/sidebar.php';
                     </div>
                     <div class="col-md-2">
                        
-                        <button type="submit" class="btn btn-default " name="add" value="add" id="add">Opslaan</button>
+                        <button type="submit" class="btn btn-primary " name="add" value="add" id="add">Opslaan</button>
                     </div>
                 </form>
                 <?php 

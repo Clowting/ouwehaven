@@ -90,7 +90,7 @@ include_once 'includes/sidebar.php';
                                 ?>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-default">Verwijder
+                        <button type="submit" class="btn btn-primary">Verwijder
                         </button>
                     </form>
                 <?php

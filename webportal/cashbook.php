@@ -90,7 +90,7 @@ include_once 'includes/sidebar.php';
                     </div>
 
                     <div class="col-md-2">
-                        <button type="submit" class="btn btn-default" id="search">Zoeken</button>
+                        <button type="submit" class="btn btn-primary" id="search">Zoeken</button>
                     </div>
                 </form>
                 <?php 
@@ -111,7 +111,7 @@ include_once 'includes/sidebar.php';
                                 <th>Code</th>
                                 <th>Van</th>
                                 <th>Voor</th>
-                                <th width="5%"><button type="submit" class="btn btn-default">Maken PDF</button></th>
+                                <th width="5%"><button type="submit" class="btn btn-primary">Maken PDF</button></th>
                                 
                             </tr>
                             </thead>

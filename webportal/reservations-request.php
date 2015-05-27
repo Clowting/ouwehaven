@@ -164,7 +164,7 @@ include_once 'includes/sidebar.php';
                             <label for="tot">Tot:</label>
                             <input type="text" value="<?php echo date("d/m/Y") ?>" class="form-control formDate" name="tot" id="tot">
                         </div>
-                        <button type="submit" class="btn btn-default">Verzenden
+                        <button type="submit" class="btn btn-primary">Verzenden
                         </button>
                     </form>
                 <?php
