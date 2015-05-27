@@ -157,34 +157,6 @@
 		for ( var i = 1; i < 6; i++ ) {
 			setTimeout( resizeAndScroll, 100 * i );
 		}
-		
-		
-		/**
-		 * Inline Comment :D
-		 * These are functions for displaying a table on the mooring page
-		 * Quite a risk to take here, because it can all be gone, but 
-		 * maybe it is totally worth the risk, because less files is
-		 * happier systemengineer, and happier systemengineer means happier
-		 * programmer, and a happier programmer means the client is happier :D
-		 */
-		$("#harbors").change(function() {
-			var id = $(this).val();
-			var dataString = 'ID=' + id;
-			alert(dataString);
-
-			$.ajax({
-				type : "POST",
-				url : "/wp-content/themes/twentyfifteen/functions-mooring.php",
-				data : dataString,
-			
-				cache : false,
-				success : function(html) {
-					$("#moorings").html(html);
-				}
-			});
-
-		});
-		
-	});
+	} );
 
 } )( jQuery );
