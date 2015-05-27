@@ -60,6 +60,8 @@
                 </li>
                 <?php } ?>
                 
-                <li class="sidebarSub"><a href="<?php echo wp_logout_url( get_permalink() ); ?>"><i class="fa fa-eject"></i> Uitloggen</a></li>
+                <li>
+                    <a href="<?php echo wp_logout_url( get_permalink() ); ?>"><i class="fa fa-eject"></i> Uitloggen</a>
+                </li>
             </ul>
         </div>
