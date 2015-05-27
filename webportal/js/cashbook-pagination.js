@@ -24,14 +24,14 @@ $(document).ready(function ($) {
 
     $('#search').click(function(e) {
         e.preventDefault();
+        $('#pagination').remove();
+        $('#page-selection').html('<ul id="pagination"></ul>');
         searchCashbook();
     });
 
     function searchCashbook() {
         loadCashbook(1);
         $(document).ajaxStop(function() {
-            $('#pagination').remove();
-            $('#page-selection').html('<ul id="pagination"></ul>');
             $('#pagination').twbsPagination({
                 totalPages: pageCount,
                 visiblePages: 5,
