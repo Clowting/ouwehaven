@@ -34,7 +34,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Welkom De 'n Ouwe Haven</h1>
+                        <h1>Welkom bij De 'n Ouwe Haven</h1>
                         <p>
                             Op dit portaal kunt u onder andere uw persoonlijke gegevens wijzigen, schepen toevoegen en havenplaatsen reserveren.<br>
                             Daarnaast kunt u hier al uw betalingen en facturen terugvinden.
