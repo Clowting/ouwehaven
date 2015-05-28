@@ -136,7 +136,7 @@
                                     echo '<p>' . $transactie["Omschrijving"] . '</p>';
 
                                     echo '<h4>Wijzig transactie</h4>';
-                                    echo '<p><a href="transactions-edit.php?action=edit&id=' . $_GET['id'] . '" class="btn btn-default">Wijzigen</a></p>';
+                                    echo '<p><a href="transactions-edit.php?action=edit&id=' . $_GET['id'] . '" class="btn btn-primary">Wijzigen</a></p>';
                                     echo '<p><a href="transactions-edit.php?action=delete&id=' . $_GET['id'] . '" class="btn btn-danger">Verwijderen</a></p>';
                                     echo '</div>';
                                 }

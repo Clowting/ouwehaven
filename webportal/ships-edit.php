@@ -159,7 +159,7 @@
                                                         <label for="afbeelding">Kies een afbeelding:</label>
                                                         <input type="file" name="afbeelding" id="afbeelding">
                                                     </div>
-                                                    <button type="submit" class="btn btn-default">Verzenden
+                                                    <button type="submit" class="btn btn-primary">Verzenden
                                                     </button>
                                                 </form>
                                             <?php

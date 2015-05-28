@@ -2,6 +2,7 @@
     require_once 'includes/globals.php';
 	require_once 'includes/requireSession.php';
 	require_once 'includes/functions.php';
+    require_once 'includes/iban.php';
     require_once 'includes/connectdb.php';
 ?>
 <!DOCTYPE html>
@@ -51,6 +52,7 @@
                                 $adres = cleanInput($_POST['adres']);
                                 $postcode = cleanInput($_POST['postcode']);
                                 $woonplaats = cleanInput($_POST['woonplaats']);
+                                $iban = str_replace(' ', '', cleanInput($_POST['iban']));
 
                                 if( validateInput($voornaam, 2, 64) &&
                                     validateInput($achternaam, 2, 64) &&
@@ -69,6 +71,14 @@
 
                                     if(validateInput($tussenvoegsel, 1, 16)) {
                                         $data['Tussenvoegsel'] = $tussenvoegsel;
+                                    }
+
+                                    if(!empty($iban)) {
+                                        if (verify_iban($iban)) {
+                                            $data['IBAN'] = $iban;
+                                        } else {
+                                            echo '<div class="alert alert-warning" role="alert">Het IBAN nummer kon niet worden gevalideerd.</div>';
+                                        }
                                     }
 
                                     $dataManager->where('ID', $details['ID']);
@@ -96,27 +106,31 @@
                         <form id="changeDetailsForm" role="form" method="POST">
                             <div class="form-group">
                                 <label for="voornaam">Voornaam:</label>
-                                <input type="text" class="form-control" name="voornaam" value="<?php echo $details['Voornaam']; ?>" required data-progression="" data-helper="Vul hier uw voornaam in.">
+                                <input type="text" class="form-control" name="voornaam" value="<?php echo $details['Voornaam']; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="tussenvoegsel">Tussenvoegsel:</label>
-                                <input type="text" class="form-control" name="tussenvoegsel" value="<?php echo $details['Tussenvoegsel']; ?>" data-progression="" data-helper="Vul hier uw tussenvoegsel in indien u die heeft.">
+                                <input type="text" class="form-control" name="tussenvoegsel" value="<?php echo $details['Tussenvoegsel']; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="achternaam">Achternaam:</label>
-                                <input type="text" class="form-control" name="achternaam" value="<?php echo $details['Achternaam']; ?>" required data-progression="" data-helper="Vul hier uw achternaam in.">
+                                <input type="text" class="form-control" name="achternaam" value="<?php echo $details['Achternaam']; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="adres">Adres:</label>
-                                <input type="text" class="form-control" name="adres" value="<?php echo $details['Adres']; ?>" required data-progression="" data-helper="Vul hier uw straat en huisnummer in.">
+                                <input type="text" class="form-control" name="adres" value="<?php echo $details['Adres']; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="postcode">Postcode:</label>
-                                <input type="text" class="form-control" name="postcode" value="<?php echo $details['Postcode']; ?>" required maxlength="7" data-progression="" data-helper="Vul hier uw postcode in.">
+                                <input type="text" class="form-control" name="postcode" value="<?php echo $details['Postcode']; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="woonplaats">Woonplaats:</label>
-                                <input type="text" class="form-control" name="woonplaats" value="<?php echo $details['Woonplaats']; ?>" required data-progression="" data-helper="Vul hier uw woonplaats in.">
+                                <input type="text" class="form-control" name="woonplaats" value="<?php echo $details['Woonplaats']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="iban">IBAN:</label>
+                                <input type="text" class="form-control" name="iban" value="<?php echo $details['IBAN']; ?>">
                             </div>
 
                             <button type="submit" class="btn btn-primary">Opslaan</button>

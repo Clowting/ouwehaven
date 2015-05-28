@@ -101,12 +101,12 @@
                                         if($result) {
                                             echo '<div class="alert alert-success"><strong>Succes!</strong> Balansmeting is succesvol verwijderd.</div>';
 
-                                            echo '<a href="balances.php" class="btn btn-default">Ga terug naar het overzicht</a>';
+                                            echo '<a href="balances.php" class="btn btn-primary">Ga terug naar het overzicht</a>';
                                         }
                                         else {
                                             echo '<div class="alert alert-warning"><strong>Waarschuwing!</strong> Balansmeting kon niet verwijderd worden.</div>';
 
-                                            echo '<a href="balances-details.php?id=' . $balance['ID'] . '" class="btn btn-default">Ga terug naar de balansmeting</a>';
+                                            echo '<a href="balances-details.php?id=' . $balance['ID'] . '" class="btn btn-primary">Ga terug naar de balansmeting</a>';
                                         }
                                     }
                                     else {

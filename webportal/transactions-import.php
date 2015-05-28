@@ -120,7 +120,7 @@
                                 <input type="file" name="transactions" id="transactions">
                             </div>
 
-                            <button type="submit" class="btn btn-default">Importeren</button>
+                            <button type="submit" class="btn btn-primary">Importeren</button>
                         </form>
                     </div>
                 </div>

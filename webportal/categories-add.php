@@ -82,7 +82,7 @@
                                 <input type="text" class="form-control" name="name" id="name">
                             </div>
 
-                            <button type="submit" class="btn btn-default">Rubriek toevoegen</button>
+                            <button type="submit" class="btn btn-primary">Rubriek toevoegen</button>
                         </form>
                     </div>
                 </div>

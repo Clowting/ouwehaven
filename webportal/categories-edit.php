@@ -97,7 +97,7 @@
                                                         echo '<input type="text" class="form-control" value="' . $category['Naam'] . '" name="name" id="name">';
                                                     echo '</div>';
 
-                                                    echo '<button type="submit" class="btn btn-default">Wijzigen</button>';
+                                                    echo '<button type="submit" class="btn btn-primary">Wijzigen</button>';
                                                 echo '</form>';
                                             }
                                             else {
@@ -115,7 +115,7 @@
                                                 echo '<div class="alert alert-warning"><strong>Waarschuwing!</strong> Rubriek kon niet verwijderd worden.</div>';
                                             }
 
-                                            echo '<a href="categories.php" class="btn btn-default">Ga terug naar het overzicht</a>';
+                                            echo '<a href="categories.php" class="btn btn-primary">Ga terug naar het overzicht</a>';
                                         }
                                     }
                                     else {

@@ -100,7 +100,7 @@
                             </table>
                         </div>
 
-                        <a href="categories.php" class="btn btn-default">Ga terug naar het overzicht</a>
+                        <a href="categories.php" class="btn btn-primary">Ga terug naar het overzicht</a>
                     </div>
                 </div>
             </div>

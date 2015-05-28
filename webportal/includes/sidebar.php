@@ -1,5 +1,5 @@
         <div id="sidebar-wrapper">
-            <a class="btn btn-default" id="menu-toggle">
+            <a class="btn btn-primary" id="menu-toggle">
                 <i class="fa fa-lg fa-angle-left"></i>
             </a>
             
@@ -27,6 +27,9 @@
                     <ul>
                         <li>
                             <a href="reservations.php"><i class="fa fa-clock-o"></i> Reserveringen</a>
+                        </li>
+                        <li>
+                            <a href="members-add.php"><i class="fa fa-users "></i> Leden</a>
                         </li>
                     </ul>
                 </li>

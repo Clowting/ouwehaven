@@ -163,7 +163,7 @@
                                                         echo '<input type="text" class="form-control" value="' . $transaction['Omschrijving'] . '" name="omschrijving" id="omschrijving">';
                                                     echo '</div>';
 
-                                                    echo '<button type="submit" class="btn btn-default">Wijzigen</button>';
+                                                    echo '<button type="submit" class="btn btn-primary">Wijzigen</button>';
                                                 echo '</form>';
                                             }
                                             else {
@@ -181,7 +181,7 @@
                                                 echo '<div class="alert alert-warning"><strong>Waarschuwing!</strong> Transactie kon niet verwijderd worden.</div>';
                                             }
 
-                                            echo '<a href="transactions.php" class="btn btn-default">Ga terug naar het overzicht</a>';
+                                            echo '<a href="transactions.php" class="btn btn-primary">Ga terug naar het overzicht</a>';
                                         }
                                     }
                                     else {
