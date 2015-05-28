@@ -54,7 +54,7 @@
                             $lengte = $_POST['lengte'];
                             $trackingID = preg_replace('/\D/', '', $_POST['trackingID']);
                             $ligplaats = cleanInput($_POST['ligplaats']);
-                            $imgURL = "";
+                            $imgURL;
 
                             if(isset($_FILES['afbeelding']['tmp_name']) && !empty($_FILES['afbeelding']['tmp_name'])) {
                                 $tmp_name = $_FILES['afbeelding']['tmp_name'];
@@ -77,7 +77,7 @@
                             }
 
 
-                            if(($detectedImageType != null && in_array($detectedImageType, $allowedImageTypes)) || $imgURL == "") {
+                            if(($detectedImageType != null && in_array($detectedImageType, $allowedImageTypes)) || empty($imgURL)) {
 
                                 if( validateInput($naam, 2, 128) &&
                                     validateNumber($lengte, 1, 16)) {

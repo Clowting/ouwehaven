@@ -63,7 +63,7 @@
                                         $lengte = $_POST['lengte'];
                                         $trackingID = preg_replace('/\D/', '', $_POST['trackingID']);
                                         $ligplaats = cleanInput($_POST['ligplaats']);
-                                        $imgURL = "";
+                                        $imgURL;
 
                                         if (isset($_FILES['afbeelding']['tmp_name']) && !empty($_FILES['afbeelding']['tmp_name'])) {
                                             $tmp_name = $_FILES['afbeelding']['tmp_name'];
@@ -86,13 +86,13 @@
                                         }
 
 
-                                        if (($detectedImageType != null && in_array($detectedImageType, $allowedImageTypes)) || $imgURL == "") {
+                                        if (($detectedImageType != null && in_array($detectedImageType, $allowedImageTypes)) || empty($imgURL)) {
 
                                             if (validateInput($naam, 2, 128) &&
                                                 validateNumber($lengte, 1, 16)
                                             ) {
 
-                                                if(imgURL == "") {
+                                                if(empty($imgURL)) {
                                                     $data = array(
                                                         'Naam' => $naam,
                                                         'Lengte' => $lengte,
@@ -107,11 +107,11 @@
                                                     );
                                                 }
 
-                                                $dataManager->where("ID", 2);
+                                                $dataManager->where('ID', $_GET['id']);
                                                 $update = $dataManager->update('oh_ships', $data);
 
-                                                if ($insert) {
-                                                    echo '<div class="alert alert-success" role="alert">Het schip is succesvol toegevoegd!</div>';
+                                                if ($update) {
+                                                    echo '<div class="alert alert-success" role="alert">Het schip is succesvol gewijzigd!</div>';
                                                     echo '<p>Klik <a href="ships.php">hier</a> om verder te gaan.</p>';
                                                 } else {
                                                     echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
