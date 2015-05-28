@@ -13,36 +13,11 @@ require_once 'includes/connectdb.php';
 
     include_once 'includes/head.php';
 
+
     ?>
-    <script type="text/javascript">
-        $(document).ready(function () {
 
-            $('#addInvoice #add').click(function () {
-                var selectBox = '<tr> <td class="form-group"> <select class="form-control" name="invoiceLines[]" class="form-control"> <?php $categories = $dataManager->get('oh_price_category'); foreach ($categories as $category) { echo '<option value="' . $category['ID'] . '" id="Categorie_ID">' . $category['Naam'] . '</option>'; } ?> </select> </td> <td class="form-group"> <input type="number" class="form-control" name="invoiceAmounts[]"> </td> <td> <input type="text" class="form-control" name="invoicePrices[]"> </td> <td> <i class="fa fa-minus-circle remove-line"></i> </td> </tr>';
-                selectBox = $(selectBox);
-
-                selectBox.hide();
-                $('#invoices tr:last').after(selectBox);
-
-                selectBox.fadeIn('slow');
-                return false;
-            });
-
-
-            $('#addInvoice').on('click', '.remove-line', function () {
-
-                $(this).parent().parent().fadeOut("slow", function () {
-                    $(this).remove();
-                    $('.number').each(function (index) {
-                        $(this).text(index + 1);
-                    });
-                });
-                return false;
-            });
-        });
-    </script>
-
-    <title><?php echo SITE_TITLE; ?> - Facturen </title>
+    <title><?php echo SITE_TITLE; ?> - Kasboek </title>
+    
 </head>
 
 <body>
@@ -63,83 +38,30 @@ include_once 'includes/sidebar.php';
         <div class="row">
             <div class="col-lg-12">
                 <div class="page-header">
-                    <h1>
-                        Facturen
-                    </h1>
+                    <h1>Facturen <small>Zoeken</small></h1>
+                    
+                    
                 </div>
-                <p>Op deze pagina kunt u een factuur aanmaken voor de leden.</p>
 
-                <?php
-                if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
+                <p>Op deze pagina kunt u gegevens in het kasboek zetten, deze worden direct opgeslagen wanneer u op volgende drukt</p>
+                <p>Wanneer u meerdere kasboek gegevens wilt invoeren, kunt u kiezen voor "nog 1 toevoegen, wanneer u klaar bent kunt u weer op volgende drukken om verder te gaan</p>
+                                
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="active"><a href="invoices.php">Facturen</a></li>
+                        <li role="presentation"  ><a href="invoices-add.php">Facturen toevoegen</a></li>
+                        <li role="presentation"><a href="priceCategories-add.php">Prijs Categorieen toevoegen</a>  
+                    </ul>
+                     <?php
 
-                    $newDate = DateTime::createFromFormat('d/m/Y', $_POST ['date']);
+        		?>
 
-                    $date = $newDate->format('Y-m-d');
-                    $invoiceCategories = $_POST['invoiceLines'];
-                    $invoiceAmounts = $_POST['invoiceAmounts'];
-                    $invoicePrices = $_POST['invoicePrices'];
-
-                    if (validateDate($date, 'Y-m-d')) {
-
-                        $data = array(
-                            'Lid_ID' => $memberID,
-                            'Datum' => $date,
-                        );
-
-                        $insert = $dataManager->insert('oh_invoices', $data);
-
-                        $factuurID = $dataManager->getInsertId();
-                        $successCount = 0;
-                        $failCount = 0;
-
-                        foreach($invoiceCategories as $key => $category) {
-                            $data = array(
-                                'Factuur_ID' => $factuurID,
-                                'Categorie_ID' => $category,
-                                'Aantal' => $invoiceAmounts[$key],
-                                'Bedrag' => $invoicePrices[$key]
-                            );
-
-                            $insertLine = $dataManager->insert('oh_invoices_line', $data);
-
-                            if($insertLine) {
-                                $successCount++;
-                            } else {
-
-                            }
-                        }
-
-                        if ($insert) {
-                            echo '<div class="alert alert-success" role="alert">De factuur is succesvol toegevoegd!</div>';
-
-                            if($successCount > 0) {
-                                echo '<div class="alert alert-success" role="alert"><strong>' . $successCount . ' factuurregels</strong> succesvol toegevoegd!</div>';
-                            }
-
-                            if($failCount > 0) {
-                                echo '<div class="alert alert-danger" role="alert"><strong>' . $failCount . ' factuurregels</strong> konden niet worden toegevoegd.</div>';
-                            }
-
-                            echo '<p>Klik <a href="/webportal">hier</a> om naar de hoofdpagina te gaan.</p>';
-                            echo "<p>Of klik <a href=" . $_SERVER ['REQUEST_URI'] . ">hier</a> om nog een factuur toe te voegen.";
-                        } else {
-                            echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
-                            echo "<p>Klik <a href=" . $_SERVER ['REQUEST_URI'] . ">hier</a> om het opnieuw te proberen.</p>";
-                        }
-                    } else {
-                        echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof niet alle gegevens zijn ingevuld...</div>';
-                        echo "<p>Klik <a href=" . $_SERVER ['REQUEST_URI'] . ">hier</a> om het opnieuw te proberen.</p>";
-                    }
-                } else {
-                    ?>
-
-                    <form class="clearfix horizontalSearchForm" id="addInvoice" role="form" method="POST"
-                          enctype="multipart/form-data">
-
+                <form class="clearfix horizontalSearchForm" id="searchInvoices" role="form" method="POST" enctype="multipart/form-data">
+                    
+                    
                         <div class="form-group col-md-5" id="selectMembers">
-                            <label for="selectMember">Selecteer lid</label>
+                            <label for="member">Selecteer lid</label>
 
-                            <select class="form-control" name="selectMember" id="selectMember">
+                            <select class="form-control" name="member" id="member">
                                 <?php
                                 $members = $dataManager->get('oh_members');
 
@@ -152,70 +74,67 @@ include_once 'includes/sidebar.php';
                             </select>
                         </div>
 
-                        <div class="form-group col-md-5">
-                            <label for="date">Factuurdatum:</label>
-                            <input type="text" value="<?php echo date("d/m/Y") ?>" class="form-control formDate"
-                                   name="date"
-                                   id="date">
-                        </div>
+                    <div class="form-group col-md-2">
+                        <label for="date">Datum uitgevoerd:</label>
+                        <input type="text" value="" class="form-control formDate" name="date" id="date">
+                    </div>
+                    
+                	<div class="form-group col-md-2">
+                        <label for="date">Datum Betaald:</label>
+                        <input type="text" value="" class="form-control formDate" name="datePaid" id="datePaid">
+                    </div>
+                    
+                    <div class="form-group col-md-2">
+                        <label for="paid">Betaald: </label>
+                        <select class="form-control" name="paid" id="paid">
+                            <option value=""> </option>
+                            <option value="0">Nee</option>
+                            <option value="1">Ja</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Misschien moet van en voor een dropdown menu worden waar eventueel iets aan kan worden toegevoegd, dit om verschillende namen tegen te gaan -->
 
-                        <div class="form-group col-md-1" id="add">
-                            <button type="button" class="btn btn-default " name="add" id="add">Voeg extra regel toe
-                            </button>
-                        </div>
 
-                        <div class="table-responsive col-md-12">
-                            <table class="table table-striped" id="invoices">
-                                <thead>
-                                    <tr>
-                                        <th>Categorie</th>
-                                        <th>Aantal</th>
-                                        <th>Prijs</th>
-                                        <th>Actie</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="form-group">
-                                            <select class="form-control" name="invoiceLines[]" class="form-control">
-                                                <?php
-                                                    $categories = $dataManager->get('oh_price_category');
-
-                                                    foreach ($categories as $category) {
-                                                        echo '<option value="' . $category['ID'] . '" id="Categorie_ID">' . $category['Naam'] . '</option>';
-                                                    }
-                                                ?>
-                                            </select>
-                                        </td>
-                                        <td class="form-group">
-                                            <input type="number" class="form-control" name="invoiceAmounts[]">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="invoicePrices[]">
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-minus-circle remove-line"></i>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-1">
-                            <button type="submit" class="btn btn-default ">Aanmaken</button>
-                        </div>
-
-                    </form>
-
-                <?php
-                }
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-default" id="search">Zoeken</button>
+                    </div>
+                </form>
+                <?php 
+                        
                 ?>
 
                 <hr/>
+                
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="cashbookEntriesTable">
 
+                            <thead>
+                            <tr>
+                                <th>Lid</th>
+                                <th width="10%">Datum</th>
+                                <th>Betaald</th>
+                                <th>Datum Betaald</th>
+                         
+                                
+                            </tr>
+                            </thead>
+                            
+                            <tbody id="invoicesEntries">
+                            
+
+
+                            </tbody>
+                	</table>
+                	
+                </div>
+                    <div class="text-center" id="page-selection">
+                        <ul id="pagination"></ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 <!-- /#page-content-wrapper -->
 
@@ -223,6 +142,7 @@ include_once 'includes/sidebar.php';
 <!-- /#wrapper -->
 
 <!-- Footer -->
+        <script src="js/invoices-pagination.js"></script>
 <?php
 
 include_once 'includes/footer.php';
