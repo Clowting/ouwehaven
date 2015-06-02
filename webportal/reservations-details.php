@@ -4,6 +4,7 @@ require_once 'includes/requireSession.php';
 require_once 'includes/requireHavenmeester.php';
 require_once 'includes/functions.php';
 require_once 'includes/connectdb.php';
+require_once 'includes/PHPMailer/PHPMailerAutoload.php';
 ?>
 <!DOCTYPE html>
 <html lang="nl">
@@ -55,11 +56,12 @@ include_once 'includes/sidebar.php';
 
                     $dataManager->join("oh_ships s", "s.ID=mr.Schip_ID", "LEFT");
                     $dataManager->join("oh_members m", "m.ID=mr.Lid_ID", "LEFT");
+                    $dataManager->join("oh_users u", "m.User_ID=u.ID", "LEFT");
                     $dataManager->join("oh_moorings mo", "mo.ID=mr.Ligplaats_ID", "LEFT");
                     $dataManager->join("oh_harbors h", "h.ID=mo.Haven_ID", "LEFT");
                     $dataManager->where("mr.Lid_ID", $_GET['lidID']);
                     $dataManager->where("mr.Ligplaats_ID", $_GET['ligplaatsID']);
-                    $result = $dataManager->getOne('oh_mooring_reservations mr', 's.Naam AS SchipNaam, s.Lengte, m.Voornaam, m.Tussenvoegsel, m.Achternaam, h.Naam AS HavenNaam, h.Breedtegraad, h.Lengtegraad, mo.Nummer, mr.Status, mr.Aankomstdatum, mr.Vertrekdatum');
+                    $result = $dataManager->getOne('oh_mooring_reservations mr', 's.Naam AS SchipNaam, s.Lengte, m.Voornaam, m.Tussenvoegsel, m.Achternaam, u.user_email, h.Naam AS HavenNaam, h.Breedtegraad, h.Lengtegraad, mo.Nummer, mr.Status, mr.Aankomstdatum, mr.Vertrekdatum');
 
                     if ($result) {
 
@@ -84,6 +86,39 @@ include_once 'includes/sidebar.php';
 
                             if ($dataManager->update('oh_mooring_reservations', $data)) {
                                 echo '<div class="alert alert-success" role="alert">De reservatie is succesvol verwerkt!</div>';
+
+                                $mail = new PHPMailer;
+
+                                $mail->From = 'ouwehaven@clowting.me';
+                                $mail->FromName = "De 'n Ouwe Haven";
+                                $mail->addAddress($result["user_email"], $eigenaar);
+
+                                $mail->isHTML(true);
+                                $mail->Subject = 'Reservatie schip ' . date("d-m-Y", strtotime($result["Aankomstdatum"]));
+
+                                $mail->Body    =  'Beste ' . $eigenaar . ',';
+                                $mail->Body    += '<br/>';
+                                $mail->Body    += '<br/>';
+                                $mail->Body    += 'De status van uw reservatie voor <b>' . $result["SchipNaam"] . '</b> is gewijzigd.';
+                                $mail->Body    += '<br/>';
+                                $mail->Body    += 'De nieuwe status is: <b>' . translateReservationStatus($result["Status"]) . '</b>.';
+                                $mail->Body    += '<br/>';
+                                $mail->Body    += '<br/>';
+                                $mail->Body    += 'Dit betreft de reservatie van <b>' . date("d-m-Y", strtotime($result["Aankomstdatum"])) . '</b> t/m <b>' . date("d-m-Y", strtotime($result["Vertrekdatum"])) . '</b>.';
+                                $mail->Body    += '<br/>';
+                                $mail->Body    += '<br/>';
+                                $mail->Body    += 'We hopen u hiermee voldoende te hebben geinformeerd.';
+                                $mail->Body    += '<br/>';
+                                $mail->Body    += '<br/>';
+                                $mail->Body    += 'Met vriendelijke groet,';
+                                $mail->Body    += '<br/>';
+                                $mail->Body    += '<br/>';
+                                $mail->Body    += "De 'n Ouwe Haven ";
+
+                                if(!$mail->send()) {
+                                    echo '<div class="alert alert-warning" role="alert">Er kon geen reservatie bevestiging worden verzonden. U kunt dit handmatig alsnog een mail sturen naar: ' . $result["user_email"] . '</div>';
+                                }
+
                             } else {
                                 echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
                             }

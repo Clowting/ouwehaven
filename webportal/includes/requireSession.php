@@ -6,6 +6,7 @@
 		$user = wp_get_current_user();
 		$roles = $user->roles;
 		$userID = $user->ID;
+        $userMail = $user->user_email;
 
 		// Store member details in session
 		if(!isset($_SESSION['member_details'])) {
