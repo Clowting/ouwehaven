@@ -4,46 +4,42 @@ require_once 'includes/requireSession.php';
 require_once 'includes/functions.php';
 require_once 'includes/connectdb.php';
 
-if($_POST['date'] != null){
+
+if(isset($_POST['date'])) {
 	$oldDate = DateTime::createFromFormat('d/m/Y', $_POST['date']);
-	$date = $oldDate->format('Y-m-d');
+    if(isset($oldDate) && !empty($oldDate)) {
+        $date = $oldDate->format('Y-m-d');
+    }
 }
 
-if($_POST['datePaid'] != null){
+if(isset($_POST['datePaid'])) {
 	$oldDate = DateTime::createFromFormat('d/m/Y', $_POST['datePaid']);
-	$datePaid = $oldDate->format('Y-m-d');
+    if(isset($oldDate) && !empty($oldDate)) {
+        $datePaid = $oldDate->format('Y-m-d');
+    }
 }
 
 $member = cleanInput($_POST['member']);
 $paid = cleanInput($_POST['paid']);
 $page = $_POST['page'];
 
-if(validateInput($paid, 1, 2)) {
-	$dataManager->orWhere('Betaald', '%' . $paid . '%', 'LIKE');
+if(validateNumber($paid, 1, 2)) {
+	$dataManager->orWhere('Betaald', $paid);
 }
 
 if(validateDate($date, 'Y-m-d')) {
-	$dataManager->orWhere('Datum', '%' . $date . '%', 'LIKE');
+	$dataManager->orWhere('Datum', $date);
 }
 
-if(validateInput($datePaid, 2, 128)) {
-	$dataManager->orWhere('DatumBetaald', '%' . $datePaid . '%', 'LIKE');
+if(validateDate($datePaid, 'Y-m-d')) {
+	$dataManager->orWhere('DatumBetaald', $datePaid);
 }
 
-if(validateInput($member, 2, 512)) {
-    $naamArray = explode(' ', $member);
-    array_walk($naamArray, function(&$value) {
-        $value = '%' . $value . '%';
-    });
-
-    foreach ($naamArray as $naam) {
-        $dataManager->orWhere('Voornaam', $naam, 'LIKE');
-        $dataManager->orWhere('Achternaam', $naam, 'LIKE');
-        $dataManager->orWhere('Tussenvoegsel', $naam, 'LIKE');
-    }
+if(validateNumber($member, 1, 11)) {
+    $dataManager->orWhere('Lid_ID', $member);
 }
 
-$data = $dataManager->get('oh_search_ship');
+$data = $dataManager->get('oh_invoices');
 $totalCount = $dataManager->count;
 $result = array();
 
@@ -54,4 +50,3 @@ for($i = $page*50-50; $i < $page*50 && $i < $totalCount; $i++) {
 $result['totalCount'] = $totalCount;
 
 echo json_encode($result);
-?>

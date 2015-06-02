@@ -13,10 +13,9 @@ require_once 'includes/connectdb.php';
 
     include_once 'includes/head.php';
 
-
     ?>
 
-    <title><?php echo SITE_TITLE; ?> - Kasboek </title>
+    <title><?php echo SITE_TITLE; ?> - Kasboek</title>
     
 </head>
 
@@ -39,8 +38,6 @@ include_once 'includes/sidebar.php';
             <div class="col-lg-12">
                 <div class="page-header">
                     <h1>Facturen <small>Zoeken</small></h1>
-                    
-                    
                 </div>
 
                 <p>Op deze pagina kunt u gegevens in het kasboek zetten, deze worden direct opgeslagen wanneer u op volgende drukt</p>
@@ -51,9 +48,6 @@ include_once 'includes/sidebar.php';
                         <li role="presentation"  ><a href="invoices-add.php">Facturen toevoegen</a></li>
                         <li role="presentation"><a href="priceCategories-add.php">Prijs Categorieen toevoegen</a>  
                     </ul>
-                     <?php
-
-        		?>
 
                 <form class="clearfix horizontalSearchForm" id="searchInvoices" role="form" method="POST" enctype="multipart/form-data">
                     
@@ -100,29 +94,20 @@ include_once 'includes/sidebar.php';
                         <button type="submit" class="btn btn-default" id="search">Zoeken</button>
                     </div>
                 </form>
-                <?php 
-                        
-                ?>
 
                 <hr/>
                 
                 <div class="table-responsive">
                     <table class="table table-striped table-hover" id="cashbookEntriesTable">
-
                             <thead>
                             <tr>
                                 <th>Lid</th>
                                 <th width="10%">Datum</th>
                                 <th>Betaald</th>
                                 <th>Datum Betaald</th>
-                         
-                                
                             </tr>
                             </thead>
-                            
                             <tbody id="invoicesEntries">
-                            
-
 
                             </tbody>
                 	</table>
@@ -142,7 +127,7 @@ include_once 'includes/sidebar.php';
 <!-- /#wrapper -->
 
 <!-- Footer -->
-        <script src="js/invoices-pagination.js"></script>
+<script src="js/invoices-pagination.js"></script>
 <?php
 
 include_once 'includes/footer.php';

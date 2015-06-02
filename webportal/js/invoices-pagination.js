@@ -39,7 +39,7 @@ $(document).ready(function ($) {
     });
 
     function searchInvoice() {
-        loadCashbook(1);
+        loadInvoice(1);
         $(document).ajaxStop(function() {
             $('#pagination').twbsPagination({
                 totalPages: pageCount,
