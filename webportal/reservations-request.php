@@ -103,6 +103,45 @@ include_once 'includes/sidebar.php';
 
                                 if ($insert) {
                                     echo '<div class="alert alert-success" role="alert">De reservatie is succesvol toegevoegd!</div>';
+
+                                    if(isset($userMail) && !empty($userMail)) {
+
+                                        $mail = new PHPMailer;
+
+                                        $mail->From = 'ouwehaven@clowting.me';
+                                        $mail->FromName = "De 'n Ouwe Haven";
+                                        $mail->addAddress($userMail);
+
+                                        $mail->isHTML(true);
+                                        $mail->Subject = 'Reservatie schip ' . date("d-m-Y", strtotime($result["Aankomstdatum"]));
+
+                                        $mailBody    =  'Beste,';
+                                        $mailBody    .= '<br/>';
+                                        $mailBody    .= '<br/>';
+                                        $mailBody    .= 'Uw reservatie is succesvol geplaatst.';
+                                        $mailBody    .= '<br/>';
+                                        $mailBody    .= 'Dit betreft de reservatie van <b>' . date("d-m-Y", strtotime($vanDatum)) . '</b> t/m <b>' . date("d-m-Y", strtotime($totDatum)) . '</b>.';
+                                        $mailBody    .= '<br/>';
+                                        $mailBody    .= '<br/>';
+                                        $mailBody    .= 'We hopen u hiermee voldoende te hebben geinformeerd.';
+                                        $mailBody    .= '<br/>';
+                                        $mailBody    .= '<br/>';
+                                        $mailBody    .= 'Met vriendelijke groet,';
+                                        $mailBody    .= '<br/>';
+                                        $mailBody    .= '<br/>';
+                                        $mailBody    .= "De 'n Ouwe Haven ";
+
+                                        $mail->Body = $mailBody;
+
+                                        if(!$mail->send()) {
+                                            echo '<div class="alert alert-warning" role="alert">Er kon geen reservatie bevestiging worden verzonden. Neem hiervoor contact op met de havenmeester.</div>';
+                                            echo $mail->ErrorInfo;
+                                        }
+
+                                    } else {
+                                        echo '<div class="alert alert-warning" role="alert">Aangezien deze gebruiker geen e-mailadres heeft opgegeven kon deze niet op de hoogte worden gesteld van de statuswijziging.</div>';
+                                    }
+
                                     echo '<p>Klik <a href="reservations.php">hier</a> om verder te gaan.</p>';
                                 } else {
                                     echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
