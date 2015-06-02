@@ -39,7 +39,9 @@ if(validateNumber($member, 1, 11)) {
     $dataManager->orWhere('Lid_ID', $member);
 }
 
-$data = $dataManager->get('oh_invoices');
+
+$dataManager->join("oh_members m", "m.ID=i.Lid_ID", "LEFT");
+$data = $dataManager->get('oh_invoices i');
 $totalCount = $dataManager->count;
 $result = array();
 

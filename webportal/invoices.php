@@ -56,6 +56,7 @@ include_once 'includes/sidebar.php';
                             <label for="member">Selecteer lid</label>
 
                             <select class="form-control" name="member" id="member">
+                                <option value="" selected></option>
                                 <?php
                                 $members = $dataManager->get('oh_members');
 
@@ -102,9 +103,10 @@ include_once 'includes/sidebar.php';
                             <thead>
                             <tr>
                                 <th>Lid</th>
-                                <th width="10%">Datum</th>
+                                <th>Datum</th>
                                 <th>Betaald</th>
                                 <th>Datum Betaald</th>
+                                <th>Optie</th>
                             </tr>
                             </thead>
                             <tbody id="invoicesEntries">
