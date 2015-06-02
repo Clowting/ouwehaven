@@ -75,17 +75,25 @@ $(document).ready(function ($) {
                 var toAppend = "";
                 pageCount = Math.ceil(data['totalCount']/50);
 
-                $.each(data['items'], function (index, value) {
-                    var eigenaar = generateName(value['Voornaam'], value['Tussenvoegsel'] , value['Achternaam']);
-                    toAppend +=
-                        '<tr id="'+ value['ID']+'">' +
-                        '<td>' + eigenaar + '</td>' +
-                        '<td>' + value['Datum'] + '</td>' +
-                        '<td>' + value['Betaald'] + '</td>' +
-                        '<td>' + value['DatumBetaald']  + '</td>' +
-                        '<td>' + '<a class="btn" id="deleteEntry" name="deleteEntry" data-invoice-id="' + value['ID'] + '"><i class="fa fa-trash-o "></i> Verwijderen</a>' + '</td>';
+                if(data['items'] == undefined) {
+
+                    toAppend += '<td colspan="5">Er konden geen facturen worden gevonden.</td>';
+
+                } else {
+
+                    $.each(data['items'], function (index, value) {
+                        var eigenaar = generateName(value['Voornaam'], value['Tussenvoegsel'], value['Achternaam']);
+                        toAppend +=
+                            '<tr id="' + value['ID'] + '">' +
+                            '<td>' + eigenaar + '</td>' +
+                            '<td>' + value['Datum'] + '</td>' +
+                            '<td>' + value['Betaald'] + '</td>' +
+                            '<td>' + value['DatumBetaald'] + '</td>' +
+                            '<td>' + '<a class="btn" id="deleteEntry" name="deleteEntry" data-invoice-id="' + value['ID'] + '"><i class="fa fa-trash-o "></i> Verwijderen</a>' + '</td>';
                         '</tr>';
-                });
+                    });
+
+                }
 
                 $("#invoicesEntries").html(toAppend);
 
