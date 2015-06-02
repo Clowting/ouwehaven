@@ -65,6 +65,8 @@ include_once 'includes/sidebar.php';
 
                     if ($result) {
 
+                        $eigenaar = generateName($result['Voornaam'], $result['Tussenvoegsel'], $result['Achternaam']);
+
                         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             if (isset($_POST['btnApprove'])) {
@@ -134,8 +136,6 @@ include_once 'includes/sidebar.php';
                             }
 
                         }
-
-                        $eigenaar = generateName($result['Voornaam'], $result['Tussenvoegsel'], $result['Achternaam']);
 
                         echo '<div class="col-md-6">';
                             echo '<h4>Eigenaar & Schip</h4>';
