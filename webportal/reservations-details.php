@@ -87,37 +87,47 @@ include_once 'includes/sidebar.php';
                             if ($dataManager->update('oh_mooring_reservations', $data)) {
                                 echo '<div class="alert alert-success" role="alert">De reservatie is succesvol verwerkt!</div>';
 
-                                $mail = new PHPMailer;
+                                if(isset($result["user_email"]) && !empty($result["user_email"])) {
 
-                                $mail->From = 'ouwehaven@clowting.me';
-                                $mail->FromName = "De 'n Ouwe Haven";
-                                $mail->addAddress($result["user_email"], $eigenaar);
+                                    $mail = new PHPMailer;
 
-                                $mail->isHTML(true);
-                                $mail->Subject = 'Reservatie schip ' . date("d-m-Y", strtotime($result["Aankomstdatum"]));
+                                    $mail->From = 'ouwehaven@clowting.me';
+                                    $mail->FromName = "De 'n Ouwe Haven";
+                                    $mail->addAddress($result["user_email"], $eigenaar);
 
-                                $mail->Body    =  'Beste ' . $eigenaar . ',';
-                                $mail->Body    += '<br/>';
-                                $mail->Body    += '<br/>';
-                                $mail->Body    += 'De status van uw reservatie voor <b>' . $result["SchipNaam"] . '</b> is gewijzigd.';
-                                $mail->Body    += '<br/>';
-                                $mail->Body    += 'De nieuwe status is: <b>' . translateReservationStatus($result["Status"]) . '</b>.';
-                                $mail->Body    += '<br/>';
-                                $mail->Body    += '<br/>';
-                                $mail->Body    += 'Dit betreft de reservatie van <b>' . date("d-m-Y", strtotime($result["Aankomstdatum"])) . '</b> t/m <b>' . date("d-m-Y", strtotime($result["Vertrekdatum"])) . '</b>.';
-                                $mail->Body    += '<br/>';
-                                $mail->Body    += '<br/>';
-                                $mail->Body    += 'We hopen u hiermee voldoende te hebben geinformeerd.';
-                                $mail->Body    += '<br/>';
-                                $mail->Body    += '<br/>';
-                                $mail->Body    += 'Met vriendelijke groet,';
-                                $mail->Body    += '<br/>';
-                                $mail->Body    += '<br/>';
-                                $mail->Body    += "De 'n Ouwe Haven ";
+                                    $mail->isHTML(true);
+                                    $mail->Subject = 'Reservatie schip ' . date("d-m-Y", strtotime($result["Aankomstdatum"]));
 
-                                if(!$mail->send()) {
-                                    echo '<div class="alert alert-warning" role="alert">Er kon geen reservatie bevestiging worden verzonden. U kunt dit handmatig alsnog een mail sturen naar: ' . $result["user_email"] . '</div>';
+                                    $mailBody    =  'Beste ' . $eigenaar . ',';
+                                    $mailBody    .= '<br/>';
+                                    $mailBody    .= '<br/>';
+                                    $mailBody    .= 'De status van uw reservatie voor <b>' . $result["SchipNaam"] . '</b> is gewijzigd.';
+                                    $mailBody    .= '<br/>';
+                                    $mailBody    .= 'De nieuwe status is: <b>' . translateReservationStatus($result["Status"]) . '</b>.';
+                                    $mailBody    .= '<br/>';
+                                    $mailBody    .= '<br/>';
+                                    $mailBody    .= 'Dit betreft de reservatie van <b>' . date("d-m-Y", strtotime($result["Aankomstdatum"])) . '</b> t/m <b>' . date("d-m-Y", strtotime($result["Vertrekdatum"])) . '</b>.';
+                                    $mailBody    .= '<br/>';
+                                    $mailBody    .= '<br/>';
+                                    $mailBody    .= 'We hopen u hiermee voldoende te hebben geinformeerd.';
+                                    $mailBody    .= '<br/>';
+                                    $mailBody    .= '<br/>';
+                                    $mailBody    .= 'Met vriendelijke groet,';
+                                    $mailBody    .= '<br/>';
+                                    $mailBody    .= '<br/>';
+                                    $mailBody    .= "De 'n Ouwe Haven ";
+
+                                    $mail->Body = $mailBody;
+
+                                    if(!$mail->send()) {
+                                        echo '<div class="alert alert-warning" role="alert">Er kon geen reservatie bevestiging worden verzonden. U kunt dit handmatig alsnog een mail sturen naar: ' . $result["user_email"] . '</div>';
+                                        echo $mail->ErrorInfo;
+                                    }
+
+                                } else {
+                                    echo '<div class="alert alert-warning" role="alert">Aangezien deze gebruiker geen e-mailadres heeft opgegeven kon deze niet op de hoogte worden gesteld van de statuswijziging.</div>';
                                 }
+
 
                             } else {
                                 echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
