@@ -97,17 +97,22 @@ include_once 'includes/sidebar.php';
                         if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 
                             $newDate = DateTime::createFromFormat('d/m/Y', $_POST ['date']);
-
                             $date = $newDate->format('Y-m-d');
+                            
+                            $oldDatePaid = DateTime::createFromFormat('d/m/Y', $_POST['datePaid']);
+                            $datePaid = $oldDatePaid->format('Y-m-d');
                             $invoiceCategories = $_POST['invoiceLines'];
                             $invoiceAmounts = $_POST['invoiceAmounts'];
                             $invoicePrices = $_POST['invoicePrices'];
-
+							$paid = $_POST['paid'];
+                            	
                             if (validateDate($date, 'Y-m-d')) {
 
                                 $data = array(
                                     'Lid_ID' => $gebruikerID,
                                     'Datum' => $date,
+                                	'DatumBetaald' => $datePaid,
+                                	'Betaald' => $paid
                                 );
 
                                 $dataManager->where('ID', $ID);
@@ -119,14 +124,16 @@ include_once 'includes/sidebar.php';
 
                                 foreach ($invoiceCategories as $key => $category) {
                                     $data = array(
-                                        'Factuur_ID' => $factuurID,
+                                        
                                         'Categorie_ID' => $category,
                                         'Aantal' => $invoiceAmounts[$key],
                                         'Bedrag' => $invoicePrices[$key]
                                     );
+                                    
+                                    
 
                                     $dataManager->where('Factuur_ID', $ID);
-                                    $insertLine = $dataManager->update('oh_invoices_line', $data);
+                                    $insertLine = $dataManager->insert('oh_invoices_line', $data);
 
                                     if ($insertLine) {
                                         $successCount++;
