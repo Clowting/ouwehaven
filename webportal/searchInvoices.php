@@ -36,7 +36,7 @@ if(isset($_POST['deleteID'])){
     $paid = cleanInput($_POST['paid']);
     $page = $_POST['page'];
 
-    if(isset($paid)) {
+    if($paid == 0 || $paid == 1) {
         $dataManager->orWhere('Betaald', $paid);
     }
 

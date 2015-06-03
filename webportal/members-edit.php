@@ -1,7 +1,8 @@
 <?php
     require_once 'includes/globals.php';
-	require_once 'includes/requireSession.php';
-	require_once 'includes/functions.php';
+    require_once 'includes/requireSession.php';
+    require_once 'includes/requireHavenmeester.php';
+    require_once 'includes/functions.php';
     require_once 'includes/iban.php';
     require_once 'includes/connectdb.php';
 ?>
@@ -15,7 +16,7 @@
 
     ?>
 
-    <title><?php echo SITE_TITLE; ?> - Instellingen - Persoonlijke gegevens</title>
+    <title><?php echo SITE_TITLE; ?> - Leden - Aanpassen</title>
 
 </head>
 
@@ -37,13 +38,24 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="page-header">
-                            <h1>Instellingen <small>Persoonlijke gegevens</small></h1>
+                            <h1>Leden
+                                <small>Aanpassen</small>
+                            </h1>
                         </div>
-                        <p>Op deze pagina vindt u een overzicht van uw gegevens. U kunt hier ook uw gegevens direct veranderen.</p>
+                        <p>Op deze pagina kunt u mensen uit het systeem aanpassen.</p>
+
+                        <ul class="nav nav-tabs">
+                            <li role="presentation"><a href="members-add.php">Toevoegen</a></li>
+                            <li role="presentation"><a href="members-remove.php">Verwijderen</a></li>
+                        </ul>
 
                         <?php
 
-                            $details = $_SESSION['member_details'];
+                            if(isset($_GET['id']) && is_numeric($_GET['id'])) {
+                                $ID = $_GET['id'];
+                                $dataManager->where('ID', $ID);
+                                $details = $dataManager->getOne('oh_members');
+                            }
 
                             if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $voornaam = cleanInput($_POST['voornaam']);

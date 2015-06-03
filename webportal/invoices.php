@@ -81,7 +81,7 @@ include_once 'includes/sidebar.php';
                     <div class="form-group col-md-2">
                         <label for="paid">Betaald: </label>
                         <select class="form-control" name="paid" id="paid">
-                            <option value=""> </option>
+                            <option value="2"> </option>
                             <option value="0">Nee</option>
                             <option value="1">Ja</option>
                         </select>
