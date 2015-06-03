@@ -20,20 +20,6 @@ $(document).ready(function ($) {
     	}
     });
     
-    $('#invoicesEntries').on('click', '#printPdf', function(){
-    	var pdf = $(this).parent().parent().attr('id');	
-    	var send = 'invoiceSessionID='+ pdf;
-	    	$.ajax({
-	    		type: "post",
-	    		url: "searchInvoices.php",
-	    		data: send,
-	    		success: function(){
-	    				window.open("pdf-creator/invoicePDF.php");
-	    			
-	    		}
-	    	})	
-    });
-
     $('#search').click(function(e) {
         e.preventDefault();
         $('#pagination').remove();
@@ -100,8 +86,8 @@ $(document).ready(function ($) {
                             '<td>' + betaald + '</td>' +
                             '<td>' + value['DatumBetaald'] + '</td>' +
                             '<td>' + '<a class="btn" id="deleteEntry" name="deleteEntry" data-invoice-id="' + value['ID'] + '"><i class="fa fa-trash-o "></i> Verwijderen</a>' +
-                            '<a class="btn" id="editInvoice" name="editInvoice" href="invoices-edit.php?id=' + value['ID'] + '"><i class="fa fa-file-pdf-o"></i> Bijwerken</a>' +
-                            '<a class="btn" id="printPdf" name="printPdf" data-invoice-id="' + value['ID'] + '"><i class="fa fa-file-pdf-o"></i> Printen PDF</a>'+ '</td>';
+                            '<a class="btn" id="editInvoice" name="editInvoice" href="invoices-edit.php?id=' + value['ID'] + '"><i class="fa fa-pencil"></i> Bijwerken</a>' +
+                            '<a class="btn" id="printPdf" name="printPdf" ref="pdf-creator/invoicePDF.php?id=' + value['ID'] + '"><i class="fa fa-file-pdf-o"></i> Printen PDF</a>'+ '</td>';
                         '</tr>';
                     });
 

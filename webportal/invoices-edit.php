@@ -105,8 +105,10 @@ include_once 'includes/sidebar.php';
                             $invoiceAmounts = $_POST['invoiceAmounts'];
                             $invoicePrices = $_POST['invoicePrices'];
 							$paid = $_POST['paid'];
+							$id = $_POST['ID'];
                             	
                             if (validateDate($date, 'Y-m-d')) {
+                            	
 
                                 $data = array(
                                     'Lid_ID' => $gebruikerID,
@@ -121,19 +123,35 @@ include_once 'includes/sidebar.php';
                                 $factuurID = $dataManager->getInsertId();
                                 $successCount = 0;
                                 $failCount = 0;
+                                
+                                
 
                                 foreach ($invoiceCategories as $key => $category) {
-                                    $data = array(
-                                        
-                                        'Categorie_ID' => $category,
-                                        'Aantal' => $invoiceAmounts[$key],
-                                        'Bedrag' => $invoicePrices[$key]
-                                    );
+                                    
+                                	if($dataManager->getValue('oh_invoices_line' , 'ID') == $id){
+	                                	$data = array(
+
+	                                        'Categorie_ID' => $category,
+	                                        'Aantal' => $invoiceAmounts[$key],
+	                                        'Bedrag' => $invoicePrices[$key]
+	                                    );
+	                                	$dataManager->where('Factuur_ID', $ID);
+	                                	$insertLine = $dataManager->update('oh_invoices_line', $data);
+                                	}else{
+                                			$data = array(
+                                		
+                                					'Categorie_ID' => $category,
+                                					'Aantal' => $invoiceAmounts[$key],
+                                					'Bedrag' => $invoicePrices[$key]
+                                			);
+                                			$dataManager->where('Factuur_ID', $ID);
+                                			$insertLine = $dataManager->update('oh_invoices_line', $data);
+                                	}
                                     
                                     
 
-                                    $dataManager->where('Factuur_ID', $ID);
-                                    $insertLine = $dataManager->insert('oh_invoices_line', $data);
+//                                     $dataManager->where('Factuur_ID', $ID);
+//                                     $insertLine = $dataManager->insert('oh_invoices_line', $data);
 
                                     if ($insertLine) {
                                         $successCount++;
@@ -240,12 +258,13 @@ include_once 'includes/sidebar.php';
                                         <?php
                                             $dataManager->where('Factuur_ID', $ID);
                                             $dataManager->join("oh_price_category p", "l.Categorie_ID=p.ID", "LEFT");
-                                            $invoiceLines = $dataManager->get("oh_invoices_line l", null, "l.Aantal, l.Bedrag, p.ID, p.Naam, p.PrijsPerEenheid, p.Prijs");
+                                            $invoiceLines = $dataManager->get("oh_invoices_line l", null, " l.ID, l.Aantal, l.Bedrag, p.ID AS prijsID, p.Naam, p.PrijsPerEenheid, p.Prijs");
 
                                             foreach($invoiceLines as $invoiceLine) {
 
                                             ?>
                                             <tr>
+                                            <input type="hidden" id="ID" value="<?php echo $invoiceLine['ID']; ?>">
                                                 <td class="form-group">
                                                     <select class="form-control" name="invoiceLines[]"
                                                             class="form-control">
@@ -253,7 +272,7 @@ include_once 'includes/sidebar.php';
                                                         $categories = $dataManager->get('oh_price_category');
 
                                                         foreach ($categories as $category) {
-                                                            if ($category['ID'] == $invoiceLine['ID']) {
+                                                            if ($category['ID'] == $invoiceLine['prijsID']) {
 
                                                                 echo '<option value="' . $category['ID'] . '" id="Categorie_ID" selected>' . $category['Naam'] . '</option>';
                                                             } else {

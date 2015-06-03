@@ -1,11 +1,10 @@
 <?php
-session_start();
 require_once '../includes/connectdb.php';
 $date = date ( "d/m/Y" );
 
 // Alle gegevens moeten uit een database worden gehaald
-if(isset($_SESSION['pdf'])){
-	$id = $_SESSION['pdf'];
+if(isset($_GET['id']) && is_numeric($_GET['id']))
+$id = $_GET['id'];
 
 
 $sql = 'SELECT DISTINCT m.Voornaam, m.Tussenvoegsel, m.Achternaam, m.Adres, m.Postcode, m.Woonplaats, m.IBAN, 
@@ -29,7 +28,7 @@ $result2 = $dataManager->rawQuery ( $sql2 );
 $header = '
 	<table cellspacing="0" width="100%">
 		<tr>
-			<td><img src="images/logo.png" width="126px" /></td>
+			<td><img src="images/logo_new.jpg" width="126px" /></td>
 		    <td class="header" align="right"> Geprint op: ' . $date . '</td>
 		</tr>
 	</table>
@@ -137,7 +136,5 @@ $mpdf->WriteHTML($html,2);
 
 $mpdf->Output('mpdf.pdf','I');
 exit;
-}else{
-	echo "<h1>U heeft geen recht hier te zijn!</h1>";
-}
+
 ?>

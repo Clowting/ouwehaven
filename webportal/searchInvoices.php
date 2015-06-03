@@ -4,12 +4,6 @@ require_once 'includes/requireSession.php';
 require_once 'includes/functions.php';
 require_once 'includes/connectdb.php';
 
-session_start();
-
-if(isset($_POST['pdfID'])){
-	$_SESSION['pdf'] = $_POST['pdfID'];
-}
-
 if(isset($_POST['deleteID'])){
 	$id = cleanInput($_POST['deleteID']);
 	$dataManager->where('ID', $id);

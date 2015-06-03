@@ -10,7 +10,7 @@ if(isset($_POST)){
 $header = '
 	<table cellspacing="0" width="100%">
 		<tr>
-			<td><img src="images/logo.png" width="126px" /></td>
+			<td><img src="images/logo_new.jpg" width="126px" /></td>
 		    <td class="header" align="right"> Geprint op: ' . $date . '</td>
 		</tr>
 	</table>

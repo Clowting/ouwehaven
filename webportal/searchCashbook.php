@@ -13,7 +13,6 @@ if(isset($_POST['deleteID'])){
 }else{
 	
 
-
 if($_POST['date'] != null){
 	$oldDate = DateTime::createFromFormat('d/m/Y', $_POST['date']);
 	$date = $oldDate->format('Y-m-d');
