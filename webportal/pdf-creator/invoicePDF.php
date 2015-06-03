@@ -4,7 +4,8 @@ require_once '../includes/connectdb.php';
 $date = date ( "d/m/Y" );
 
 // Alle gegevens moeten uit een database worden gehaald
-$id = $_SESSION['pdf'];
+if(isset($_SESSION['pdf'])){
+	$id = $_SESSION['pdf'];
 
 
 $sql = 'SELECT DISTINCT m.Voornaam, m.Tussenvoegsel, m.Achternaam, m.Adres, m.Postcode, m.Woonplaats, m.IBAN, 
@@ -136,4 +137,7 @@ $mpdf->WriteHTML($html,2);
 
 $mpdf->Output('mpdf.pdf','I');
 exit;
+}else{
+	echo "<h1>U heeft geen recht hier te zijn!</h1>";
+}
 ?>

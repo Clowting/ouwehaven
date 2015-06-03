@@ -22,7 +22,7 @@ $(document).ready(function ($) {
     
     $('#invoicesEntries').on('click', '#printPdf', function(){
     	var pdf = $(this).parent().parent().attr('id');	
-    	var send = 'pdfID='+ pdf;
+    	var send = 'invoiceSessionID='+ pdf;
 	    	$.ajax({
 	    		type: "post",
 	    		url: "searchInvoices.php",
@@ -32,8 +32,19 @@ $(document).ready(function ($) {
 	    			
 	    		}
 	    	})	
-	    	
-    	
+    });
+    
+    $('#invoicesEntries').on('click', '#editInvoice', function(){
+    	var editId = $(this).parent().parent().attr('id');	
+    	var send = 'invoiceSessionID='+ editId;
+	    	$.ajax({
+	    		type: "post",
+	    		url: "searchInvoices.php",
+	    		data: send,
+	    		success: function(){
+	    				window.open("invoices-edit.php");
+	    		}
+	    	})	
     });
 
     $('#search').click(function(e) {
@@ -67,7 +78,7 @@ $(document).ready(function ($) {
             member: $('#member').val(),
             date: $('#date').val(),
             paid: $('#paid').val(),
-            datePaid: $('datePaid').val(),
+            datePaid: $('#datePaid').val(),
             page: page
         };
 
@@ -101,7 +112,8 @@ $(document).ready(function ($) {
                             '<td>' + value['Datum'] + '</td>' +
                             '<td>' + betaald + '</td>' +
                             '<td>' + value['DatumBetaald'] + '</td>' +
-                            '<td>' + '<a class="btn" id="deleteEntry" name="deleteEntry" data-invoice-id="' + value['ID'] + '"><i class="fa fa-trash-o "></i> Verwijderen</a>' + 
+                            '<td>' + '<a class="btn" id="deleteEntry" name="deleteEntry" data-invoice-id="' + value['ID'] + '"><i class="fa fa-trash-o "></i> Verwijderen</a>' +
+                            '<a class="btn" id="editInvoice" name="editInvoice" data-invoice-id="' + value['ID'] + '"><i class="fa fa-file-pdf-o"></i> Bijwerken</a>' +
                             '<a class="btn" id="printPdf" name="printPdf" data-invoice-id="' + value['ID'] + '"><i class="fa fa-file-pdf-o"></i> Printen PDF</a>'+ '</td>';
                         '</tr>';
                     });
