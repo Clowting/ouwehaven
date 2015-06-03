@@ -11,15 +11,15 @@ $naamEigenaar = $_POST['naamEigenaar'];
 $page = $_POST['page'];
 
 if(validateInput($naamSchip, 2, 128)) {
-    $dataManager->orWhere('Naam', '%' . $naamSchip . '%', 'LIKE');
+    $dataManager->where('Naam', '%' . $naamSchip . '%', 'LIKE');
 }
 
 if(validateNumber($minLengte, 1, 16) && validateNumber($maxLengte, 1, 16)) {
-    $dataManager->orWhere('Lengte', Array($minLengte, $maxLengte), 'BETWEEN');
+    $dataManager->where('Lengte', Array($minLengte, $maxLengte), 'BETWEEN');
 } else if (validateNumber($minLengte, 1, 16)) {
-    $dataManager->orWhere('Lengte', $minLengte, '>=');
+    $dataManager->where('Lengte', $minLengte, '>=');
 } else if (validateNumber($maxLengte, 1, 16)) {
-    $dataManager->orWhere('Lengte', $maxLengte, '<=');
+    $dataManager->where('Lengte', $maxLengte, '<=');
 }
 
 if(validateInput($naamEigenaar, 2, 512)) {
@@ -29,9 +29,7 @@ if(validateInput($naamEigenaar, 2, 512)) {
     });
 
     foreach ($naamArray as $naam) {
-        $dataManager->orWhere('Voornaam', $naam, 'LIKE');
-        $dataManager->orWhere('Achternaam', $naam, 'LIKE');
-        $dataManager->orWhere('Tussenvoegsel', $naam, 'LIKE');
+        $dataManager->where('(Voornaam LIKE "' . $naam . '" OR Achternaam LIKE "' . $naam . '" OR Tussenvoegsel LIKE "' . $naam . '")');
     }
 }
 

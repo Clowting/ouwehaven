@@ -101,9 +101,11 @@ include_once 'includes/sidebar.php';
                             
                             $oldDatePaid = DateTime::createFromFormat('d/m/Y', $_POST['datePaid']);
                             $datePaid = $oldDatePaid->format('Y-m-d');
+
                             $invoiceCategories = $_POST['invoiceLines'];
                             $invoiceAmounts = $_POST['invoiceAmounts'];
                             $invoicePrices = $_POST['invoicePrices'];
+
 							$paid = $_POST['paid'];
 							$id = $_POST['ID'];
                             	
@@ -123,35 +125,39 @@ include_once 'includes/sidebar.php';
                                 $factuurID = $dataManager->getInsertId();
                                 $successCount = 0;
                                 $failCount = 0;
-                                
-                                
+
+                                /*$dataManager->where('Factuur_ID', $ID);
+                                $oldInvoiceLines->get('oh_invoices_line');*/
 
                                 foreach ($invoiceCategories as $key => $category) {
                                     
                                 	if($dataManager->getValue('oh_invoices_line' , 'ID') == $id){
-	                                	$data = array(
 
+	                                	$data = array(
 	                                        'Categorie_ID' => $category,
 	                                        'Aantal' => $invoiceAmounts[$key],
 	                                        'Bedrag' => $invoicePrices[$key]
 	                                    );
+
 	                                	$dataManager->where('Factuur_ID', $ID);
 	                                	$insertLine = $dataManager->update('oh_invoices_line', $data);
-                                	}else{
-                                			$data = array(
-                                		
-                                					'Categorie_ID' => $category,
-                                					'Aantal' => $invoiceAmounts[$key],
-                                					'Bedrag' => $invoicePrices[$key]
-                                			);
-                                			$dataManager->where('Factuur_ID', $ID);
-                                			$insertLine = $dataManager->update('oh_invoices_line', $data);
+                                	} else {
+
+                                        $data = array(
+
+                                                'Categorie_ID' => $category,
+                                                'Aantal' => $invoiceAmounts[$key],
+                                                'Bedrag' => $invoicePrices[$key]
+                                        );
+
+                                        $dataManager->where('Factuur_ID', $ID);
+                                        $insertLine = $dataManager->update('oh_invoices_line', $data);
                                 	}
                                     
                                     
 
-//                                     $dataManager->where('Factuur_ID', $ID);
-//                                     $insertLine = $dataManager->insert('oh_invoices_line', $data);
+                                    //$dataManager->where('Factuur_ID', $ID);
+                                    //$insertLine = $dataManager->insert('oh_invoices_line', $data);
 
                                     if ($insertLine) {
                                         $successCount++;
