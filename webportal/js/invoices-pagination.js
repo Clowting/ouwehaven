@@ -33,19 +33,6 @@ $(document).ready(function ($) {
 	    		}
 	    	})	
     });
-    
-    $('#invoicesEntries').on('click', '#editInvoice', function(){
-    	var editId = $(this).parent().parent().attr('id');	
-    	var send = 'invoiceSessionID='+ editId;
-	    	$.ajax({
-	    		type: "post",
-	    		url: "searchInvoices.php",
-	    		data: send,
-	    		success: function(){
-	    				window.open("invoices-edit.php");
-	    		}
-	    	})	
-    });
 
     $('#search').click(function(e) {
         e.preventDefault();
@@ -113,7 +100,7 @@ $(document).ready(function ($) {
                             '<td>' + betaald + '</td>' +
                             '<td>' + value['DatumBetaald'] + '</td>' +
                             '<td>' + '<a class="btn" id="deleteEntry" name="deleteEntry" data-invoice-id="' + value['ID'] + '"><i class="fa fa-trash-o "></i> Verwijderen</a>' +
-                            '<a class="btn" id="editInvoice" name="editInvoice" data-invoice-id="' + value['ID'] + '"><i class="fa fa-file-pdf-o"></i> Bijwerken</a>' +
+                            '<a class="btn" id="editInvoice" name="editInvoice" href="invoices-edit.php?id=' + value['ID'] + '"><i class="fa fa-file-pdf-o"></i> Bijwerken</a>' +
                             '<a class="btn" id="printPdf" name="printPdf" data-invoice-id="' + value['ID'] + '"><i class="fa fa-file-pdf-o"></i> Printen PDF</a>'+ '</td>';
                         '</tr>';
                     });
