@@ -35,17 +35,29 @@ thead th {
 
 p {
 	font-family: "Arial";
-	font-size: 20px;
+	font-size: 12px;
 }
 
 .total {
-	font-size: 15px;
+	font-size: 17px;
 	font-weight: bold;
-	color: orange;
 	background-color: grey;
+	border-color: grey;
+	
 }
 
 .header {
 	font-size: 10px;
 	text-align: right;
+}
+
+
+.invoiceTitle{
+	font-size: 8px;
+	float:left;
+	width:100%;
+}
+
+.invoicesTitle tr:nth-child(even) td {
+    background: #FFFFFF;
 }

@@ -39,7 +39,6 @@ include_once 'includes/sidebar.php';
                 <div class="page-header">
                     <h1>Facturen <small>Zoeken</small></h1>
                 </div>
-
                 <p>Op deze pagina kunt u gegevens in het kasboek zetten, deze worden direct opgeslagen wanneer u op volgende drukt</p>
                 <p>Wanneer u meerdere kasboek gegevens wilt invoeren, kunt u kiezen voor "nog 1 toevoegen, wanneer u klaar bent kunt u weer op volgende drukken om verder te gaan</p>
                                 
@@ -88,7 +87,7 @@ include_once 'includes/sidebar.php';
                         </select>
                     </div>
                     
-                    <!-- Misschien moet van en voor een dropdown menu worden waar eventueel iets aan kan worden toegevoegd, dit om verschillende namen tegen te gaan -->
+                    
 
 
                     <div class="col-md-2">
@@ -103,10 +102,13 @@ include_once 'includes/sidebar.php';
                             <thead>
                             <tr>
                                 <th>Lid</th>
+                                <th>FactuurNummer</th>
                                 <th>Datum</th>
+                           		
                                 <th>Betaald</th>
                                 <th>Datum Betaald</th>
                                 <th>Optie</th>
+                                
                             </tr>
                             </thead>
                             <tbody id="invoicesEntries">

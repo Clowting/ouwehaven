@@ -8,7 +8,7 @@ $(document).ready(function ($) {
     	if(confirm("Weet u zeker dat u deze entrie wilt verwijderen?")){	
 	    	$.ajax({
 	    		type: "post",
-	    		url: "searchCashbook.php",
+	    		url: "searchInvoices.php",
 	    		data: send,
 	    		success: function(){
 	    			$('#'+deleteID).fadeOut("slow", function(){
@@ -21,14 +21,19 @@ $(document).ready(function ($) {
     });
     
     $('#invoicesEntries').on('click', '#printPdf', function(){
-    	var id = 'id=' + $(this).parent().parent().attr('id');
-    	$.ajax({
-    		url: "pdf-creator/invoicesPDF.php",
-    		data: id,
-    		success: function(){
-    			windows.open(this);
-    		}
-    	})
+    	var pdf = $(this).parent().parent().attr('id');	
+    	var send = 'pdfID='+ pdf;
+	    	$.ajax({
+	    		type: "post",
+	    		url: "searchInvoices.php",
+	    		data: send,
+	    		success: function(){
+	    				window.open("pdf-creator/invoicePDF.php");
+	    			
+	    		}
+	    	})	
+	    	
+    	
     });
 
     $('#search').click(function(e) {
@@ -57,7 +62,7 @@ $(document).ready(function ($) {
 
     function loadInvoice(page) {
     	
-        $("#invoiceEntries").html('<tr><td colspan="7">Kasboek entries worden geladen...</td></tr>');
+        $("#invoicesEntries").html('<tr><td colspan="6">Facturen worden geladen...</td></tr>');
         var postData = {
             member: $('#member').val(),
             date: $('#date').val(),
@@ -82,14 +87,22 @@ $(document).ready(function ($) {
                 } else {
 
                     $.each(data['items'], function (index, value) {
+                    	
+                    	var betaald = "Nee";
+                    	if(value['Betaald'] == 1){
+                    		betaald = "Ja";
+                    	}
+                    	
                         var eigenaar = generateName(value['Voornaam'], value['Tussenvoegsel'], value['Achternaam']);
                         toAppend +=
                             '<tr id="' + value['ID'] + '">' +
                             '<td>' + eigenaar + '</td>' +
+                            '<td>' + value['ID'] + '</td>' +
                             '<td>' + value['Datum'] + '</td>' +
-                            '<td>' + value['Betaald'] + '</td>' +
+                            '<td>' + betaald + '</td>' +
                             '<td>' + value['DatumBetaald'] + '</td>' +
-                            '<td>' + '<a class="btn" id="deleteEntry" name="deleteEntry" data-invoice-id="' + value['ID'] + '"><i class="fa fa-trash-o "></i> Verwijderen</a>' + '</td>';
+                            '<td>' + '<a class="btn" id="deleteEntry" name="deleteEntry" data-invoice-id="' + value['ID'] + '"><i class="fa fa-trash-o "></i> Verwijderen</a>' + 
+                            '<a class="btn" id="printPdf" name="printPdf" data-invoice-id="' + value['ID'] + '"><i class="fa fa-file-pdf-o"></i> Printen PDF</a>'+ '</td>';
                         '</tr>';
                     });
 

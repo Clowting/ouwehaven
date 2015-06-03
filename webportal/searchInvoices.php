@@ -4,6 +4,19 @@ require_once 'includes/requireSession.php';
 require_once 'includes/functions.php';
 require_once 'includes/connectdb.php';
 
+session_start();
+
+if(isset($_POST['pdfID'])){
+	$_SESSION['pdf'] = $_POST['pdfID'];
+}
+
+if(isset($_POST['deleteID'])){
+	$id = cleanInput($_POST['deleteID']);
+	$dataManager->where('ID', $id);
+	$remove = $dataManager->delete('oh_invoices');
+	$dataManager->where('Factuur_ID', $id);
+	$remove2 = $dataManager->delete('oh_invoices_line');
+}else{
 
 if(isset($_POST['date'])) {
 	$oldDate = DateTime::createFromFormat('d/m/Y', $_POST['date']);
@@ -40,8 +53,8 @@ if(validateNumber($member, 1, 11)) {
 }
 
 
-$dataManager->join("oh_members m", "m.ID=i.Lid_ID", "LEFT");
-$data = $dataManager->get('oh_invoices i');
+$dataManager->join("oh_members AS m", "m.ID=i.Lid_ID", "LEFT");
+$data = $dataManager->get('oh_invoices AS i', null, "i.ID, i.Datum, i.Betaald, i.DatumBetaald, m.Voornaam, m.Tussenvoegsel, m.Achternaam");
 $totalCount = $dataManager->count;
 $result = array();
 
@@ -52,3 +65,4 @@ for($i = $page*50-50; $i < $page*50 && $i < $totalCount; $i++) {
 $result['totalCount'] = $totalCount;
 
 echo json_encode($result);
+}

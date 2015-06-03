@@ -11,7 +11,7 @@ $header = '
 	<table cellspacing="0" width="100%">
 		<tr>
 			<td><img src="images/logo.png" width="126px" /></td>
-		    <td class="header" align="right"> Printed on: ' . $date . '</td>
+		    <td class="header" align="right"> Geprint op: ' . $date . '</td>
 		</tr>
 	</table>
 		';
