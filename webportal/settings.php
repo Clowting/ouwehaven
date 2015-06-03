@@ -52,6 +52,7 @@
                                 $adres = cleanInput($_POST['adres']);
                                 $postcode = cleanInput($_POST['postcode']);
                                 $woonplaats = cleanInput($_POST['woonplaats']);
+                                $telefoonnummer = cleanInput($_POST['telefoonnummer']);
                                 $iban = str_replace(' ', '', cleanInput($_POST['iban']));
 
                                 if( validateInput($voornaam, 2, 64) &&
@@ -73,12 +74,26 @@
                                         $data['Tussenvoegsel'] = $tussenvoegsel;
                                     }
 
-                                    if(!empty($iban)) {
-                                        if (verify_iban($iban)) {
-                                            $data['IBAN'] = $iban;
-                                        } else {
-                                            echo '<div class="alert alert-warning" role="alert">Het IBAN nummer kon niet worden gevalideerd.</div>';
-                                        }
+                                    // Telefoonnummer
+                                    if(validateInput($telefoonnummer, 1, 16)) {
+                                        $data['Telefoonnummer'] = $telefoonnummer;
+                                    }
+                                    elseif(empty($telefoonnummer)) {
+                                        $data['Telefoonnummer'] = '';
+                                    }
+                                    else {
+                                        echo '<div class="alert alert-warning" role="alert">U heeft geen geldig telefoonnummer opgegeven.</div>';
+                                    }
+
+                                    // IBAN
+                                    if (verify_iban($iban)) {
+                                        $data['IBAN'] = $iban;
+                                    }
+                                    elseif(empty($iban)) {
+                                        $data['IBAN'] = '';
+                                    }
+                                    else {
+                                        echo '<div class="alert alert-warning" role="alert">Het IBAN nummer kon niet worden gevalideerd.</div>';
                                     }
 
                                     $dataManager->where('ID', $details['ID']);
@@ -127,6 +142,10 @@
                             <div class="form-group">
                                 <label for="woonplaats">Woonplaats:</label>
                                 <input type="text" class="form-control" name="woonplaats" value="<?php echo $details['Woonplaats']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="iban">Telefoonnummer:</label>
+                                <input type="text" class="form-control" name="telefoonnummer" value="<?php echo $details['Telefoonnummer']; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="iban">IBAN:</label>

@@ -36,6 +36,12 @@ h1 {
 	margin-bottom: 30px;
 }
 
+h2 {
+	small {
+		display: block;
+	}
+}
+
 h4 {
 	margin-top: 20px;
 }
@@ -231,6 +237,12 @@ div.alert-form {
     button {
         margin-top: 25px;
     }
+}
+
+.col-center {
+	margin: 0 auto;
+	float: none;
+	display: block;
 }
 
 @media(min-width:768px) {
