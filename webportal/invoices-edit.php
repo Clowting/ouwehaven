@@ -63,28 +63,25 @@ include_once 'includes/sidebar.php';
         <div class="row">
             <div class="col-lg-12">
                 <div class="page-header">
-                    <h1>
-                        Facturen
-                    </h1>
+                    <h1>Facturen</h1>
                 </div>
                 <p>Op deze pagina kunt u een factuur aanpassen voor de leden.</p>
                     <ul class="nav nav-tabs">
-                        <li role="presentation" ><a href="invoices.php">Facturen</a></li>
+                        <li role="presentation"><a href="invoices.php">Facturen</a></li>
                         <li role="presentation"><a href="invoices-add.php">Facturen toevoegen</a></li>
-                        <li role="presentation"><a href="priceCategories-add.php">Prijs Categorieen toevoegen</a>  
+                        <li role="presentation"><a href="priceCategories-add.php">Prijs Categorieen toevoegen</a>
                     </ul>
 
                 <?php
 
                 if(isset($_GET['id']) && is_numeric($_GET['id'])) {
-                    $ID = $_GET['id'];
+                    $id = $_GET['id'];
 
-                    $dataManager->where('i.ID', $ID);
-                    $dataManager->join("oh_members AS m", "m.ID=i.Lid_ID", "LEFT");
-                    $data = $dataManager->getOne('oh_invoices AS i', "i.Datum, i.Betaald, i.DatumBetaald, m.ID, m.Voornaam, m.Tussenvoegsel, m.Achternaam");
+                    $dataManager->where('i.ID', $id);
+                    $data = $dataManager->getOne('oh_invoices AS i', 'i.Lid_ID, i.Datum, i.Betaald, i.DatumBetaald');
 
                     if(!empty($data)) {
-                        $gebruikerID = $data['ID'];
+                        $oudGebruikerID = $data['Lid_ID'];
 
                         $oudDatum = DateTime::createFromFormat('Y-m-d', $data['Datum']);
                         $datum = $oudDatum->format('d/m/Y');
@@ -96,90 +93,71 @@ include_once 'includes/sidebar.php';
 
                         if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 
-                            $newDate = DateTime::createFromFormat('d/m/Y', $_POST ['date']);
-                            $date = $newDate->format('Y-m-d');
+                            $nieuwGebruikerID = $_POST['member'];
+
+                            $nieuwDatum = DateTime::createFromFormat('d/m/Y', $_POST['date']);
+                            $date = $nieuwDatum->format('Y-m-d');
                             
-                            $oldDatePaid = DateTime::createFromFormat('d/m/Y', $_POST['datePaid']);
-                            $datePaid = $oldDatePaid->format('Y-m-d');
+                            $nieuwDatumBetaald = DateTime::createFromFormat('d/m/Y', $_POST['datePaid']);
+                            $datePaid = $nieuwDatumBetaald->format('Y-m-d');
 
                             $invoiceCategories = $_POST['invoiceLines'];
                             $invoiceAmounts = $_POST['invoiceAmounts'];
                             $invoicePrices = $_POST['invoicePrices'];
 
 							$paid = $_POST['paid'];
-							$id = $_POST['ID'];
                             	
                             if (validateDate($date, 'Y-m-d')) {
-                            	
 
                                 $data = array(
-                                    'Lid_ID' => $gebruikerID,
+                                    'Lid_ID' => $nieuwGebruikerID,
                                     'Datum' => $date,
                                 	'DatumBetaald' => $datePaid,
                                 	'Betaald' => $paid
                                 );
 
-                                $dataManager->where('ID', $ID);
-                                $insert = $dataManager->update('oh_invoices', $data);
+                                $dataManager->where('ID', $id);
+                                $update = $dataManager->update('oh_invoices', $data);
 
-                                $factuurID = $dataManager->getInsertId();
-                                $successCount = 0;
-                                $failCount = 0;
+                                $lines_success = 0;
+                                $lines_failed = 0;
 
-                                /*$dataManager->where('Factuur_ID', $ID);
-                                $oldInvoiceLines->get('oh_invoices_line');*/
+                                // Remove old invoice lines
+                                $dataManager->where('Factuur_ID', $ID);
+                                $dataManager->delete('oh_invoices_line');
 
                                 foreach ($invoiceCategories as $key => $category) {
-                                    
-                                	if($dataManager->getValue('oh_invoices_line' , 'ID') == $id){
 
-	                                	$data = array(
-	                                        'Categorie_ID' => $category,
-	                                        'Aantal' => $invoiceAmounts[$key],
-	                                        'Bedrag' => $invoicePrices[$key]
-	                                    );
+                                    $data = array(
+                                        'Factuur_ID' => $id,
+                                        'Categorie_ID' => $category,
+                                        'Aantal' => $invoiceAmounts[$key],
+                                        'Bedrag' => $invoicePrices[$key]
+                                    );
 
-	                                	$dataManager->where('Factuur_ID', $ID);
-	                                	$insertLine = $dataManager->update('oh_invoices_line', $data);
-                                	} else {
-
-                                        $data = array(
-
-                                                'Categorie_ID' => $category,
-                                                'Aantal' => $invoiceAmounts[$key],
-                                                'Bedrag' => $invoicePrices[$key]
-                                        );
-
-                                        $dataManager->where('Factuur_ID', $ID);
-                                        $insertLine = $dataManager->update('oh_invoices_line', $data);
-                                	}
-                                    
-                                    
-
-                                    //$dataManager->where('Factuur_ID', $ID);
-                                    //$insertLine = $dataManager->insert('oh_invoices_line', $data);
+                                    $insertLine = $dataManager->insert('oh_invoices_line', $data);
 
                                     if ($insertLine) {
-                                        $successCount++;
-                                    } else {
-
+                                        $lines_success++;
+                                    }
+                                    else {
+                                        $lines_failed++;
                                     }
                                 }
 
-                                if ($insert) {
-                                    echo '<div class="alert alert-success" role="alert">De factuur is succesvol toegevoegd!</div>';
-                                    echo $_POST['ID'];
+                                if ($update) {
+                                    echo '<div class="alert alert-success" role="alert">De factuur is succesvol bijgewerkt!</div>';
 
-                                    if ($successCount > 0) {
-                                        echo '<div class="alert alert-success" role="alert"><strong>' . $successCount . ' factuurregels</strong> succesvol toegevoegd!</div>';
+                                    if ($lines_success > 0) {
+                                        echo '<div class="alert alert-success" role="alert"><strong>' . $lines_success . ' factuurregels</strong> succesvol bijgewerkt!</div>';
                                     }
 
-                                    if ($failCount > 0) {
-                                        echo '<div class="alert alert-danger" role="alert"><strong>' . $failCount . ' factuurregels</strong> konden niet worden toegevoegd.</div>';
+                                    if ($lines_failed > 0) {
+                                        echo '<div class="alert alert-danger" role="alert"><strong>' . $lines_failed . ' factuurregels</strong> konden niet worden bijgewerkt.</div>';
                                     }
 
                                     echo '<p>Klik <a href="/webportal">hier</a> om naar de hoofdpagina te gaan.</p>';
-                                    echo "<p>Of klik <a href=" . $_SERVER ['REQUEST_URI'] . ">hier</a> om nog een factuur toe te voegen.";
+                                    echo "<p>Of klik <a href=" . $_SERVER ['REQUEST_URI'] . ">hier</a> om de wijzigingen te bekijken.</p>";
                                 } else {
                                     echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof er een fout is met de verbinding van de database...</div>';
                                     echo "<p>Klik <a href=" . $_SERVER ['REQUEST_URI'] . ">hier</a> om het opnieuw te proberen.</p>";
@@ -201,52 +179,44 @@ include_once 'includes/sidebar.php';
                                     <select class="form-control" name="member" id="member">
                                         <option value="" selected></option>
                                         <?php
-                                        $members = $dataManager->get('oh_members');
 
-                                        foreach ($members as $member) {
-                                            $eigenaar = generateName($member['Voornaam'], $member['Tussenvoegsel'], $member['Achternaam']);
-                                            if ($member['ID'] == $gebruikerID) {
-                                                echo '<option value="' . $member["ID"] . '" selected>' . $eigenaar . '</option>';
-                                            } else {
-                                                echo '<option value="' . $member["ID"] . '">' . $eigenaar . '</option>';
+                                            $members = $dataManager->get('oh_members');
+
+                                            foreach ($members as $member) {
+                                                $eigenaar = generateName($member['Voornaam'], $member['Tussenvoegsel'], $member['Achternaam']);
+
+                                                if ($member['ID'] == $oudGebruikerID) {
+                                                    echo '<option value="' . $member["ID"] . '" selected>' . $eigenaar . '</option>';
+                                                }
+                                                else {
+                                                    echo '<option value="' . $member["ID"] . '">' . $eigenaar . '</option>';
+                                                }
                                             }
-                                        }
+
                                         ?>
                                     </select>
                                 </div>
 
                                 <div class="form-group col-md-2">
                                     <label for="date">Datum uitgevoerd:</label>
-                                    <input type="text" value="<?php echo $datum ?>" class="form-control formDate"
-                                           name="date"
-                                           id="date">
+                                    <input type="text" value="<?php echo $datum ?>" class="form-control formDate" name="date" id="date">
                                 </div>
 
                                 <div class="form-group col-md-2">
                                     <label for="date">Datum Betaald:</label>
-                                    <input type="text" value="<?php echo $datumBetaald ?>" class="form-control formDate"
-                                           name="datePaid" id="datePaid">
+                                    <input type="text" value="<?php echo $datumBetaald ?>" class="form-control formDate" name="datePaid" id="datePaid">
                                 </div>
 
                                 <div class="form-group col-md-2">
-                                    <label for="paid">Betaald: </label>
+                                    <label for="paid">Betaald:</label>
                                     <select class="form-control" name="paid" id="paid">
-                                        <?php
-                                        if ($betaald == 1) {
-                                            echo '<option value="1" selected>Ja</option>';
-                                            echo '<option value="0">Nee</option> ';
-                                        } else if ($betaald == 0) {
-                                            echo '<option value="1">Ja</option>';
-                                            echo '<option value="0" selected>Nee</option>';
-                                        }
-                                        ?>
+                                        <option value="1" <?php echo ($betaald == 1 ? 'selected' : '') ?>>Ja</option>
+                                        <option value="0" <?php echo ($betaald == 0 ? 'selected' : '') ?>>Nee</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group col-md-1" id="add">
-                                    <button type="button" class="btn btn-default " name="add" id="add">Voeg extra regel
-                                        toe
-                                    </button>
+                                    <button type="button" class="btn btn-primary" name="add" id="add">Voeg extra regel toe</button>
                                 </div>
 
 
@@ -305,7 +275,7 @@ include_once 'includes/sidebar.php';
                                     </table>
                                 </div>
                                 <div class="col-md-1">
-                                    <button type="submit" class="btn btn-default ">Aanmaken</button>
+                                    <button type="submit" class="btn btn-primary">Bijwerken</button>
                                 </div>
 
                             </form>
