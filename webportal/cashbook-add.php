@@ -87,7 +87,6 @@ include_once 'includes/sidebar.php';
 
             } else {
                 echo '<div class="alert alert-danger" role="alert">Het lijkt er op alsof niet alle gegevens zijn ingevuld...</div>';
-                var_dump($data);
                 echo "<p>Klik <a href=".$_SERVER['REQUEST_URI'].">hier</a> om het opnieuw te proberen.</p>";
             }
 
