@@ -77,20 +77,17 @@ include_once 'includes/sidebar.php';
                 if(isset($_GET['id']) && is_numeric($_GET['id'])) {
                     $id = $_GET['id'];
 
-                    $dataManager->where('i.ID', $id);
-                    $data = $dataManager->getOne('oh_invoices AS i', 'i.Lid_ID, i.Datum, i.Betaald, i.DatumBetaald');
+                    $dataManager->where('ID', $id);
+                    $data = $dataManager->getOne('oh_invoices');
 
                     if(!empty($data)) {
+                    	
                         $oudGebruikerID = $data['Lid_ID'];
 						if($data['Datum'] != null){
 	                        $oudDatum = DateTime::createFromFormat('Y-m-d', $data['Datum']);
 	                        $datum = $oudDatum->format('d/m/Y');
 						}
-											   
-                        if($data['DatumBetaald'] != null){
-                        	$oudDatumBetaald = DateTime::createFromFormat('Y-m-d', $data['DatumBetaald']);
-                        	$datumBetaald = $oudDatumBetaald->format('d/m/Y');
-                        }
+
                         
                         $betaald = $data['Betaald'];
 
@@ -99,11 +96,8 @@ include_once 'includes/sidebar.php';
                             $nieuwGebruikerID = cleanInput($_POST['member']);
 
                             $nieuwDatum = DateTime::createFromFormat('d/m/Y', $_POST['date']);
-                            $date = $nieuwDatum->format('Y-m-d');
+                            $date = $nieuwDatum->format('Y-m-d');                           
                             
-                            $nieuwDatumBetaald = DateTime::createFromFormat('d/m/Y', $_POST['datePaid']);
-                            $datePaid = $nieuwDatumBetaald->format('Y-m-d');
-
                             $invoiceCategories = cleanInput($_POST['invoiceLines']);
                             $invoiceAmounts = cleanInput($_POST['invoiceAmounts']);
                             $invoicePrices = cleanInput($_POST['invoicePrices']);
@@ -111,15 +105,20 @@ include_once 'includes/sidebar.php';
 							$paid = $_POST['paid'];
                             	
                             if (validateDate($date, 'Y-m-d') &&
-                            	validateInput($nieuwGebruikerID, 2, 5)
+                            	validateNumber($nieuwGebruikerID, 1, 11)
                             		) {
 
                                 $data = array(
                                     'Lid_ID' => $nieuwGebruikerID,
                                     'Datum' => $date,
-                                	'DatumBetaald' => $datePaid,
                                 	'Betaald' => $paid
                                 );
+                                
+                                if(isset($_POST['DatumBetaald']) && !empty($_POST['DatumBetaald'])){
+                                	$nieuwDatumBetaald = DateTime::createFromFormat('d/m/Y', $_POST['datePaid']);
+                                	$datePaid = $nieuwDatumBetaald->format('Y-m-d');
+                                	$data['DatumBetaald'] = $datePaid;
+                                }
 
                                 $dataManager->where('ID', $id);
                                 $update = $dataManager->update('oh_invoices', $data);
@@ -128,7 +127,7 @@ include_once 'includes/sidebar.php';
                                 $lines_failed = 0;
 
                                 // Remove old invoice lines
-                                $dataManager->where('Factuur_ID', $ID);
+                                $dataManager->where('Factuur_ID', $id);
                                 $dataManager->delete('oh_invoices_line');
 
                                 foreach ($invoiceCategories as $key => $category) {
@@ -237,7 +236,7 @@ include_once 'includes/sidebar.php';
                                         </thead>
                                         <tbody>
                                         <?php
-                                            $dataManager->where('Factuur_ID', $ID);
+                                            $dataManager->where('Factuur_ID', $id);
                                             $dataManager->join("oh_price_category p", "l.Categorie_ID=p.ID", "LEFT");
                                             $invoiceLines = $dataManager->get("oh_invoices_line l", null, " l.ID, l.Aantal, l.Bedrag, p.ID AS prijsID, p.Naam, p.PrijsPerEenheid, p.Prijs");
 
