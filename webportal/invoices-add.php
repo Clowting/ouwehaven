@@ -79,6 +79,7 @@ include_once 'includes/sidebar.php';
 
                     $newDate = DateTime::createFromFormat('d/m/Y', $_POST ['date']);
 
+                    $memberID = cleanInput($_POST['selectMember']);
                     $date = $newDate->format('Y-m-d');
                     $invoiceCategories = $_POST['invoiceLines'];
                     $invoiceAmounts = $_POST['invoiceAmounts'];
@@ -159,14 +160,11 @@ include_once 'includes/sidebar.php';
 
                         <div class="form-group col-md-5">
                             <label for="date">Factuurdatum:</label>
-                            <input type="text" value="<?php echo date("d/m/Y") ?>" class="form-control formDate"
-                                   name="date"
-                                   id="date">
+                            <input type="text" value="<?php echo date("d/m/Y") ?>" class="form-control formDate" name="date" id="date">
                         </div>
 
                         <div class="form-group col-md-1" id="add">
-                            <button type="button" class="btn btn-primary" name="add" id="add">Voeg extra regel toe
-                            </button>
+                            <button type="button" class="btn btn-primary" name="add" id="add">Voeg extra regel toe</button>
                         </div>
 
                         <div class="table-responsive col-md-12">
