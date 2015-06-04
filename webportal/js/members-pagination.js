@@ -30,9 +30,9 @@ $(document).ready(function ($) {
         $("#member-content").html('<tr><td colspan="5">Leden worden geladen...</td></tr>');
         var postData = {
             naam: $('#naam').val(),
-            minLengte: $('#adres').val(),
-            maxLengte: $('#postcode').val(),
-            naamEigenaar: $('#woonplaats').val(),
+            adres: $('#adres').val(),
+            postcode: $('#postcode').val(),
+            woonplaats: $('#woonplaats').val(),
             page: page
         };
 
