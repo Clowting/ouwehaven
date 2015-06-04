@@ -44,6 +44,7 @@ include_once 'includes/sidebar.php';
                 <p>Op deze pagina kunt u nieuwe mensen uit het systeem verwijderen.</p>
 
                 <ul class="nav nav-tabs">
+                    <li role="presentation"><a href="members.php">Overzicht</a></li>
                     <li role="presentation"><a href="members-add.php">Toevoegen</a></li>
                     <li role="presentation" class="active"><a href="members-remove.php">Verwijderen</a></li>
                 </ul>
