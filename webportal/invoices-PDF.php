@@ -14,7 +14,7 @@ if(isset($_GET['id']) && is_numeric($_GET['id'])) {
     $dataManager->join("oh_members AS m", "m.ID=i.Lid_ID", "LEFT");
     $details = $dataManager->getOne('oh_invoices AS i', "i.Datum, i.Betaald, i.DatumBetaald, m.ID, m.Voornaam, m.Tussenvoegsel, m.Achternaam, m.Adres, m.Postcode, m.Woonplaats");
 
-    $dataManager->where('Factuur_ID', $ID);
+    $dataManager->where('Factuur_ID', $id);
     $dataManager->join("oh_price_category p", "l.Categorie_ID=p.ID", "LEFT");
     $invoiceLines = $dataManager->get("oh_invoices_line l", null, " l.ID, l.Aantal, l.Bedrag, p.ID AS prijsID, p.Naam, p.PrijsPerEenheid, p.Prijs");
 
