@@ -87,7 +87,7 @@ $(document).ready(function ($) {
                             '<td>' + value['DatumBetaald'] + '</td>' +
                             '<td>' + '<a class="btn" id="deleteEntry" name="deleteEntry" data-invoice-id="' + value['ID'] + '"><i class="fa fa-trash-o "></i> Verwijderen</a>' +
                             '<a class="btn" id="editInvoice" name="editInvoice" href="invoices-edit.php?id=' + value['ID'] + '"><i class="fa fa-pencil"></i> Bijwerken</a>' +
-                            '<a class="btn" id="printPdf" name="printPdf" ref="pdf-creator/invoicePDF.php?id=' + value['ID'] + '"><i class="fa fa-file-pdf-o"></i> Printen PDF</a>'+ '</td>';
+                            '<a class="btn" id="printPdf" name="printPdf" href="invoices-PDF.php?id=' + value['ID'] + '"><i class="fa fa-file-pdf-o"></i> Printen PDF</a>'+ '</td>';
                         '</tr>';
                     });
 
