@@ -82,18 +82,21 @@ include_once 'includes/sidebar.php';
 
                     if(!empty($data)) {
                         $oudGebruikerID = $data['Lid_ID'];
-
-                        $oudDatum = DateTime::createFromFormat('Y-m-d', $data['Datum']);
-                        $datum = $oudDatum->format('d/m/Y');
-
-                        $oudDatumBetaald = DateTime::createFromFormat('Y-m-d', $data['DatumBetaald']);
-                        $datumBetaald = $oudDatumBetaald->format('d/m/Y');
-
+						if($data['Datum'] != null){
+	                        $oudDatum = DateTime::createFromFormat('Y-m-d', $data['Datum']);
+	                        $datum = $oudDatum->format('d/m/Y');
+						}
+											   
+                        if($data['DatumBetaald'] != null){
+                        	$oudDatumBetaald = DateTime::createFromFormat('Y-m-d', $data['DatumBetaald']);
+                        	$datumBetaald = $oudDatumBetaald->format('d/m/Y');
+                        }
+                        
                         $betaald = $data['Betaald'];
 
                         if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 
-                            $nieuwGebruikerID = $_POST['member'];
+                            $nieuwGebruikerID = cleanInput($_POST['member']);
 
                             $nieuwDatum = DateTime::createFromFormat('d/m/Y', $_POST['date']);
                             $date = $nieuwDatum->format('Y-m-d');
@@ -101,13 +104,15 @@ include_once 'includes/sidebar.php';
                             $nieuwDatumBetaald = DateTime::createFromFormat('d/m/Y', $_POST['datePaid']);
                             $datePaid = $nieuwDatumBetaald->format('Y-m-d');
 
-                            $invoiceCategories = $_POST['invoiceLines'];
-                            $invoiceAmounts = $_POST['invoiceAmounts'];
-                            $invoicePrices = $_POST['invoicePrices'];
+                            $invoiceCategories = cleanInput($_POST['invoiceLines']);
+                            $invoiceAmounts = cleanInput($_POST['invoiceAmounts']);
+                            $invoicePrices = cleanInput($_POST['invoicePrices']);
 
 							$paid = $_POST['paid'];
                             	
-                            if (validateDate($date, 'Y-m-d')) {
+                            if (validateDate($date, 'Y-m-d') &&
+                            	validateInput($nieuwGebruikerID, 2, 5)
+                            		) {
 
                                 $data = array(
                                     'Lid_ID' => $nieuwGebruikerID,
