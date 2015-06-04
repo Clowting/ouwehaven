@@ -34,19 +34,19 @@ if(isset($_POST['deleteID'])){
     $page = $_POST['page'];
 
     if($paid == 0 || $paid == 1) {
-        $dataManager->orWhere('Betaald', $paid);
+        $dataManager->where('Betaald', $paid);
     }
 
     if(validateDate($date, 'Y-m-d')) {
-        $dataManager->orWhere('Datum', $date);
+        $dataManager->where('Datum', $date);
     }
 
     if(validateDate($datePaid, 'Y-m-d')) {
-        $dataManager->orWhere('DatumBetaald', $datePaid);
+        $dataManager->where('DatumBetaald', $datePaid);
     }
 
     if(validateNumber($member, 1, 11)) {
-        $dataManager->orWhere('Lid_ID', $member);
+        $dataManager->where('Lid_ID', $member);
     }
 
 
