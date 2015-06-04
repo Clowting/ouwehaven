@@ -1,15 +1,18 @@
 <?php
 require_once 'includes/globals.php';
 require_once 'includes/requireSession.php';
+require_once 'includes/requirePenningmeester.php';
 require_once 'includes/functions.php';
 require_once 'includes/connectdb.php';
 
 if(isset($_POST['deleteID'])){
 	$id = cleanInput($_POST['deleteID']);
+
+    $dataManager->where('Factuur_ID', $id);
+    $remove2 = $dataManager->delete('oh_invoices_line');
+
 	$dataManager->where('ID', $id);
 	$remove = $dataManager->delete('oh_invoices');
-	$dataManager->where('Factuur_ID', $id);
-	$remove2 = $dataManager->delete('oh_invoices_line');
 } else {
 
     if(isset($_POST['date'])) {
