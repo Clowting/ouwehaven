@@ -96,9 +96,6 @@ include_once 'includes/sidebar.php';
                         <button type="submit" class="btn btn-primary" id="search">Zoeken</button>
                     </div>
                 </form>
-                <?php
-
-                ?>
 
                 <hr/>
 

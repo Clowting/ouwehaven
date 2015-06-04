@@ -68,12 +68,19 @@ $(document).ready(function ($) {
                 pageCount = Math.ceil(data['totalCount']/50);
 
                 $.each(data['items'], function (index, value) {
+                    if(value['Code'] == 'D') {
+                        var code = 'Debet';
+                    }
+                    else if(value['Code'] == 'C') {
+                        var code = 'Credit';
+                    }
+
                     toAppend +=
                         '<tr id="'+ value['ID']+'">' +
                         '<td><input type="hidden" name="'+ value['ID'] +'[desc]" value="'+ value['Beschrijving'] +'"></input>	' + value['Beschrijving'] + '</td>' +
                         '<td><input type="hidden" name="'+ value['ID'] +'[date]" value="'+ value['Datum'] +'"></input>	' + value['Datum'] + '</td>' +
                         '<td><input type="hidden" name="'+ value['ID'] +'[amount]" value="&euro; '+ value['Bedrag'] +'"></input>&euro;	' + value['Bedrag'] + '</td>' +
-                        '<td><input type="hidden" name="'+ value['ID'] +'[code]" value="'+ value['Code'] +'"></input>	' + value['Code'] + '</td>' +
+                        '<td><input type="hidden" name="'+ value['ID'] +'[code]" value="'+ value['Code'] +'"></input>	' + code + '</td>' +
                         '<td><input type="hidden" name="'+ value['ID'] +'[sender]" value="'+ value['Afzender'] +'"></input>	' + value['Afzender'] + '</td>' +
                         '<td><input type="hidden" name="'+ value['ID'] +'[receiver]" value="'+ value['Ontvanger'] +'"></input>	' + value['Ontvanger'] + '</td>' +
                         '<td><a class="btn" id="deleteEntry" name="deleteEntry"><i class="fa fa-trash-o "></i> Verwijderen</a></td>';
