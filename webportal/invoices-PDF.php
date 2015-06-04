@@ -58,8 +58,7 @@ if(isset($_GET['id']) && is_numeric($_GET['id'])) {
             $oldDatePaid = DateTime::createFromFormat('Y-m-d', $details['DatumBetaald']);
             $datePaid = $oldDatePaid->format('d/m/Y');
             $html .= '<tr><td>Betaald: </td><td>Ja</td></tr>';
-            $html .= '<tr><td>Datum Betaald: </td><td>' . $datePaid . '</td></tr>';
-            $html .= '<tr><td>BetaalWijze: </td><td>' . $details['BetaaldWijze'] . '</td></tr>';
+            $html .= '<tr><td>Datum betaald: </td><td>' . $datePaid . '</td></tr>';
         }
 
         $html .= '   </table>
@@ -67,7 +66,8 @@ if(isset($_GET['id']) && is_numeric($_GET['id'])) {
             </tr>
             <tr>
                 <td style="background:WHITE;">';
-        $html .= '<h4>' . $details['Voornaam'] . ' ' . $details['Tussenvoegsel'] . ' ' . $details['Achternaam'] . '</h4><p>';
+        $eigenaar = generateName($details['Voornaam'], $details['Tussenvoegsel'], $details['Achternaam']);
+        $html .= '<h4>' . $eigenaar . '</h4><p>';
         $html .= $details['Adres'] . '<br/>';
         $html .= $details['Postcode'] . '<br/>';
         $html .= $details['Woonplaats'] . '</p></td>';

@@ -46,11 +46,12 @@ $(document).ready(function ($) {
                 pageCount = Math.ceil(data['totalCount']/50);
 
                 $.each(data['items'], function (index, value) {
+                    var eigenaar = generateName(value['Voornaam'], value['Tussenvoegsel'], value['Achternaam']);
                     toAppend +=
                         '<tr>' +
                         '<td>' + value['Naam'] + '</td>' +
                         '<td>' + value['Lengte'] + '</td>' +
-                        '<td>' + value['Voornaam'] + '</td>' +
+                        '<td>' + eigenaar + '</td>' +
                         '<td><a href="ships-details.php?id=' + value['ID'] + '"><i class="fa fa-arrow-right"></i></a></td>' +
                         '</tr>';
                 });
@@ -59,6 +60,14 @@ $(document).ready(function ($) {
 
             }
         });
+    }
+
+    function generateName(voornaam, tussenvoegel, achternaam) {
+        if(tussenvoegel != "") {
+            return voornaam + ' ' + tussenvoegel + ' ' + achternaam;
+        } else {
+            return voornaam + ' ' + achternaam;
+        }
     }
 
 });

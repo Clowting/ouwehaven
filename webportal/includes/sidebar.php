@@ -50,6 +50,9 @@
                             <a href="financial-year.php"><i class="fa fa-bar-chart"></i> Financieel jaarverslag</a>
                         </li>
                         <li>
+                            <a href="invoices.php"><i class="fa fa-file"></i> Facturen</a>
+                        </li>
+                        <li>
                             <a href="cashbook.php"><i class="fa fa-money"></i> Kasboek</a>
                         </li>
                     </ul>
