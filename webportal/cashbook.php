@@ -100,7 +100,7 @@ include_once 'includes/sidebar.php';
                 <hr/>
 
                 <div class="table-responsive">
-                    <form id="toPDFForm" method="POST" action="pdf-creator/cashbookPDF.php">
+                    <form id="toPDFForm" method="POST" action="cashbookPDF.php">
                         <table class="table table-striped table-hover" id="cashbookEntriesTable">
 
                             <thead>
