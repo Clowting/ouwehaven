@@ -99,20 +99,27 @@ include_once 'includes/sidebar.php';
                         $failCount = 0;
 
                         foreach($invoiceCategories as $key => $category) {
-                            $data = array(
-                                'Factuur_ID' => $factuurID,
-                                'Categorie_ID' => $category,
-                                'Aantal' => $invoiceAmounts[$key],
-                                'Bedrag' => $invoicePrices[$key]
-                            );
-
-                            $insertLine = $dataManager->insert('oh_invoices_line', $data);
-
-                            if($insertLine) {
-                                $successCount++;
-                            } else {
-
-                            }
+                        	
+                        	if(validateNumber($invoiceAmounts[$key], 1, 11)&&
+                        		is_numeric($invoicePrices[$key])){
+                        		
+	                            $data = array(
+	                                'Factuur_ID' => $factuurID,
+	                                'Categorie_ID' => $category,
+	                                'Aantal' => $invoiceAmounts[$key],
+	                                'Bedrag' => $invoicePrices[$key]
+	                            );
+	
+	                            $insertLine = $dataManager->insert('oh_invoices_line', $data);
+	
+	                            if($insertLine) {
+	                                $successCount++;
+	                            } else {
+									$failCount++;
+	                            }
+                        	}else{
+                        		$failCount++;
+                        	}
                         }
 
                         if ($insert) {
