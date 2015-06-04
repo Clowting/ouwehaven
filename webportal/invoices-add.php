@@ -165,7 +165,7 @@ include_once 'includes/sidebar.php';
                         </div>
 
                         <div class="form-group col-md-1" id="add">
-                            <button type="button" class="btn btn-default " name="add" id="add">Voeg extra regel toe
+                            <button type="button" class="btn btn-primary" name="add" id="add">Voeg extra regel toe
                             </button>
                         </div>
 
@@ -206,7 +206,7 @@ include_once 'includes/sidebar.php';
                             </table>
                         </div>
                         <div class="col-md-1">
-                            <button type="submit" class="btn btn-default ">Aanmaken</button>
+                            <button type="submit" class="btn btn-primary ">Aanmaken</button>
                         </div>
 
                     </form>

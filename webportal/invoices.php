@@ -91,7 +91,7 @@ include_once 'includes/sidebar.php';
 
 
                     <div class="col-md-2">
-                        <button type="submit" class="btn btn-default" id="search">Zoeken</button>
+                        <button type="submit" class="btn btn-primary" id="search">Zoeken</button>
                     </div>
                 </form>
 

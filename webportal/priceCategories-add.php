@@ -97,7 +97,7 @@ include_once 'includes/sidebar.php';
                                 <input type="number" class="form-control" name="prijs">
                             </div>
                        <div class="form-group">
-                        <button type="submit" class="btn btn-default ">Opslaan</button>
+                        <button type="submit" class="btn btn-primary">Opslaan</button>
                     </div>
                 </form>
                 <?php 
